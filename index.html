@@ -162,8 +162,8 @@
       border-radius: 8px;
     }
 
-    .card-scene:hover .card {
-      transform: rotateY(180deg);
+    @media (hover: hover) {
+      .card-scene:hover .card { transform: rotateY(180deg); }
     }
 
 
@@ -1497,12 +1497,24 @@
 
     // Tap-to-flip on touch devices
     if ('ontouchstart' in window) {
-      document.querySelectorAll('.card-scene').forEach(scene => {
+      const scenes = document.querySelectorAll('.card-scene');
+
+      scenes.forEach(scene => {
         scene.addEventListener('click', e => {
           if (e.target.closest('.share-btn, .download-btn, .cook-mode-btn')) return;
           scene.classList.toggle('flipped');
         });
       });
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.intersectionRatio < 0.2) {
+            entry.target.classList.remove('flipped');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      scenes.forEach(scene => observer.observe(scene));
     }
 
     // Search

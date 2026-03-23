@@ -64,7 +64,7 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      padding: 6px 14px;
+      padding: 9px 18px;
       transition: background 0.15s;
       border-radius: inherit;
     }
@@ -75,7 +75,16 @@
     .controls-row > div:hover { background: rgba(196, 168, 112, 0.3); }
 
     .controls-row > div + div {
-      border-left: 1px solid #c4a870;
+      position: relative;
+    }
+    .controls-row > div + div::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: #c4a870;
     }
 
     .controls-row > div:first-child {
@@ -97,18 +106,18 @@
     }
 
     .controls label {
-      font-size: 0.6rem;
+      font-size: 0.65rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #9a7a5a;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
       white-space: nowrap;
       cursor: default;
     }
 
     .controls select {
       font-family: Georgia, serif;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #3b1f0a;
       background: transparent;
       border: none;
@@ -124,12 +133,12 @@
 
     .search-input {
       font-family: Georgia, serif;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #3b1f0a;
       background: transparent;
       border: none;
       padding: 0;
-      width: 160px;
+      width: 175px;
       outline: none;
     }
 

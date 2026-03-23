@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Cards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #f5f0e8;
+      font-family: Georgia, serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px;
+    }
+
+    .page-header {
+      width: 100%;
+      max-width: calc(3 * 360px + 2 * 48px);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 5rem;
+      font-weight: 600;
+      color: #7a3e1a;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #5a3e2b;
+    }
+
+    .controls-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .controls label {
+      margin-right: 6px;
+    }
+
+    .controls select {
+      font-family: Georgia, serif;
+      font-size: 0.9rem;
+      color: #3b1f0a;
+      background: #ede6d8;
+      border: 1px solid #c4a870;
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+      appearance: auto;
+    }
+
+    .search-input {
+      font-family: Georgia, serif;
+      font-size: 0.9rem;
+      color: #3b1f0a;
+      background: #ede6d8;
+      border: 1px solid #c4a870;
+      border-radius: 4px;
+      padding: 4px 10px;
+      width: 180px;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #9a7a5a;
+      font-style: italic;
+    }
+
+    .search-input:focus {
+      border-color: #8a6a30;
+    }
+
+    .no-results {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #9a7a5a;
+      padding: 60px 0;
+    }
+
+    .back.large {
+      font-size: 4.5cqw;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .back.large::after,
+    .back.xl::after {
+      display: none;
+    }
+
+    .back.xl {
+      font-size: 6cqw;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .back.large::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .back.large::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .back.large::-webkit-scrollbar-thumb {
+      background: rgba(90,50,15,0.35);
+      border-radius: 2px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 360px);
+      gap: 48px;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .card-scene {
+      width: 360px;
+      aspect-ratio: 2 / 3;
+      perspective: 1200px;
+      cursor: pointer;
+      container-type: size;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.22);
+      border-radius: 8px;
+    }
+
+    .card-scene:hover .card {
+      transform: rotateY(180deg);
+    }
+
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .card-front { transform: rotateY(0deg); }
+    .card-back  { transform: rotateY(180deg); }
+
+    /* ── FRONT CARD ── */
+    .front {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .front-title {
+      position: absolute;
+      top: 6%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      line-height: 1;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      padding: 0.4em 0;
+    }
+
+    .ft-script {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 10cqw;
+      color: #3b1f0a;
+      text-shadow: 0 1px 6px rgba(255,255,255,0.4);
+      white-space: nowrap;
+    }
+
+    /* ── BACK CARD ── */
+    .back {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background-color: #d4b86a;
+      background-image:
+        url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.08'/></svg>"),
+        radial-gradient(ellipse 60% 40% at 5% 100%, rgba(60,30,0,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 95% 0%, rgba(70,35,0,0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 20% at 80% 90%, rgba(50,25,0,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 110% 110% at 50% 50%, transparent 45%, rgba(60,30,0,0.15) 100%),
+        linear-gradient(162deg, #e8d48e 0%, #d8bc6a 30%, #cdb055 55%, #ddc470 75%, #c8a848 100%);
+      padding: 1.3em 1.2em 1.1em;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65em;
+      font-family: Georgia, serif;
+      font-size: min(3.2cqw, 2.2cqh);
+      overflow: hidden;
+    }
+
+    .back::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      box-shadow:
+        inset 0 0 2em rgba(50,20,0,0.18),
+        inset 0 0 0.5em rgba(50,20,0,0.1);
+      pointer-events: none;
+    }
+
+    .back-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 4.5cqw;
+      color: #3b1f0a;
+      line-height: 1.1;
+      margin-bottom: 0.2em;
+    }
+
+    .serves {
+      position: absolute;
+      top: 0.9em;
+      right: 0.9em;
+      font-size: 1em;
+      font-style: italic;
+      color: #3b1f0a;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #3d1f08;
+      color: #e8d5a8;
+      font-size: 0.78em;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2em 0.9em;
+      border-radius: 0.3em;
+      margin-bottom: 0.4em;
+      font-family: Georgia, serif;
+      opacity: 0.88;
+    }
+
+    .badge.tips { background: #5c4010; }
+
+    .dotted-box {
+      border: 1px dashed rgba(70,40,5,0.55);
+      border-radius: 0.3em;
+      padding: 0.45em 0.55em;
+    }
+
+    .ingredients-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 0.75em;
+    }
+
+    .ingredients-cols ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .ingredients-cols li {
+      font-size: 1em;
+      color: #1e1005;
+      line-height: 1.45;
+      margin-bottom: 0.15em;
+      padding-left: 0.75em;
+      position: relative;
+    }
+
+    .ingredients-cols li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #5a3510;
+    }
+
+    .instructions-list {
+      list-style: decimal;
+      padding-left: 1.2em;
+    }
+
+    .instructions-list li {
+      font-size: 1em;
+      color: #1e1005;
+      line-height: 1.38;
+      margin-bottom: 0.25em;
+    }
+
+    .tips-box {
+      border: 1px solid rgba(120,90,30,0.4);
+      background: rgba(255,245,210,0.25);
+      border-radius: 0.3em;
+      padding: 0.45em 0.55em;
+    }
+
+    .tips-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .tips-list li {
+      font-size: 1em;
+      color: #1e1005;
+      line-height: 1.38;
+      margin-bottom: 0.2em;
+      padding-left: 0.75em;
+      position: relative;
+    }
+
+    .tips-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #5a3510;
+    }
+
+    .share-btn {
+      position: absolute;
+      bottom: 0.65em;
+      right: 3.3em;
+      z-index: 10;
+      width: 2em;
+      height: 2em;
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s, background 0.15s;
+      padding: 0;
+    }
+
+    .card-scene:hover .share-btn {
+      opacity: 1;
+    }
+
+    .share-btn:hover {
+      background: rgba(255,255,255,0.92);
+    }
+
+    .download-btn {
+      position: absolute;
+      bottom: 0.65em;
+      right: 0.65em;
+      z-index: 10;
+      width: 2em;
+      height: 2em;
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s, background 0.15s;
+      padding: 0;
+    }
+
+    .card-scene:hover .download-btn {
+      opacity: 1;
+    }
+
+    .download-btn:hover {
+      background: rgba(255,255,255,0.92);
+    }
+
+    /* ── COOK MODE ── */
+    .cook-mode-btn {
+      font-family: Georgia, serif;
+      font-size: 0.9rem;
+      color: #3b1f0a;
+      background: #ede6d8;
+      border: 1px solid #c4a870;
+      border-radius: 20px;
+      padding: 5px 14px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      position: relative;
+      top: -16px;
+    }
+    .cook-mode-btn.active {
+      background: #7a3e1a;
+      color: #faf6ef;
+      border-color: #5a2e0e;
+    }
+    .cook-mode-btn.active:hover { background: #5a2e0e; }
+
+    body.cook-mode-on .card-scene {
+      position: relative;
+    }
+    body.cook-mode-on .card-scene::after {
+      content: 'Tap to Cook';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(42, 16, 4, 0.6);
+      color: #faf6ef;
+      font-family: 'Dancing Script', cursive;
+      font-size: 10cqw;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 15;
+      pointer-events: none;
+    }
+    body.cook-mode-on .card-scene:hover::after { opacity: 1; }
+
+    #cook-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 12, 3, 0.88);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #cook-overlay.visible { display: flex; }
+
+    .cook-modal {
+      background: #faf5ec;
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 48px 52px 44px;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+    }
+
+    .cook-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: #9a7a5a;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
+    }
+    .cook-close:hover { color: #3b1f0a; }
+
+    .cook-recipe-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      color: #7a3e1a;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .cook-phase-label {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #9a7a5a;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 24px;
+    }
+    .cook-prompt {
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      color: #5a3e2b;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .cook-checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .cook-checklist li label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: Georgia, serif;
+      font-size: 1.05rem;
+      color: #3b1f0a;
+      cursor: pointer;
+      padding: 9px 12px;
+      border-radius: 6px;
+      background: rgba(196, 168, 112, 0.12);
+      transition: background 0.15s;
+    }
+    .cook-checklist li label:hover { background: rgba(196, 168, 112, 0.25); }
+    .cook-checklist li.checked label {
+      color: #a08060;
+      text-decoration: line-through;
+    }
+    .cook-checklist input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #7a3e1a;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .cook-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cook-checked-count {
+      font-family: Georgia, serif;
+      font-size: 0.9rem;
+      color: #9a7a5a;
+      font-style: italic;
+    }
+    .cook-action-btn {
+      font-family: Georgia, serif;
+      font-size: 1.05rem;
+      color: #faf6ef;
+      background: #7a3e1a;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .cook-action-btn:hover { background: #5a2e0e; }
+
+    .cook-step-counter {
+      text-align: center;
+      font-size: 0.82rem;
+      color: #9a7a5a;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+    .cook-progress-bar {
+      height: 3px;
+      background: #e8dcc8;
+      border-radius: 2px;
+      margin-bottom: 44px;
+      overflow: hidden;
+    }
+    .cook-progress-fill {
+      height: 100%;
+      background: #7a3e1a;
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    .cook-step-text {
+      font-family: Georgia, serif;
+      font-size: 1.35rem;
+      color: #2a1508;
+      line-height: 1.75;
+      text-align: center;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .cook-step-footer { display: flex; justify-content: center; }
+    .cook-hint {
+      text-align: center;
+      margin-top: 20px;
+      font-family: Georgia, serif;
+      font-size: 0.8rem;
+      color: #b8a080;
+      font-style: italic;
+    }
+
+    .cook-timer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: -16px 0 36px;
+    }
+    .cook-timer-btn {
+      font-family: Georgia, serif;
+      font-size: 0.95rem;
+      color: #fff;
+      background: #4ea862;
+      border: none;
+      border-radius: 20px;
+      padding: 7px 18px;
+      cursor: pointer;
+      transition: background 0.15s;
+      box-shadow: 0 2px 8px rgba(78, 168, 98, 0.35);
+    }
+    .cook-timer-btn:hover { background: #3a8a4a; }
+    .cook-timer-display {
+      font-family: Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: #3b1f0a;
+      min-width: 90px;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .cook-timer-display.done { color: #7a3e1a; }
+    .cook-timer-reminder {
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      color: #c8581a;
+      font-style: italic;
+      margin-top: 8px;
+      animation: cook-reminder-fade 0.4s ease;
+    }
+    @keyframes cook-reminder-fade {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .cook-complete { text-align: center; padding: 20px 0; }
+    .cook-complete-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.2rem;
+      color: #7a3e1a;
+      margin-bottom: 12px;
+    }
+    .cook-complete-text {
+      font-family: Georgia, serif;
+      font-size: 1.1rem;
+      color: #5a3e2b;
+      margin-bottom: 40px;
+    }
+    .cook-complete-footer { display: flex; justify-content: center; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>Recipe Cards</h1>
+    <div class="controls">
+      <div>
+        <button id="cook-mode-toggle" class="cook-mode-btn">Guided Mode</button>
+      </div>
+      <div class="controls-row">
+        <div>
+          <input class="search-input" id="search" type="search" placeholder="Search recipes…" autocomplete="off">
+        </div>
+        <div>
+          <label for="servings">Servings</label>
+          <select id="servings">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+        </div>
+        <div>
+          <label for="units">Units</label>
+          <select id="units">
+            <option value="customary" selected>Customary</option>
+            <option value="metric">Metric</option>
+          </select>
+        </div>
+        <div>
+          <label for="font-size">Font</label>
+          <select id="font-size">
+            <option value="standard" selected>Standard</option>
+            <option value="large">Large</option>
+            <option value="xl">Extra Large</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- CARD: chicken francese -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/chicken_francese_blank.png" alt="Chicken Francese">
+              <div class="front-title">
+                <span class="ft-script">Chicken Francese</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Chicken Francese</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="2" data-name="large chicken breasts, halved lengthwise">2 large chicken breasts, halved lengthwise</li>
+                      <li data-qty="0.5" data-name="cup all-purpose flour">½ cup all-purpose flour</li>
+                      <li data-qty="3" data-name="eggs, beaten">3 eggs, beaten</li>
+                      <li data-qty="2" data-name="tbsp olive oil">2 tbsp olive oil</li>
+                      <li data-qty="3" data-name="tbsp unsalted butter, divided">3 tbsp unsalted butter, divided</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="3" data-name="garlic cloves, minced">3 garlic cloves, minced</li>
+                      <li data-qty="0.5" data-name="cup dry white wine">½ cup dry white wine</li>
+                      <li data-qty="0.75" data-name="cup chicken stock">¾ cup chicken stock</li>
+                      <li data-qty="3" data-name="tbsp fresh lemon juice">3 tbsp fresh lemon juice</li>
+                      <li data-qty="2" data-name="tbsp capers, drained">2 tbsp capers, drained</li>
+                      <li data-qty="2" data-name="tbsp flat-leaf parsley, chopped">2 tbsp flat-leaf parsley, chopped</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Season cutlets well. Dredge in flour, shaking off excess, then coat in beaten egg.</li>
+                  <li>Heat oil and 1 tbsp butter over medium-high until shimmering. Cook cutlets 3 min per side until deep golden. Remove and tent with foil.</li>
+                  <li>Reduce heat to medium. Add garlic and cook 30 seconds. Pour in wine and reduce by half, scraping up the fond.</li>
+                  <li>Add stock and lemon juice. Simmer 3 min until slightly thickened.</li>
+                  <li>Off heat, swirl in remaining cold butter to finish the sauce. Stir in capers.</li>
+                  <li>Return chicken, spoon sauce over, and garnish with parsley.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Cold butter off heat is the key to a silky, emulsified sauce.</li>
+                    <li>Don't skip the fond — those browned bits are where the flavor lives.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: shrimp risotto -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/shrimp risotto.png" alt="Shrimp Risotto">
+              <div class="front-title">
+                <span class="ft-script">Shrimp Risotto</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Shrimp Risotto</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="1.5" data-name="lb large shrimp, peeled &amp; deveined">1½ lb large shrimp, peeled &amp; deveined</li>
+                      <li>Chili flakes</li>
+                      <li data-qty="3" data-name="tbsp unsalted butter, divided">3 tbsp unsalted butter, divided</li>
+                      <li data-qty="2" data-name="tbsp olive oil">2 tbsp olive oil</li>
+                      <li data-qty="1" data-name="shallot, finely diced">1 shallot, finely diced</li>
+                      <li data-qty="4" data-name="garlic cloves, minced">4 garlic cloves, minced</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="1.5" data-name="cups Arborio rice">1½ cups Arborio rice</li>
+                      <li data-qty="0.5" data-name="cup dry white wine">½ cup dry white wine</li>
+                      <li data-qty="5" data-name="cups warm seafood or chicken stock">5 cups warm seafood or chicken stock</li>
+                      <li data-qty="0.5" data-name="cup Parmesan, grated">½ cup Parmesan, grated</li>
+                      <li data-qty="1" data-name="lemon (zest &amp; juice)">1 lemon (zest &amp; juice)</li>
+                      <li data-qty="2" data-name="tbsp flat-leaf parsley, chopped">2 tbsp flat-leaf parsley, chopped</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Season shrimp. Sear in 1 tbsp butter and oil over high heat, 1–2 min per side until pink. Set aside.</li>
+                  <li>Reduce heat to medium. Add remaining butter and shallot, cook 3 min until soft. Add garlic, cook 1 min.</li>
+                  <li>Add rice and toast 2 min, stirring constantly, until edges turn translucent.</li>
+                  <li>Pour in wine and stir until fully absorbed.</li>
+                  <li>Add warm stock one ladle at a time, stirring frequently and waiting until each addition is absorbed, about 18–20 min total.</li>
+                  <li>Stir in Parmesan, lemon zest and juice. Fold shrimp back in, rest 1 min off heat, and serve topped with parsley.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Keep stock warm — cold stock slows cooking and affects texture.</li>
+                    <li>Sear shrimp separately so they don't overcook in the risotto.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: beef stroganoff -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/beef_stroganoff.png" alt="Beef Stroganoff">
+              <div class="front-title">
+                <span class="ft-script">Beef Stroganoff</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Beef Stroganoff</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="1.5" data-name="lb beef sirloin, thinly sliced">1½ lb beef sirloin, thinly sliced</li>
+                      <li data-qty="2" data-name="tbsp unsalted butter, divided">2 tbsp unsalted butter, divided</li>
+                      <li data-qty="1" data-name="tbsp olive oil">1 tbsp olive oil</li>
+                      <li data-qty="1" data-name="onion, thinly sliced">1 onion, thinly sliced</li>
+                      <li data-qty="8" data-name="oz cremini mushrooms, sliced">8 oz cremini mushrooms, sliced</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="3" data-name="garlic cloves, minced">3 garlic cloves, minced</li>
+                      <li data-qty="1" data-name="tbsp all-purpose flour">1 tbsp all-purpose flour</li>
+                      <li data-qty="1" data-name="cup beef stock">1 cup beef stock</li>
+                      <li data-qty="1" data-name="tbsp Worcestershire sauce">1 tbsp Worcestershire sauce</li>
+                      <li data-qty="1" data-name="tsp Dijon mustard">1 tsp Dijon mustard</li>
+                      <li data-qty="0.75" data-name="cup sour cream">¾ cup sour cream</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Season beef well. Sear in 1 tbsp butter and oil over high heat in batches, 1 min per side. Set aside — don't crowd the pan.</li>
+                  <li>Reduce to medium. Add remaining butter and onion, cook 5 min until softened.</li>
+                  <li>Add mushrooms and cook 4–5 min until golden. Add garlic and cook 1 min.</li>
+                  <li>Sprinkle flour over and stir 1 min. Add stock and Worcestershire, scraping up the fond. Simmer 3–4 min until thickened.</li>
+                  <li>Stir in Dijon and sour cream. Warm through gently — do not boil.</li>
+                  <li>Return beef and any juices. Stir gently, season to taste, and serve over egg noodles with fresh parsley.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Sear in batches over high heat so the beef browns rather than steams.</li>
+                    <li>Never boil after adding sour cream or it will curdle.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: baked potato soup -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/baked_potato_soup.png" alt="Baked Potato Soup">
+              <div class="front-title">
+                <span class="ft-script">Baked Potato Soup</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Baked Potato Soup</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="4" data-name="large russet potatoes, peeled &amp; cubed">4 large russet potatoes, peeled &amp; cubed</li>
+                      <li data-qty="4" data-name="strips bacon, chopped">4 strips bacon, chopped</li>
+                      <li data-qty="1" data-name="onion, finely diced">1 onion, finely diced</li>
+                      <li data-qty="3" data-name="garlic cloves, minced">3 garlic cloves, minced</li>
+                      <li data-qty="3" data-name="tbsp unsalted butter">3 tbsp unsalted butter</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="3" data-name="tbsp all-purpose flour">3 tbsp all-purpose flour</li>
+                      <li data-qty="3" data-name="cups chicken stock">3 cups chicken stock</li>
+                      <li data-qty="2" data-name="cups whole milk">2 cups whole milk</li>
+                      <li data-qty="0.5" data-name="cup sour cream">½ cup sour cream</li>
+                      <li data-qty="1" data-name="cup cheddar cheese, shredded">1 cup cheddar cheese, shredded</li>
+                      <li data-qty="3" data-name="green onions, sliced">3 green onions, sliced</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Cook bacon in a large pot over medium heat until crispy. Remove and set aside, leaving the fat in the pot.</li>
+                  <li>Add butter and onion. Cook 4–5 min until softened. Add garlic and cook 1 min.</li>
+                  <li>Sprinkle flour over and stir 1 min. Pour in stock gradually, whisking until smooth.</li>
+                  <li>Add potatoes and bring to a boil. Reduce heat and simmer 15–18 min until tender.</li>
+                  <li>Lightly mash some potatoes in the pot to thicken. Stir in milk and sour cream. Warm through — do not boil.</li>
+                  <li>Season to taste and serve topped with cheddar, bacon, and green onions.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Russet potatoes break down better than waxy varieties — ideal for a creamy texture.</li>
+                    <li>Don't boil after adding dairy or the soup may curdle.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: crab cakes -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/crab_cakes.png" alt="Crab Cakes">
+              <div class="front-title">
+                <span class="ft-script">Crab Cakes</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Crab Cakes</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="1" data-name="lb lump crab meat, picked over">1 lb lump crab meat, picked over</li>
+                      <li data-qty="0.25" data-name="cup mayonnaise">¼ cup mayonnaise</li>
+                      <li data-qty="1" data-name="large egg, beaten">1 large egg, beaten</li>
+                      <li data-qty="1" data-name="tbsp Dijon mustard">1 tbsp Dijon mustard</li>
+                      <li data-qty="1" data-name="tsp Old Bay seasoning">1 tsp Old Bay seasoning</li>
+                      <li data-qty="1" data-name="tsp Worcestershire sauce">1 tsp Worcestershire sauce</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="2" data-name="tbsp fresh lemon juice">2 tbsp fresh lemon juice</li>
+                      <li data-qty="2" data-name="tbsp flat-leaf parsley, chopped">2 tbsp flat-leaf parsley, chopped</li>
+                      <li data-qty="0.5" data-name="cup panko breadcrumbs">½ cup panko breadcrumbs</li>
+                      <li data-qty="2" data-name="tbsp unsalted butter">2 tbsp unsalted butter</li>
+                      <li data-qty="2" data-name="tbsp olive oil">2 tbsp olive oil</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Gently combine mayo, egg, mustard, Old Bay, Worcestershire, lemon juice, and parsley in a bowl.</li>
+                  <li>Fold in crab meat and panko, being careful not to break up the lumps. Season to taste.</li>
+                  <li>Shape into 8 patties about ¾ inch thick. Refrigerate at least 30 min to firm up.</li>
+                  <li>Heat butter and oil in a large skillet over medium-high until the foam subsides.</li>
+                  <li>Cook crab cakes 3–4 min per side until deeply golden and heated through. Work in batches if needed.</li>
+                  <li>Serve with lemon wedges and remoulade or tartar sauce.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Chilling is non-negotiable — it's what keeps them from falling apart in the pan.</li>
+                    <li>Less filler means better crab cakes; add just enough panko to bind.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 6: spaghetti carbonara -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/spaghetti_carbonara.png" alt="Spaghetti Carbonara">
+              <div class="front-title">
+                <span class="ft-script">Spaghetti Carbonara</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Spaghetti Carbonara</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="12" data-name="oz spaghetti">12 oz spaghetti</li>
+                      <li data-qty="200" data-name="g pancetta or guanciale, diced">200g pancetta or guanciale, diced</li>
+                      <li data-qty="3" data-name="garlic cloves, lightly crushed">3 garlic cloves, lightly crushed</li>
+                      <li data-qty="4" data-name="large egg yolks">4 large egg yolks</li>
+                      <li data-qty="1" data-name="whole egg">1 whole egg</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="80" data-name="g Pecorino Romano, finely grated">80g Pecorino Romano, finely grated</li>
+                      <li data-qty="40" data-name="g Parmesan, finely grated">40g Parmesan, finely grated</li>
+                      <li data-qty="1" data-name="cup pasta water, reserved">1 cup pasta water, reserved</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Boil spaghetti in heavily salted water until al dente. Reserve 1 cup pasta water before draining.</li>
+                  <li>Cook pancetta in a large skillet over medium heat until crispy. Add garlic for 1 min, then remove garlic.</li>
+                  <li>Whisk egg yolks, whole egg, Pecorino, and Parmesan together. Season very generously with black pepper.</li>
+                  <li>Remove skillet from heat and let cool 1 min. Add drained pasta and toss to coat in the fat.</li>
+                  <li>Pour egg mixture over pasta, tossing quickly. Add pasta water a splash at a time until the sauce is silky and coats every strand.</li>
+                  <li>Serve immediately with extra cheese and a crack of black pepper.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Never add cream — the creaminess comes entirely from eggs, cheese, and starchy pasta water.</li>
+                    <li>Off the heat is critical when adding the egg mixture or it will scramble.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: beef wellington -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/beef_wellington.png" alt="Beef Wellington">
+              <div class="front-title">
+                <span class="ft-script">Beef Wellington</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Beef Wellington</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="2" data-name="lb center-cut beef tenderloin">2 lb center-cut beef tenderloin</li>
+                      <li data-qty="2" data-name="tbsp olive oil">2 tbsp olive oil</li>
+                      <li data-qty="1" data-name="lb cremini mushrooms, finely chopped">1 lb cremini mushrooms, finely chopped</li>
+                      <li data-qty="4" data-name="garlic cloves, minced">4 garlic cloves, minced</li>
+                      <li data-qty="2" data-name="shallots, minced">2 shallots, minced</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="2" data-name="tbsp Dijon mustard">2 tbsp Dijon mustard</li>
+                      <li data-qty="6" data-name="thin slices prosciutto">6 thin slices prosciutto</li>
+                      <li data-qty="1" data-name="sheet puff pastry, thawed">1 sheet puff pastry, thawed</li>
+                      <li data-qty="2" data-name="egg yolks, beaten (egg wash)">2 egg yolks, beaten (egg wash)</li>
+                      <li data-qty="2" data-name="tbsp fresh thyme leaves">2 tbsp fresh thyme leaves</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Season tenderloin generously. Sear in hot oil 2 min per side until browned all over. Brush with Dijon and let cool completely.</li>
+                  <li>Cook mushrooms, shallots, garlic, and thyme in the same pan over medium heat, stirring, until all moisture evaporates, about 15 min. Cool completely.</li>
+                  <li>Lay prosciutto in overlapping slices on plastic wrap. Spread mushroom mixture evenly over prosciutto. Place tenderloin at edge and roll tightly into a log. Refrigerate 30 min.</li>
+                  <li>Wrap in puff pastry, sealing seams with egg wash. Brush all over with egg wash. Score lightly. Chill 15 min.</li>
+                  <li>Bake at 425°F (220°C) for 25–30 min until pastry is deep golden and internal temp reads 125°F (52°C) for medium-rare.</li>
+                  <li>Rest 10 min before slicing.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>The duxelles (mushroom mixture) must be completely dry or the pastry will be soggy.</li>
+                    <li>Chilling at each stage keeps the layers firm and the shape tight.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: meatballs -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/meatballs.png" alt="Meatballs">
+              <div class="front-title">
+                <span class="ft-script">Meatballs</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Meatballs</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="1" data-name="lb ground beef (80/20)">1 lb ground beef (80/20)</li>
+                      <li data-qty="0.5" data-name="lb ground pork">½ lb ground pork</li>
+                      <li data-qty="0.5" data-name="cup breadcrumbs, soaked in ¼ cup milk">½ cup breadcrumbs, soaked in ¼ cup milk</li>
+                      <li data-qty="2" data-name="eggs">2 eggs</li>
+                      <li data-qty="0.5" data-name="cup Parmesan, grated">½ cup Parmesan, grated</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="4" data-name="garlic cloves, minced">4 garlic cloves, minced</li>
+                      <li data-qty="0.25" data-name="cup flat-leaf parsley, chopped">¼ cup flat-leaf parsley, chopped</li>
+                      <li data-qty="1" data-name="tsp dried oregano">1 tsp dried oregano</li>
+                      <li data-qty="0.5" data-name="tsp red pepper flakes">½ tsp red pepper flakes</li>
+                      <li data-qty="28" data-name="oz crushed San Marzano tomatoes">28 oz crushed San Marzano tomatoes</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Combine beef, pork, soaked breadcrumbs, eggs, Parmesan, garlic, parsley, oregano, and pepper flakes. Mix gently until just combined — do not overwork.</li>
+                  <li>Roll into 1½-inch balls. Refrigerate 20 min to firm up.</li>
+                  <li>Brown meatballs in olive oil over medium-high heat, turning to sear all sides, about 6 min. Remove and set aside.</li>
+                  <li>In the same pan, sauté a little garlic in olive oil, then add crushed tomatoes. Season and simmer 10 min.</li>
+                  <li>Nestle meatballs into sauce. Cover and simmer on low for 20 min.</li>
+                  <li>Serve over pasta or with crusty bread, topped with extra Parmesan.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Soaking breadcrumbs in milk (panade) keeps the meatballs tender and moist.</li>
+                    <li>Mix with your hands just until combined — overworking makes them tough.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: shrimp scampi -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/shrimp_scampi.png" alt="Shrimp Scampi">
+              <div class="front-title">
+                <span class="ft-script">Shrimp Scampi</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Shrimp Scampi</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="1.5" data-name="lb large shrimp, peeled &amp; deveined">1½ lb large shrimp, peeled &amp; deveined</li>
+                      <li data-qty="16" data-name="oz linguine">16 oz linguine</li>
+                      <li data-qty="4" data-name="tbsp unsalted butter">4 tbsp unsalted butter</li>
+                      <li data-qty="3" data-name="tbsp olive oil">3 tbsp olive oil</li>
+                      <li data-qty="6" data-name="garlic cloves, thinly sliced">6 garlic cloves, thinly sliced</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="0.5" data-name="tsp red pepper flakes">½ tsp red pepper flakes</li>
+                      <li data-qty="0.5" data-name="cup dry white wine">½ cup dry white wine</li>
+                      <li data-qty="1" data-name="lemon, juice &amp; zest">1 lemon, juice &amp; zest</li>
+                      <li data-qty="0.5" data-name="cup pasta water, reserved">½ cup pasta water, reserved</li>
+                      <li data-qty="0.25" data-name="cup flat-leaf parsley, chopped">¼ cup flat-leaf parsley, chopped</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Cook linguine in salted boiling water until al dente. Reserve ½ cup pasta water before draining.</li>
+                  <li>Pat shrimp dry and season. Sear in 1 tbsp butter and olive oil over high heat, 1 min per side. Remove and set aside.</li>
+                  <li>Reduce heat to medium. Add remaining butter, garlic, and pepper flakes. Cook 1–2 min until garlic is fragrant but not browned.</li>
+                  <li>Pour in white wine and lemon juice. Simmer 2 min, scraping up any bits.</li>
+                  <li>Add pasta and a splash of pasta water. Toss to coat, adding more water as needed for a glossy sauce.</li>
+                  <li>Return shrimp, toss together, and finish with lemon zest and parsley.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Don't overcook the shrimp — pull them off heat while still slightly underdone as they'll finish in the sauce.</li>
+                    <li>Pasta water is the secret to a silky, emulsified sauce that clings to every noodle.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-results" id="no-results">No recipes found.</div>
+  </div>
+
+  <!-- Guide Mode Overlay -->
+  <div id="cook-overlay">
+    <div class="cook-modal">
+      <button class="cook-close" aria-label="Close">✕</button>
+      <div id="cook-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const BASE = 4;
+
+    function fmtQty(n) {
+      if (n <= 0) return '0';
+      const whole = Math.floor(n);
+      const frac  = n - whole;
+      const fracs = [[0.125,'⅛'],[0.25,'¼'],[0.333,'⅓'],[0.5,'½'],[0.667,'⅔'],[0.75,'¾']];
+      if (frac < 0.06)  return String(whole) || '0';
+      if (frac > 0.94)  return String(whole + 1);
+      // Snap to nearest standard fraction (prefer larger on ties)
+      let nearestStr = fracs[0][1], nearestDiff = Math.abs(frac - fracs[0][0]);
+      for (const [val, str] of fracs) {
+        const diff = Math.abs(frac - val);
+        if (diff <= nearestDiff) { nearestDiff = diff; nearestStr = str; }
+      }
+      return whole === 0 ? nearestStr : `${whole}${nearestStr}`;
+    }
+
+    let currentServings = 1;
+    let currentSystem = 'customary';
+
+    function fmtMetricQty(n) {
+      if (n < 10)  return String(parseFloat(n.toFixed(1)));
+      if (n < 100) return String(Math.round(n / 5) * 5);
+      return String(Math.round(n));
+    }
+
+    function parseUnit(name) {
+      const m = name.match(/^(tbsp|tsp|fl\s+oz|oz|lbs?|cups?|kg|g\b|ml)\s+/i);
+      if (!m) return { unit: null, rest: name };
+      const unit = m[1].toLowerCase().replace(/^lbs$/, 'lb').replace(/^cups$/, 'cup');
+      return { unit, rest: name.slice(m[0].length) };
+    }
+
+    function convertUnit(qty, unit) {
+      if (currentSystem === 'metric') {
+        switch (unit) {
+          case 'lb': { const g = qty * 453.592; return g >= 950 ? [g / 1000, 'kg'] : [Math.round(g / 5) * 5, 'g']; }
+          case 'oz': return [Math.round(qty * 28.35 / 5) * 5, 'g'];
+          case 'cup': return [Math.round(qty * 240), 'ml'];
+          case 'tbsp': return [Math.round(qty * 15), 'ml'];
+          case 'tsp':  return [parseFloat((qty * 5).toFixed(1)), 'ml'];
+          default: return [qty, unit]; // already metric
+        }
+      } else {
+        switch (unit) {
+          case 'g': { const oz = qty / 28.35; return oz >= 16 ? [oz / 16, 'lb'] : [Math.round(oz), 'oz']; }
+          case 'kg': return [qty * 2.20462, 'lb'];
+          case 'ml': { const cups = qty / 240; return cups >= 0.25 ? [cups, 'cup'] : [qty / 15, 'tbsp']; }
+          default: return [qty, unit]; // already customary
+        }
+      }
+    }
+
+    // Names starting with a unit are measured quantities — keep plural regardless
+    const UNIT_PREFIX = /^(tbsp|tsp|oz|lbs?|g\b|ml|cups?|fl\s+oz)/i;
+
+    function singularizeWord(word) {
+      const m = word.match(/^([a-zA-Z]+)([^a-zA-Z]*)$/);
+      if (!m) return word;
+      const [, bare, trail] = m;
+      if (/ss$/i.test(bare)) return word;                         // e.g. "glass"
+      if (/oes$/i.test(bare)) return bare.slice(0, -2) + trail;  // potatoes → potato
+      if (/[^s]s$/i.test(bare)) return bare.slice(0, -1) + trail; // cloves → clove
+      return word;
+    }
+
+    function toSingular(name) {
+      return name.split(' ').map(singularizeWord).join(' ');
+    }
+
+    function updateServings(servings) {
+      currentServings = servings;
+      const ratio = servings / BASE;
+      document.querySelectorAll('.serves').forEach(el => {
+        el.textContent = `Serves ${servings}`;
+      });
+      document.querySelectorAll('[data-qty]').forEach(el => {
+        const origQty = parseFloat(el.dataset.qty);
+        const scaled  = origQty * ratio;
+        const { unit, rest } = parseUnit(el.dataset.name);
+        if (unit) {
+          const [cQty, cUnit] = convertUnit(scaled, unit);
+          const isMetric = ['g', 'kg', 'ml'].includes(cUnit);
+          const displayQty = isMetric ? fmtMetricQty(cQty) : fmtQty(cQty);
+          el.textContent = `${displayQty} ${cUnit} ${rest}`;
+        } else {
+          // Countable item (eggs, cloves, etc.) — no unit conversion
+          const display = Number.isInteger(origQty) ? Math.max(1, Math.round(scaled)) : scaled;
+          const name = (display === 1) ? toSingular(el.dataset.name) : el.dataset.name;
+          el.textContent = `${fmtQty(display)} ${name}`;
+        }
+      });
+    }
+
+    function fitBackContent() {
+      document.querySelectorAll('.card-scene').forEach(scene => {
+        const back = scene.querySelector('.back');
+        if (back.classList.contains('large') || back.classList.contains('xl')) return;
+        back.style.fontSize = ''; // reset to CSS-computed value
+        const maxH = scene.offsetHeight;
+        let fs = parseFloat(getComputedStyle(back).fontSize);
+        while (back.scrollHeight > maxH && fs > 7) {
+          fs -= 0.25;
+          back.style.fontSize = fs + 'px';
+        }
+      });
+    }
+
+    document.getElementById('servings').addEventListener('change', function () {
+      updateServings(parseInt(this.value));
+      fitBackContent();
+    });
+
+    document.getElementById('units').addEventListener('change', function () {
+      currentSystem = this.value;
+      updateServings(currentServings);
+      fitBackContent();
+    });
+
+    document.getElementById('font-size').addEventListener('change', function () {
+      document.querySelectorAll('.back').forEach(el => {
+        el.style.fontSize = '';
+        el.classList.remove('large', 'xl');
+        if (this.value !== 'standard') el.classList.add(this.value);
+      });
+      if (this.value === 'standard') fitBackContent();
+    });
+
+    // initialise at 1 serving on load
+    updateServings(1);
+    requestAnimationFrame(() => fitBackContent());
+
+    // Search
+    const derivedForms = new Set(['stock', 'broth', 'bouillon', 'powder', 'extract', 'oil', 'flakes', 'seasoning']);
+    function ingredientMatches(ingredient, query) {
+      const idx = ingredient.indexOf(query);
+      if (idx === -1) return false;
+      const after = ingredient.slice(idx + query.length).trim();
+      const nextWord = after.split(/\s+/)[0];
+      return !derivedForms.has(nextWord);
+    }
+
+    document.getElementById('search').addEventListener('input', function () {
+      const q = this.value.trim().toLowerCase();
+      const cards = document.querySelectorAll('.cards-grid > div:not(#no-results)');
+      let visible = 0;
+      cards.forEach(card => {
+        const title = card.querySelector('.ft-script').textContent.toLowerCase();
+        const ingredients = [...card.querySelectorAll('[data-name]')].map(el => el.dataset.name.toLowerCase());
+        const match = !q || title.includes(q) || ingredients.some(ing => ingredientMatches(ing, q));
+        card.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+      document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+    });
+
+    // Download buttons
+    const downloadIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b1f0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+
+    function downloadCardBack(scene) {
+      const back = scene.querySelector('.back');
+      const rect = scene.getBoundingClientRect();
+
+      // Wrapper re-establishes the container query context at the correct card size
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = `position:fixed;left:-9999px;top:0;width:${rect.width}px;height:9999px;container-type:size;overflow:hidden;`;
+
+      const clone = back.cloneNode(true);
+      clone.classList.remove('large', 'xl');
+      clone.classList.add('back-download');
+      clone.style.height = 'auto';
+      clone.style.overflow = 'visible';
+
+      const tempStyle = document.createElement('style');
+      tempStyle.textContent = '.back-download::after { display: none !important; }';
+      document.head.appendChild(tempStyle);
+
+      wrapper.appendChild(clone);
+      document.body.appendChild(wrapper);
+
+      requestAnimationFrame(() => {
+        const fullHeight = clone.getBoundingClientRect().height;
+        html2canvas(wrapper, { width: rect.width, height: fullHeight, scale: 2, useCORS: true }).then(canvas => {
+          document.body.removeChild(wrapper);
+          document.head.removeChild(tempStyle);
+          const title = scene.querySelector('.ft-script').textContent.trim();
+          const link = document.createElement('a');
+          link.download = title.toLowerCase().replace(/\s+/g, '_') + '_recipe.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        });
+      });
+    }
+
+    const shareIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b1f0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`;
+
+    function shareCardBack(scene) {
+      const back = scene.querySelector('.back');
+      const rect = scene.getBoundingClientRect();
+      const title = scene.querySelector('.ft-script').textContent.trim();
+
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = `position:fixed;left:-9999px;top:0;width:${rect.width}px;height:9999px;container-type:size;overflow:hidden;`;
+
+      const clone = back.cloneNode(true);
+      clone.classList.remove('large', 'xl');
+      clone.classList.add('back-download');
+      clone.style.height = 'auto';
+      clone.style.overflow = 'visible';
+
+      const tempStyle = document.createElement('style');
+      tempStyle.textContent = '.back-download::after { display: none !important; }';
+      document.head.appendChild(tempStyle);
+
+      wrapper.appendChild(clone);
+      document.body.appendChild(wrapper);
+
+      requestAnimationFrame(() => {
+        const fullHeight = clone.getBoundingClientRect().height;
+        html2canvas(wrapper, { width: rect.width, height: fullHeight, scale: 2, useCORS: true }).then(canvas => {
+          document.body.removeChild(wrapper);
+          document.head.removeChild(tempStyle);
+          canvas.toBlob(blob => {
+            const file = new File([blob], title.toLowerCase().replace(/\s+/g, '_') + '_recipe.png', { type: 'image/png' });
+            navigator.share({ files: [file], title: title + ' Recipe' });
+          }, 'image/png');
+        });
+      });
+    }
+
+    document.querySelectorAll('.card-scene').forEach(scene => {
+      if (navigator.canShare) {
+        const shareBtn = document.createElement('button');
+        shareBtn.className = 'share-btn';
+        shareBtn.title = 'Share recipe card';
+        shareBtn.innerHTML = shareIcon;
+        shareBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          shareCardBack(scene);
+        });
+        scene.appendChild(shareBtn);
+      }
+
+      const btn = document.createElement('button');
+      btn.className = 'download-btn';
+      btn.title = 'Download recipe card';
+      btn.innerHTML = downloadIcon;
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        downloadCardBack(scene);
+      });
+      scene.appendChild(btn);
+    });
+
+    // ── COOK MODE ──
+    let cookModeActive = false;
+    let cookKeyHandler = null;
+    let cookTimerInterval = null;
+
+    function clearCookTimer() {
+      if (cookTimerInterval) { clearInterval(cookTimerInterval); cookTimerInterval = null; }
+    }
+
+    function fmtTime(s) {
+      const m = Math.floor(s / 60), sec = s % 60;
+      return `${m}:${String(sec).padStart(2, '0')}`;
+    }
+
+    function parseStepTime(text) {
+      const toSec = (val, unit) => /^h/i.test(unit) ? val * 3600 : /^m/i.test(unit) ? val * 60 : val;
+      const adjUnit = unit => /^h/i.test(unit) ? 'hour' : /^m/i.test(unit) ? 'minute' : 'second';
+      const range = text.match(/(\d+)[–\-](\d+)\s*(min(?:utes?)?|seconds?|hrs?|hours?)/i);
+      if (range) {
+        const minSec = toSec(+range[1], range[3]), maxSec = toSec(+range[2], range[3]);
+        return { seconds: maxSec, checkAt: maxSec - minSec, label: `${range[1]}–${range[2]}-${adjUnit(range[3])}` };
+      }
+      const single = text.match(/\b(\d+)\s*(min(?:utes?)?|seconds?|hrs?|hours?)\b/i);
+      if (single) return { seconds: toSec(+single[1], single[2]), checkAt: null, label: `${single[1]}-${adjUnit(single[2])}` };
+      return null;
+    }
+
+    const cookOverlay  = document.getElementById('cook-overlay');
+    const cookContent  = document.getElementById('cook-content');
+    const cookToggleBtn = document.getElementById('cook-mode-toggle');
+
+    cookToggleBtn.addEventListener('click', () => {
+      cookModeActive = !cookModeActive;
+      cookToggleBtn.classList.toggle('active', cookModeActive);
+      document.body.classList.toggle('cook-mode-on', cookModeActive);
+    });
+
+    document.querySelectorAll('.card-scene').forEach(scene => {
+      scene.addEventListener('click', e => {
+        if (!cookModeActive) return;
+        if (e.target.closest('.download-btn, .share-btn')) return;
+        e.stopPropagation();
+        const title       = scene.querySelector('.ft-script').textContent.trim();
+        const ingredients = [...scene.querySelectorAll('[data-qty]')].map(el => el.textContent.trim());
+        const steps       = [...scene.querySelectorAll('.instructions-list li')].map(el => el.textContent.trim());
+        showPrepPhase(title, ingredients, steps);
+        cookOverlay.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    cookOverlay.addEventListener('click', e => {
+      if (e.target === cookOverlay) closeCookOverlay();
+    });
+
+    document.querySelector('.cook-close').addEventListener('click', closeCookOverlay);
+
+    function closeCookOverlay() {
+      clearCookTimer();
+      cookOverlay.classList.remove('visible');
+      document.body.style.overflow = '';
+      if (cookKeyHandler) {
+        document.removeEventListener('keydown', cookKeyHandler);
+        cookKeyHandler = null;
+      }
+    }
+
+    function setKeyHandler(fn) {
+      if (cookKeyHandler) document.removeEventListener('keydown', cookKeyHandler);
+      cookKeyHandler = e => {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); fn(); }
+        if (e.key === 'Escape') closeCookOverlay();
+      };
+      document.addEventListener('keydown', cookKeyHandler);
+    }
+
+    function showPrepPhase(title, ingredients, steps) {
+      cookContent.innerHTML = `
+        <div class="cook-recipe-title">${title}</div>
+        <div class="cook-phase-label">Ingredients</div>
+        <p class="cook-prompt">Check off each ingredient once you have it portioned and ready.</p>
+        <ul class="cook-checklist" id="cook-checklist">
+          ${ingredients.map(ing => `
+            <li>
+              <label><input type="checkbox"><span>${ing}</span></label>
+            </li>`).join('')}
+        </ul>
+        <div class="cook-footer">
+          <span class="cook-checked-count" id="cook-count">0 of ${ingredients.length} ready</span>
+          <button class="cook-action-btn" id="cook-start-btn">Start Cooking →</button>
+        </div>
+      `;
+
+      const list    = document.getElementById('cook-checklist');
+      const countEl = document.getElementById('cook-count');
+
+      list.addEventListener('change', () => {
+        const total   = list.querySelectorAll('input').length;
+        const checked = list.querySelectorAll('input:checked').length;
+        countEl.textContent = `${checked} of ${total} ready`;
+        list.querySelectorAll('li').forEach(li => {
+          li.classList.toggle('checked', li.querySelector('input').checked);
+        });
+        if (checked === total) showCookPhase(title, steps, 0);
+      });
+
+      document.getElementById('cook-start-btn').addEventListener('click', () => {
+        showCookPhase(title, steps, 0);
+      });
+    }
+
+    function showCookPhase(title, steps, index) {
+      clearCookTimer();
+      const total    = steps.length;
+      const isLast   = index === total - 1;
+      const progress = ((index + 1) / total) * 100;
+      const timeInfo = parseStepTime(steps[index]);
+
+      cookContent.innerHTML = `
+        <div class="cook-recipe-title">${title}</div>
+        <div class="cook-step-counter">Step ${index + 1} of ${total}</div>
+        <div class="cook-progress-bar">
+          <div class="cook-progress-fill" style="width:${progress}%"></div>
+        </div>
+        <div class="cook-step-text">${steps[index]}</div>
+        ${timeInfo ? `<div class="cook-timer"><button class="cook-timer-btn" id="cook-timer-start">⏱ Start ${timeInfo.label} timer</button></div>` : ''}
+        <div class="cook-step-footer">
+          <button class="cook-action-btn" id="cook-step-btn">
+            ${isLast ? 'Finish Cooking ✓' : 'Next Step →'}
+          </button>
+        </div>
+      `;
+
+      const advance = () => { clearCookTimer(); isLast ? showCompletePhase(title) : showCookPhase(title, steps, index + 1); };
+      document.getElementById('cook-step-btn').addEventListener('click', advance);
+      setKeyHandler(advance);
+
+      if (timeInfo) {
+        document.getElementById('cook-timer-start').addEventListener('click', () => {
+          clearCookTimer();
+          let remaining = timeInfo.seconds;
+          const timerEl = document.querySelector('.cook-timer');
+          timerEl.innerHTML = `<div class="cook-timer-display" id="cook-timer-display">${fmtTime(remaining)}</div>`;
+          cookTimerInterval = setInterval(() => {
+            remaining--;
+            const el = document.getElementById('cook-timer-display');
+            if (!el) { clearCookTimer(); return; }
+            if (remaining <= 0) {
+              clearCookTimer();
+              timerEl.innerHTML = `<div class="cook-timer-display done">Time's Up!</div>`;
+            } else {
+              el.textContent = fmtTime(remaining);
+              if (timeInfo.checkAt && remaining === timeInfo.checkAt) {
+                const reminder = document.createElement('div');
+                reminder.className = 'cook-timer-reminder';
+                reminder.textContent = `Time to check on your ${title}!`;
+                timerEl.appendChild(reminder);
+              }
+            }
+          }, 1000);
+        });
+      }
+    }
+
+    function showCompletePhase(title) {
+      if (cookKeyHandler) {
+        document.removeEventListener('keydown', cookKeyHandler);
+        cookKeyHandler = null;
+      }
+      cookContent.innerHTML = `
+        <div class="cook-complete">
+          <div class="cook-complete-title">Enjoy!</div>
+          <p class="cook-complete-text">Your ${title} is ready. Time to eat!</p>
+          <div class="cook-complete-footer">
+            <button class="cook-action-btn" id="cook-done-btn">Close</button>
+          </div>
+        </div>
+      `;
+      document.getElementById('cook-done-btn').addEventListener('click', closeCookOverlay);
+    }
+  </script>
+
+
+</body>
+</html>

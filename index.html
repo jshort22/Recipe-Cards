@@ -66,7 +66,7 @@
       justify-content: center;
       padding: 9px 18px;
       transition: background 0.15s;
-      border-radius: inherit;
+      border-radius: 0;
     }
 
     .controls-row > div:first-child { border-radius: 9px 0 0 9px; }
@@ -129,6 +129,7 @@
       background-repeat: no-repeat;
       background-position: right 2px center;
       outline: none;
+      width: 100%;
     }
 
     .search-input {
@@ -278,14 +279,7 @@
       width: 100%;
       height: 100%;
       position: relative;
-      background-color: #d4b86a;
-      background-image:
-        url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.08'/></svg>"),
-        radial-gradient(ellipse 60% 40% at 5% 100%, rgba(60,30,0,0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 30% at 95% 0%, rgba(70,35,0,0.13) 0%, transparent 65%),
-        radial-gradient(ellipse 30% 20% at 80% 90%, rgba(50,25,0,0.1) 0%, transparent 60%),
-        radial-gradient(ellipse 110% 110% at 50% 50%, transparent 45%, rgba(60,30,0,0.15) 100%),
-        linear-gradient(162deg, #e8d48e 0%, #d8bc6a 30%, #cdb055 55%, #ddc470 75%, #c8a848 100%);
+      background-color: #f0d898;
       padding: 1.3em 1.2em 1.1em;
       display: flex;
       flex-direction: column;
@@ -1757,6 +1751,13 @@
 
       scenes.forEach(scene => observer.observe(scene));
     }
+
+    // Clicking anywhere in a controls segment opens its dropdown
+    document.querySelectorAll('.controls-row > div').forEach(div => {
+      const select = div.querySelector('select');
+      if (!select) return;
+      div.addEventListener('click', () => select.click());
+    });
 
     // Search
     const derivedForms = new Set(['stock', 'broth', 'bouillon', 'powder', 'extract', 'oil', 'flakes', 'seasoning']);

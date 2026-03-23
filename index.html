@@ -684,6 +684,49 @@
       margin-bottom: 40px;
     }
     .cook-complete-footer { display: flex; justify-content: center; }
+
+    @media (max-width: 600px) {
+      body { padding: 28px 16px; }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+
+      h1 { font-size: 3.2rem; }
+
+      .controls {
+        width: 100%;
+        align-items: flex-start;
+      }
+
+      .controls-row {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .search-input { width: 100%; }
+
+      .cook-mode-btn { top: 0; }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .card-scene {
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+      }
+
+      .share-btn,
+      .download-btn { opacity: 1; }
+
+      .card-scene.flipped .card { transform: rotateY(180deg); }
+    }
   </style>
 </head>
 <body>
@@ -1451,6 +1494,16 @@
     // initialise at 1 serving on load
     updateServings(1);
     requestAnimationFrame(() => fitBackContent());
+
+    // Tap-to-flip on touch devices
+    if ('ontouchstart' in window) {
+      document.querySelectorAll('.card-scene').forEach(scene => {
+        scene.addEventListener('click', e => {
+          if (e.target.closest('.share-btn, .download-btn, .cook-mode-btn')) return;
+          scene.classList.toggle('flipped');
+        });
+      });
+    }
 
     // Search
     const derivedForms = new Set(['stock', 'broth', 'bouillon', 'powder', 'extract', 'oil', 'flakes', 'seasoning']);

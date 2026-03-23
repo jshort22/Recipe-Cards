@@ -45,52 +45,97 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 8px;
+      gap: 10px;
       font-size: 0.9rem;
       color: #5a3e2b;
     }
 
     .controls-row {
       display: flex;
+      align-items: stretch;
+      background: #fff;
+      border: 1.5px solid #c4a870;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
+    }
+
+    .controls-row > div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 6px 14px;
+      transition: background 0.15s;
+      border-radius: inherit;
+    }
+
+    .controls-row > div:first-child { border-radius: 9px 0 0 9px; }
+    .controls-row > div:last-child  { border-radius: 0 9px 9px 0; }
+
+    .controls-row > div:hover { background: rgba(196, 168, 112, 0.3); }
+
+    .controls-row > div + div {
+      border-left: 1px solid #c4a870;
+    }
+
+    .controls-row > div:first-child {
+      flex-direction: row;
       align-items: center;
-      gap: 20px;
+      gap: 7px;
+    }
+
+    .controls-row > div:first-child::before {
+      content: '';
+      display: block;
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      opacity: 0.55;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b1f0a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
     }
 
     .controls label {
-      margin-right: 6px;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9a7a5a;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      cursor: default;
     }
 
     .controls select {
       font-family: Georgia, serif;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #3b1f0a;
-      background: #ede6d8;
-      border: 1px solid #c4a870;
-      border-radius: 4px;
-      padding: 4px 10px;
+      background: transparent;
+      border: none;
+      padding: 0 18px 0 0;
       cursor: pointer;
-      appearance: auto;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6' fill='none' stroke='%23c4a870' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 2px center;
+      outline: none;
     }
 
     .search-input {
       font-family: Georgia, serif;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #3b1f0a;
-      background: #ede6d8;
-      border: 1px solid #c4a870;
-      border-radius: 4px;
-      padding: 4px 10px;
-      width: 180px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      width: 160px;
       outline: none;
     }
 
     .search-input::placeholder {
-      color: #9a7a5a;
+      color: #b09a7a;
       font-style: italic;
-    }
-
-    .search-input:focus {
-      border-color: #8a6a30;
     }
 
     .no-results {
@@ -423,17 +468,19 @@
     /* ── COOK MODE ── */
     .cook-mode-btn {
       font-family: Georgia, serif;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
       color: #3b1f0a;
-      background: #ede6d8;
-      border: 1px solid #c4a870;
+      background: #fff;
+      border: 1.5px solid #c4a870;
       border-radius: 20px;
-      padding: 5px 14px;
+      padding: 9px 22px;
       cursor: pointer;
       transition: background 0.2s, color 0.2s, border-color 0.2s;
       white-space: nowrap;
       position: relative;
       top: -16px;
+      box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
     }
     .cook-mode-btn.active {
       background: #7a3e1a;
@@ -1341,6 +1388,191 @@
                   <ul class="tips-list">
                     <li>Don't overcook the shrimp — pull them off heat while still slightly underdone as they'll finish in the sauce.</li>
                     <li>Pasta water is the secret to a silky, emulsified sauce that clings to every noodle.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: chicken tikka masala -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/chicken_tikka_masala.webp" alt="Chicken Tikka Masala" loading="lazy">
+              <div class="front-title">
+                <span class="ft-script">Chicken Tikka Masala</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Chicken Tikka Masala</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="1.5" data-name="lb boneless chicken thighs, cubed">1½ lb boneless chicken thighs, cubed</li>
+                      <li data-qty="1" data-name="cup plain yogurt">1 cup plain yogurt</li>
+                      <li data-qty="2" data-name="tbsp fresh lemon juice">2 tbsp fresh lemon juice</li>
+                      <li data-qty="2" data-name="tsp garam masala">2 tsp garam masala</li>
+                      <li data-qty="1" data-name="tbsp vegetable oil">1 tbsp vegetable oil</li>
+                      <li data-qty="1" data-name="onion, finely diced">1 onion, finely diced</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="4" data-name="garlic cloves, minced">4 garlic cloves, minced</li>
+                      <li data-qty="1" data-name="tbsp fresh ginger, grated">1 tbsp fresh ginger, grated</li>
+                      <li data-qty="1" data-name="tsp paprika">1 tsp paprika</li>
+                      <li data-qty="14" data-name="oz crushed tomatoes">14 oz crushed tomatoes</li>
+                      <li data-qty="1" data-name="cup heavy cream">1 cup heavy cream</li>
+                      <li data-qty="2" data-name="tbsp fresh cilantro, chopped">2 tbsp fresh cilantro, chopped</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Combine chicken with yogurt, lemon juice, 1 tsp garam masala, and salt. Marinate at least 30 min.</li>
+                  <li>Cook chicken over high heat in a pan or under the broiler until charred in spots, 8–10 min. Set aside.</li>
+                  <li>Heat oil over medium. Cook onion 6–8 min until golden. Add garlic and ginger; cook 2 min.</li>
+                  <li>Stir in remaining garam masala and paprika. Cook 1 min until fragrant.</li>
+                  <li>Add tomatoes and simmer 10 min. Stir in cream and simmer 5 min until thickened.</li>
+                  <li>Add chicken and simmer 5 min to heat through. Garnish with cilantro and serve with rice or naan.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Marinating overnight makes a big difference — yogurt tenderizes the chicken and deepens the flavor.</li>
+                    <li>A little char on the chicken is authentic and adds depth to the sauce.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: chocolate lava cake -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/chocolate_lava_cake.webp" alt="Chocolate Lava Cake" loading="lazy">
+              <div class="front-title">
+                <span class="ft-script">Chocolate Lava Cake</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Chocolate Lava Cake</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="4" data-name="oz dark chocolate (70%), chopped">4 oz dark chocolate (70%), chopped</li>
+                      <li data-qty="4" data-name="tbsp unsalted butter, plus more for ramekins">4 tbsp unsalted butter</li>
+                      <li data-qty="2" data-name="large eggs">2 large eggs</li>
+                      <li data-qty="2" data-name="egg yolks">2 egg yolks</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="0.25" data-name="cup granulated sugar">¼ cup granulated sugar</li>
+                      <li data-qty="2" data-name="tbsp all-purpose flour">2 tbsp all-purpose flour</li>
+                      <li data-qty="1" data-name="pinch of salt">1 pinch of salt</li>
+                      <li data-qty="1" data-name="tbsp cocoa powder, for dusting">1 tbsp cocoa powder, for dusting</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Preheat oven to 425°F. Butter 4 ramekins and dust with cocoa powder, tapping out the excess.</li>
+                  <li>Melt chocolate and butter together over a double boiler or in 30-second microwave bursts, stirring until smooth. Cool slightly.</li>
+                  <li>Whisk eggs, yolks, and sugar until pale and slightly thickened, about 2 min.</li>
+                  <li>Fold chocolate mixture into eggs. Stir in flour and salt until just combined.</li>
+                  <li>Divide batter among ramekins. Bake 12–13 min until edges are set but the center still jiggles.</li>
+                  <li>Rest 1 min. Run a knife around the edge, invert onto plates, and serve immediately.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>The center should jiggle like Jell-O when you pull it — it firms as it rests.</li>
+                    <li>Fill ramekins up to 24 hrs ahead and refrigerate; add 1–2 min to bake time from cold.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: eggs benedict -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front">
+              <img src="Cards/eggs_benedict.webp" alt="Eggs Benedict" loading="lazy">
+              <div class="front-title">
+                <span class="ft-script">Eggs Benedict</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Eggs Benedict</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="4" data-name="English muffins, split &amp; toasted">4 English muffins, split &amp; toasted</li>
+                      <li data-qty="8" data-name="slices Canadian bacon">8 slices Canadian bacon</li>
+                      <li data-qty="8" data-name="large eggs">8 large eggs</li>
+                      <li data-qty="2" data-name="tbsp white vinegar">2 tbsp white vinegar</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="3" data-name="egg yolks">3 egg yolks</li>
+                      <li data-qty="1" data-name="tbsp fresh lemon juice">1 tbsp fresh lemon juice</li>
+                      <li data-qty="0.5" data-name="cup unsalted butter, melted">½ cup unsalted butter, melted</li>
+                      <li data-qty="1" data-name="pinch cayenne pepper">1 pinch cayenne pepper</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Hollandaise: whisk egg yolks and lemon juice in a heatproof bowl over barely simmering water until thickened, 3–4 min. Slowly drizzle in butter, whisking constantly. Season with cayenne and salt. Keep warm over the hot water off heat.</li>
+                  <li>Warm Canadian bacon in a pan over medium, 1 min per side.</li>
+                  <li>Poach eggs: bring a wide pan of water to a gentle simmer and add vinegar. Crack eggs in and poach 3–4 min until whites are set but yolks are runny. Remove with a slotted spoon.</li>
+                  <li>Assemble: toasted muffin half, Canadian bacon, poached egg, generous spoon of hollandaise.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Fresh eggs poach best — older eggs spread in the water and lose their shape.</li>
+                    <li>Make hollandaise last and keep it warm while you poach — it doesn't reheat well.</li>
                   </ul>
                 </div>
               </div>

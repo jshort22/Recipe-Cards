@@ -1,7 +1,7 @@
 // Recipe Cards service worker.
 // Bump CACHE_VERSION whenever index.html or any precached asset changes so
 // installed apps pick up the new files.
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `recipe-cards-${CACHE_VERSION}`;
 
 const PRECACHE = [

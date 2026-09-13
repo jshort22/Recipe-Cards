@@ -749,17 +749,47 @@
 
       .controls {
         width: 100%;
-        align-items: flex-start;
+        min-width: 0;
+        align-items: stretch;
       }
 
+      /* Two-row grid: search across the top, three dropdowns beneath */
       .controls-row {
-        flex-wrap: wrap;
-        gap: 12px;
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.25fr) minmax(0, 1fr);
+        width: 100%;
       }
 
-      .search-input { width: 100%; }
+      .controls-row > div {
+        padding: 10px 12px;
+        min-width: 0;
+        border-radius: 0;
+      }
 
-      .cook-mode-btn { top: 0; }
+      .controls-row > div:first-child {
+        grid-column: 1 / -1;
+        border-bottom: 1px solid #c4a870;
+        border-radius: 9px 9px 0 0;
+      }
+
+      /* Servings sits at the start of row two, so it needs no left divider */
+      .controls-row > div:nth-child(2)::before { display: none; }
+      .controls-row > div:nth-child(2) { border-radius: 0 0 0 9px; }
+      .controls-row > div:last-child  { border-radius: 0 0 9px 0; }
+
+      .search-input {
+        width: 100%;
+        min-width: 0;
+        font-size: 1rem; /* 16px stops iOS Safari zooming the page on focus */
+      }
+
+      .controls select {
+        font-size: 0.95rem;
+        padding-right: 18px;
+        background-position: right 4px center;
+      }
+
+      .cook-mode-btn { top: 0; align-self: flex-start; }
 
       .cards-grid {
         grid-template-columns: 1fr;

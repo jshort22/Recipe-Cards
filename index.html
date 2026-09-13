@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Recipe Cards</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <meta name="theme-color" content="#f5f0e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Recipes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link href="vendor/fonts/fonts.css" rel="stylesheet">
+  <script src="vendor/html2canvas.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -21,6 +28,8 @@
       flex-direction: column;
       align-items: center;
       padding: 48px 24px;
+      padding-top: calc(48px + env(safe-area-inset-top));
+      padding-bottom: calc(48px + env(safe-area-inset-bottom));
     }
 
     .page-header {
@@ -736,7 +745,11 @@
     .cook-complete-footer { display: flex; justify-content: center; }
 
     @media (max-width: 600px) {
-      body { padding: 28px 16px; }
+      body {
+        padding: 28px 16px;
+        padding-top: calc(28px + env(safe-area-inset-top));
+        padding-bottom: calc(28px + env(safe-area-inset-bottom));
+      }
 
       .page-header {
         flex-direction: column;
@@ -2091,8 +2104,13 @@
       `;
       document.getElementById('cook-done-btn').addEventListener('click', closeCookOverlay);
     }
+
+    // Offline support: register the service worker (needs https or localhost)
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW registration failed', err));
+      });
+    }
   </script>
-
-
 </body>
 </html>

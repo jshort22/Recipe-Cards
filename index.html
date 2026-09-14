@@ -2943,6 +2943,35 @@
       if (cookTimerInterval) { clearInterval(cookTimerInterval); cookTimerInterval = null; }
     }
 
+    // Timer alarm: a short ding plus a buzz, then nothing to dismiss.
+    // The AudioContext must be created inside a tap, so it's primed when the timer starts.
+    let alarmCtx = null;
+    function primeAlarm() {
+      try {
+        alarmCtx = alarmCtx || new (window.AudioContext || window.webkitAudioContext)();
+        if (alarmCtx.state === 'suspended') alarmCtx.resume();
+      } catch (e) { alarmCtx = null; }
+    }
+    function soundAlarm() {
+      if (navigator.vibrate) { try { navigator.vibrate([250, 120, 250, 120, 400]); } catch (e) {} }
+      if (!alarmCtx) return;
+      try {
+        const t0 = alarmCtx.currentTime;
+        [[0, 880], [0.35, 880], [0.7, 1175]].forEach(([at, freq]) => {   // ding, ding, higher ding
+          const osc = alarmCtx.createOscillator();
+          const gain = alarmCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.0001, t0 + at);
+          gain.gain.exponentialRampToValueAtTime(0.5, t0 + at + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t0 + at + 0.6);
+          osc.connect(gain).connect(alarmCtx.destination);
+          osc.start(t0 + at);
+          osc.stop(t0 + at + 0.65);
+        });
+      } catch (e) {}
+    }
+
     function fmtTime(s) {
       const m = Math.floor(s / 60), sec = s % 60;
       return `${m}:${String(sec).padStart(2, '0')}`;
@@ -3171,6 +3200,7 @@
       if (timeInfo) {
         document.getElementById('cook-timer-start').addEventListener('click', () => {
           clearCookTimer();
+          primeAlarm();
           let remaining = timeInfo.seconds;
           const timerEl = document.querySelector('.cook-timer');
           timerEl.innerHTML = `<div class="cook-timer-display" id="cook-timer-display">${fmtTime(remaining)}</div>`;
@@ -3181,6 +3211,7 @@
             if (remaining <= 0) {
               clearCookTimer();
               timerEl.innerHTML = `<div class="cook-timer-display done">Time's Up!</div>`;
+              soundAlarm();
             } else {
               el.textContent = fmtTime(remaining);
               if (timeInfo.checkAt && remaining === timeInfo.checkAt) {

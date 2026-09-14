@@ -2565,7 +2565,13 @@
     document.querySelectorAll('.controls-row > div').forEach(div => {
       const select = div.querySelector('select');
       if (!select) return;
-      div.addEventListener('click', () => select.click());
+      // Tapping the select itself opens natively; only forward taps on the label/padding.
+      // Forwarding every click used to fire the select twice, which could close the picker.
+      div.addEventListener('click', e => {
+        if (e.target.closest('select')) return;
+        select.focus();
+        if (typeof select.showPicker === 'function') { try { select.showPicker(); } catch (err) {} }
+      });
     });
 
     // Search

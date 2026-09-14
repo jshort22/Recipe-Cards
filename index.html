@@ -304,6 +304,22 @@
       opacity: 0.88;
     }
 
+    /* Optional source attribution, e.g. "NYT Cooking", top-right inside the inner rule */
+    .front-source {
+      position: absolute;
+      top: 5.5cqw;
+      right: 6cqw;
+      font-family: Georgia, serif;
+      font-size: 2.4cqw;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9a7a5a;
+      text-decoration: none;
+      z-index: 2;
+    }
+    a.front-source { border-bottom: 1px solid rgba(154,122,90,0.5); }
+    a.front-source:hover { color: #3b1f0a; border-color: #3b1f0a; }
+
     .front-icon {
       width: 32cqw;
       height: 32cqw;
@@ -1970,7 +1986,7 @@
 
       scenes.forEach(scene => {
         scene.addEventListener('click', e => {
-          if (e.target.closest('.share-btn, .cook-mode-btn')) return;
+          if (e.target.closest('.share-btn, .cook-mode-btn, .front-source')) return;
           scene.classList.toggle('flipped');
         });
       });
@@ -2121,7 +2137,7 @@
     document.querySelectorAll('.card-scene').forEach(scene => {
       scene.addEventListener('click', e => {
         if (!cookModeActive) return;
-        if (e.target.closest('.share-btn')) return;
+        if (e.target.closest('.share-btn, .front-source')) return;
         e.stopPropagation();
         const title       = scene.querySelector('.ft-script').textContent.trim();
         const ingredients = [...scene.querySelectorAll('[data-qty]')].map(el => el.textContent.trim());

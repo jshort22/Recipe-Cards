@@ -18,6 +18,15 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
    `.cards-grid`) and paste it before `<div class="no-results" id="no-results">`.
 4. **Fill in the front:** `data-category`, the category label, the icon `href`, and the
    title in `.ft-script`. Leave `.front-ing` and `.front-steps` empty; JS fills them.
+   **Cite the source.** If the recipe came from somewhere (NYT Cooking, Allrecipes, Serious
+   Eats, a cookbook), add a source tag as the first child of `.front` so it can be tracked
+   down later. Use a link when there is a URL; plain text otherwise. Ask for the source if
+   the user doesn't give one. Recipes the user wrote or built with ChatGPT get no tag.
+   ```html
+   <a class="front-source" href="https://cooking.nytimes.com/..." target="_blank" rel="noopener">NYT Cooking</a>
+   <div class="front-source">Salt Fat Acid Heat</div>
+   ```
+   Tapping a source link opens it instead of flipping the card.
 5. **Fill in the back:**
    - `.back-title` matches the front title exactly. `.serves` stays `Serves 4`.
    - Ingredients go in two `<ul>`s, roughly balanced. Each `<li>` needs

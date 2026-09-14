@@ -39,7 +39,7 @@ Vercel deploys in about a minute.
 }
 ```
 
-1. **Normalise to 4 servings.** All quantities are stored for 4 servings (`BASE = 4` in the
+1. **Normalize to 4 servings.** All quantities are stored for 4 servings (`BASE = 4` in the
    script); the Servings control scales from there. For baked goods that means dividing a
    full-pan recipe down (e.g. a 12-serving 9×14 pan ÷ 3) and noting the pan size for the
    original yield in the first step. Prefer units that stay readable at 1 serving: tbsp
@@ -47,14 +47,14 @@ Vercel deploys in about a minute.
 2. **`category`** is one of: `seafood`, `chicken`, `beef`, `pasta`, `soup`, `breakfast`,
    `dessert`, `vegetarian`, `baking` (breads, cornbread, and other baked sides). Chicken
    dishes are `chicken`; if turkey or duck ever appear, add a specific category rather
-   than a generic poultry one. Each has a stock colour (`--stock` rule in the front CSS), an
+   than a generic poultry one. Each has a stock color (`--stock` rule in the front CSS), an
    icon `<symbol id="icon-NAME">` in the sprite at the top of `<body>`, and a label in
    `CATEGORY_LABELS` in the script. Add all three for a new category.
 3. **`defaultServes`**: the recipe view opens at this count. Use 2 for a weeknight dinner for
    the user's household, 4 for batch dishes (soups, stews, sauces, curries, meatballs, a whole
    Wellington), and the full original yield for baking and desserts (e.g. cornbread 12).
 4. **`time`**: rough start-to-finish minutes including chilling or a short marinade, shown on
-   the tile as "35 min" or "1¼ hr". Leave out overnight steps.
+   the tile as "35 min" or "1 hr 45 min". Leave out overnight steps.
 5. **`source`** (optional). If the recipe came from somewhere (NYT Cooking, Allrecipes, Serious
    Eats, a cookbook), give `label` and, when there is one, `url`; it shows on the tile front
    and in the recipe header. Ask for the source if the user doesn't give one. Recipes the user
@@ -68,7 +68,7 @@ Vercel deploys in about a minute.
    - `qty` is a number for 4 servings; `name` is everything after the number. Units the
      converter understands, when they lead `name`: `tbsp`, `tsp`, `oz`, `fl oz`, `lb`/`lbs`,
      `cup`/`cups`, `g`, `kg`, `ml`. Countable items (eggs, cloves) have no unit and get
-     singularised automatically at quantity 1, so write countable names **plural**
+     singularized automatically at quantity 1, so write countable names **plural**
      (`eggs, beaten`, `onions, diced`). Canned goods are given in `oz` with the word `canned`
      in the name so they never flip to pounds: `"oz canned diced tomatoes"`.
    - **`scale`** (default linear). Tag anything that shouldn't simply multiply:
@@ -81,9 +81,16 @@ Vercel deploys in about a minute.
 7. **`steps`**: 5–7 strings, one sentence or two each. The cook overlay reads times like
    "3 min", "1–2 min", "30 seconds", "1 hour" out of step text to offer a timer, so keep
    times in that form. Plain text only; no HTML.
+   **Quantities in step text scale too.** Write them as `{qty|name|scale}` with the same
+   qty/name/scale conventions as an ingredient: `Sear in {1|tbsp butter} and oil`,
+   `Butter {4|ramekins}`, `add up to {0.5|tsp sugar|season}`. Tag amounts that should follow
+   the servings count (a portion of a divided ingredient, pan or patty counts). Leave times,
+   temperatures, sizes ("1½-inch balls"), and pan-dependent amounts ("1 cup pasta water")
+   as plain text.
 8. **`tips`**: exactly two, each with the 1-based `step` it belongs to; the cook overlay shows
    the tip beneath that step.
 9. **Search** indexes title, ingredient names, and category. Nothing else to update.
+11. **Spelling:** American English everywhere (color, flavor, favorite, check/uncheck).
 10. `sw.js` fetches `recipes.json` network-first, so new recipes need no cache bump. Bump
    `CACHE_VERSION` only when a file that is already cached under the same name changes
    (fonts, vendor JS, icons, sw.js).
@@ -92,10 +99,10 @@ Vercel deploys in about a minute.
 
 A basket icon button in the header (left of the settings gear) opens `#pantry-overlay`: a
 checklist of every distinct ingredient across the deck, with recipes you can make (all
-non-optional ingredients ticked) and "Almost there" (missing 1–2) updating live. Ticked state
+non-optional ingredients checked) and "Almost there" (missing 1–2) updating live. Checked state
 persists in `localStorage` under `recipes.pantry.v2`. Only the short `STAPLES` list starts
-ticked (salt, pepper, olive oil, butter, eggs, milk, flour, sugar, garlic, onion). "Spices &
-seasonings" and "Pantry & condiments" are unticked groups with a Select all / Clear control
+checked (salt, pepper, olive oil, butter, eggs, milk, flour, sugar, garlic, onion). "Spices &
+seasonings" and "Pantry & condiments" are unchecked groups with a Select all / Clear control
 (`SELECT_ALL`).
 
 Ingredient identity comes from `ingredientKey(data-name)` in the script: units and prep words
@@ -103,7 +110,7 @@ are stripped, then an `ALIASES` table maps variants to one canonical key (`unsal
 `butter`, `chicken broth` → `chicken stock`, `egg yolks` → `eggs`). `STAPLES` lists keys assumed
 on hand; `GROUPS` sorts the rest into Spices & seasonings / Pantry & condiments / Proteins /
 Produce / Dairy & cheese, else Other; `LABELS`
-fixes capitalisation of proper nouns. Names containing "optional" are ignored for matching.
+fixes capitalization of proper nouns. Names containing "optional" are ignored for matching.
 
 **When adding a recipe**, check what its ingredients key to. The app script runs inside
 `main()`, so from the console use the DOM: open the pantry and look for the new names under

@@ -50,7 +50,7 @@
     ],
     "steps": [
       "Season cutlets well. Dredge in flour, shaking off excess, then coat in beaten egg.",
-      "Heat oil and 1 tbsp butter over medium-high until shimmering. Cook cutlets 3 min per side until deep golden. Remove and tent with foil.",
+      "Heat oil and {1|tbsp butter} over medium-high until shimmering. Cook cutlets 3 min per side until deep golden. Remove and tent with foil.",
       "Reduce heat to medium. Add garlic and cook 30 seconds. Pour in wine and reduce by half, scraping up the fond.",
       "Add stock and lemon juice. Simmer 3 min until slightly thickened.",
       "Off heat, swirl in remaining cold butter to finish the sauce. Stir in capers.",
@@ -118,7 +118,7 @@
       }
     ],
     "steps": [
-      "Season shrimp. Sear in 1 tbsp butter and oil over high heat, 1–2 min per side until pink. Set aside.",
+      "Season shrimp. Sear in {1|tbsp butter} and oil over high heat, 1–2 min per side until pink. Set aside.",
       "Reduce heat to medium. Add remaining butter and shallot, cook 3 min until soft. Add garlic, cook 1 min.",
       "Add rice and toast 2 min, stirring constantly, until edges turn translucent.",
       "Pour in wine and stir until fully absorbed.",
@@ -188,7 +188,7 @@
       }
     ],
     "steps": [
-      "Season beef well. Sear in 1 tbsp butter and oil over high heat in batches, 1 min per side. Set aside — don't crowd the pan.",
+      "Season beef well. Sear in {1|tbsp butter} and oil over high heat in batches, 1 min per side. Set aside — don't crowd the pan.",
       "Reduce to medium. Add remaining butter and onion, cook 5 min until softened.",
       "Add mushrooms and cook 4–5 min until golden. Add garlic and cook 1 min.",
       "Sprinkle flour over and stir 1 min. Add stock and Worcestershire, scraping up the fond. Simmer 3–4 min until thickened.",
@@ -331,7 +331,7 @@
     "steps": [
       "Gently combine mayo, egg, mustard, Old Bay, Worcestershire, lemon juice, and parsley in a bowl.",
       "Fold in crab meat and panko, being careful not to break up the lumps. Season to taste.",
-      "Shape into 8 patties about ¾ inch thick. Refrigerate at least 30 min to firm up.",
+      "Shape into {8|patties} about ¾ inch thick. Refrigerate at least 30 min to firm up.",
       "Heat butter and oil in a large skillet over medium-high until the foam subsides.",
       "Cook crab cakes 3–4 min per side until deeply golden and heated through. Work in batches if needed.",
       "Serve with lemon wedges and remoulade or tartar sauce."
@@ -594,7 +594,7 @@
     ],
     "steps": [
       "Cook linguine in salted boiling water until al dente. Reserve ½ cup pasta water before draining.",
-      "Pat shrimp dry and season. Sear in 1 tbsp butter and olive oil over high heat, 1 min per side. Remove and set aside.",
+      "Pat shrimp dry and season. Sear in {1|tbsp butter} and olive oil over high heat, 1 min per side. Remove and set aside.",
       "Reduce heat to medium. Add remaining butter, garlic, and pepper flakes. Cook 1–2 min until garlic is fragrant but not browned.",
       "Pour in white wine and lemon juice. Simmer 2 min, scraping up any bits.",
       "Add pasta and a splash of pasta water. Toss to coat, adding more water as needed for a glossy sauce.",
@@ -667,7 +667,7 @@
       }
     ],
     "steps": [
-      "Combine chicken with yogurt, lemon juice, 1 tsp garam masala, and salt. Marinate at least 30 min.",
+      "Combine chicken with yogurt, lemon juice, {1|tsp garam masala|season}, and salt. Marinate at least 30 min.",
       "Cook chicken over high heat in a pan or under the broiler until charred in spots, 8–10 min. Set aside.",
       "Heat oil over medium. Cook onion 6–8 min until golden. Add garlic and ginger; cook 2 min.",
       "Stir in remaining garam masala and paprika. Cook 1 min until fragrant.",
@@ -727,7 +727,7 @@
       }
     ],
     "steps": [
-      "Preheat oven to 425°F. Butter 4 ramekins and dust with cocoa powder, tapping out the excess.",
+      "Preheat oven to 425°F. Butter {4|ramekins} and dust with cocoa powder, tapping out the excess.",
       "Melt chocolate and butter together over a double boiler or in 30-second microwave bursts, stirring until smooth. Cool slightly.",
       "Whisk eggs, yolks, and sugar until pale and slightly thickened, about 2 min.",
       "Fold chocolate mixture into eggs. Stir in flour and salt until just combined.",
@@ -1033,7 +1033,7 @@
       "Add the salt and black pepper. Bring to a gentle simmer.",
       "Reduce to medium-low and simmer 25–35 min, partially covered with a good gap for steam. Stir every 5–10 min.",
       "Blend to your preferred texture with an immersion blender — partially, so a little texture remains but the pepper and onion melt into the tomatoes.",
-      "Taste and add salt if needed. If the tomatoes taste acidic, add up to ½ tsp sugar. Stir in the butter right at the end for a richer, silkier sauce."
+      "Taste and add salt if needed. If the tomatoes taste acidic, add up to {0.5|tsp sugar|season}. Stir in the butter right at the end for a richer, silkier sauce."
     ],
     "tips": [
       {

@@ -5,7 +5,9 @@ at https://recipe-cards-xi.vercel.app/. No build step. `sw.js` handles offline c
 
 Interaction: the grid shows card fronts. Tapping a card opens a full-screen recipe view
 (`#recipe-overlay`) that clones the card's hidden `.back` into a scrollable sheet, with Share
-and "Start Cooking" buttons. Start Cooking launches the step-by-step cook overlay
+and "Start Cooking" buttons. In that view "Serves N" is a button opening a servings picker
+(1–10 plus a custom number, capped at `MAX_SERVINGS` = 50); servings is global state and is
+not on the home screen. Units and Font live in the header as settings; search has its own box. Start Cooking launches the step-by-step cook overlay
 (`#cook-overlay`: ingredient checklist, then one step at a time with timers). Cards do not
 flip; the `.card-back` face exists only as the data source for the view, share export, and
 cook overlay.
@@ -25,6 +27,7 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
    `.cards-grid`) and paste it before `<div class="no-results" id="no-results">`.
 4. **Fill in the front:** `data-category`, the category label, the icon `href`, and the
    title in `.ft-script`. Leave `.front-ing` and `.front-steps` empty; JS fills them.
+   The front carries no serves text.
    **Cite the source.** If the recipe came from somewhere (NYT Cooking, Allrecipes, Serious
    Eats, a cookbook), add a source tag as the first child of `.front` so it can be tracked
    down later. Use a link when there is a URL; plain text otherwise. Ask for the source if

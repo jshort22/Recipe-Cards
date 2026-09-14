@@ -36,9 +36,16 @@
       width: 100%;
       max-width: calc(3 * 320px + 2 * 40px);
       display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin-bottom: 40px;
+    }
+
+    .header-top {
+      display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 48px;
+      gap: 16px;
     }
 
     h1 {
@@ -50,15 +57,7 @@
       line-height: 1;
     }
 
-    .controls {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
-      font-size: 0.9rem;
-      color: #5a3e2b;
-    }
-
+    /* Settings (units, font) — a small segmented bar top-right */
     .controls-row {
       display: flex;
       align-items: stretch;
@@ -66,6 +65,9 @@
       border: 1.5px solid #c4a870;
       border-radius: 10px;
       box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
+      font-size: 0.9rem;
+      color: #5a3e2b;
+      margin-top: 6px;
     }
 
     .controls-row > div {
@@ -73,19 +75,13 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      padding: 9px 18px;
+      padding: 8px 16px;
       transition: background 0.15s;
-      border-radius: 0;
-    }
-
-    .controls-row > div:first-child { border-radius: 9px 0 0 9px; }
-    .controls-row > div:last-child  { border-radius: 0 9px 9px 0; }
-
-    .controls-row > div:hover { background: rgba(196, 168, 112, 0.3); }
-
-    .controls-row > div + div {
       position: relative;
     }
+    .controls-row > div:first-child { border-radius: 9px 0 0 9px; }
+    .controls-row > div:last-child  { border-radius: 0 9px 9px 0; }
+    .controls-row > div:hover { background: rgba(196, 168, 112, 0.3); }
     .controls-row > div + div::before {
       content: '';
       position: absolute;
@@ -96,25 +92,7 @@
       background: #c4a870;
     }
 
-    .controls-row > div:first-child {
-      flex-direction: row;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .controls-row > div:first-child::before {
-      content: '';
-      display: block;
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
-      opacity: 0.55;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b1f0a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-
-    .controls label {
+    .controls-row label {
       font-size: 0.65rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -124,7 +102,7 @@
       cursor: default;
     }
 
-    .controls select {
+    .controls-row select {
       font-family: Georgia, serif;
       font-size: 0.9rem;
       color: #3b1f0a;
@@ -141,14 +119,41 @@
       width: 100%;
     }
 
+    /* Search — its own box under the title */
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 520px;
+      padding: 11px 16px;
+      background: #fff;
+      border: 1.5px solid #c4a870;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
+    }
+    .search-box:focus-within { border-color: #7a3e1a; }
+    .search-box::before {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      opacity: 0.55;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b1f0a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
     .search-input {
       font-family: Georgia, serif;
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: #3b1f0a;
       background: transparent;
       border: none;
       padding: 0;
-      width: 175px;
+      flex: 1;
+      min-width: 0;
       outline: none;
     }
 
@@ -567,6 +572,92 @@
     .recipe-sheet .back-title { font-size: 2.3em; }
     .recipe-sheet .back .serves { top: 1.5em; right: 1.6em; }
 
+    .recipe-modal { position: relative; }
+    .recipe-sheet .serves-btn {
+      position: absolute;
+      top: 1.35em;
+      right: 1.6em;
+      font: inherit;
+      font-style: italic;
+      color: #7a2a1a;
+      background: rgba(181,72,58,0.08);
+      border: 1px solid rgba(181,72,58,0.45);
+      border-radius: 999px;
+      padding: 0.15em 0.7em 0.15em 0.8em;
+      cursor: pointer;
+      line-height: 1.3;
+    }
+    .recipe-sheet .serves-btn:hover { background: rgba(181,72,58,0.16); }
+    .recipe-sheet .serves-btn span { font-style: normal; font-size: 0.85em; margin-left: 0.15em; }
+
+    .serves-picker {
+      position: absolute;
+      top: 64px;
+      right: 16px;
+      width: 272px;
+      max-width: calc(100% - 32px);
+      background: #fbf4e3;
+      border: 1.5px solid #c4a870;
+      border-radius: 12px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+      padding: 14px;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: Georgia, serif;
+    }
+    .serves-picker[hidden] { display: none; }
+    .serves-picker-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9a7a5a;
+    }
+    .serves-quick {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+    .serves-quick button {
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      color: #3b1f0a;
+      background: #fff;
+      border: 1.5px solid #c4a870;
+      border-radius: 8px;
+      padding: 9px 0;
+      cursor: pointer;
+    }
+    .serves-quick button:hover { border-color: #7a3e1a; }
+    .serves-quick button.current { background: #7a3e1a; border-color: #5a2e0e; color: #faf6ef; }
+    .serves-custom { display: flex; gap: 6px; }
+    .serves-custom input {
+      flex: 1;
+      min-width: 0;
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      color: #3b1f0a;
+      padding: 8px 10px;
+      border: 1.5px solid #c4a870;
+      border-radius: 8px;
+      background: #fff;
+      outline: none;
+    }
+    .serves-custom input:focus { border-color: #7a3e1a; }
+    .serves-custom .cook-action-btn { padding: 8px 16px; font-size: 0.95rem; }
+    .serves-cancel {
+      align-self: flex-end;
+      font-family: Georgia, serif;
+      font-size: 0.85rem;
+      color: #9a7a5a;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+    .serves-cancel:hover { color: #3b1f0a; }
+
     .recipe-actions {
       display: flex;
       justify-content: flex-end;
@@ -819,66 +910,27 @@
         padding-bottom: calc(28px + env(safe-area-inset-bottom));
       }
 
-      .page-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        margin-bottom: 28px;
-      }
+      .page-header { gap: 14px; margin-bottom: 24px; }
 
-      h1 { font-size: 3.2rem; }
+      /* Title on the left, settings tucked to the right; search full width beneath */
+      .header-top { align-items: center; flex-wrap: wrap; row-gap: 10px; }
+      h1 { font-size: 3rem; }
+      .controls-row { margin-top: 0; margin-left: auto; }
+      .controls-row > div { padding: 7px 12px; }
+      .controls-row select { font-size: 0.95rem; }
 
-      .controls {
-        width: 100%;
-        min-width: 0;
-        align-items: stretch;
-      }
+      .search-box { max-width: none; }
+      .search-input { font-size: 1rem; } /* 16px stops iOS Safari zooming on focus */
 
-      /* Two-row grid: search across the top, three dropdowns beneath */
-      .controls-row {
-        display: grid;
-        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.25fr) minmax(0, 1fr);
-        width: 100%;
-      }
-
-      .controls-row > div {
-        padding: 10px 12px;
-        min-width: 0;
-        border-radius: 0;
-      }
-
-      .controls-row > div:first-child {
-        grid-column: 1 / -1;
-        border-bottom: 1px solid #c4a870;
-        border-radius: 9px 9px 0 0;
-      }
-
-      /* Servings sits at the start of row two, so it needs no left divider */
-      .controls-row > div:nth-child(2)::before { display: none; }
-      .controls-row > div:nth-child(2) { border-radius: 0 0 0 9px; }
-      .controls-row > div:last-child  { border-radius: 0 0 9px 0; }
-
-      .search-input {
-        width: 100%;
-        min-width: 0;
-        font-size: 1rem; /* 16px stops iOS Safari zooming the page on focus */
-      }
-
-      .controls select {
-        font-size: 0.95rem;
-        padding-right: 18px;
-        background-position: right 4px center;
-      }
-
+      .recipe-modal { max-height: 100dvh; border-radius: 0; }
+      #recipe-overlay { padding: 0; }
+      .recipe-sheet .back { border-radius: 0; }
 
       .cards-grid {
         grid-template-columns: 1fr;
         gap: 16px;
       }
 
-      .recipe-modal { max-height: 100dvh; border-radius: 0; }
-      #recipe-overlay { padding: 0; }
-      .recipe-sheet .back { border-radius: 0; }
     }
   </style>
 </head>
@@ -931,29 +983,9 @@
   </svg>
 
   <div class="page-header">
-    <h1>Recipes</h1>
-    <div class="controls">
-      <div class="controls-row">
-        <div>
-          <input class="search-input" id="search" type="search" placeholder="Search recipes…" autocomplete="off">
-        </div>
-        <div>
-          <label for="servings">Servings</label>
-          <select id="servings">
-            <option value="1" selected>1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-          </select>
-        </div>
+    <div class="header-top">
+      <h1>Recipes</h1>
+      <div class="controls-row settings-row" aria-label="Settings">
         <div>
           <label for="units">Units</label>
           <select id="units">
@@ -970,6 +1002,9 @@
           </select>
         </div>
       </div>
+    </div>
+    <div class="search-box">
+      <input class="search-input" id="search" type="search" placeholder="Search recipes…" autocomplete="off">
     </div>
   </div>
 
@@ -988,7 +1023,7 @@
                   <span class="ft-script">Chicken Francese</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1058,7 +1093,7 @@
                   <span class="ft-script">Shrimp Risotto</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1129,7 +1164,7 @@
                   <span class="ft-script">Beef Stroganoff</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1199,7 +1234,7 @@
                   <span class="ft-script">Baked Potato Soup</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1269,7 +1304,7 @@
                   <span class="ft-script">Crab Cakes</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1339,7 +1374,7 @@
                   <span class="ft-script">Spaghetti Carbonara</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1406,7 +1441,7 @@
                   <span class="ft-script">Beef Wellington</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1475,7 +1510,7 @@
                   <span class="ft-script">Meatballs</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1544,7 +1579,7 @@
                   <span class="ft-script">Shrimp Scampi</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1613,7 +1648,7 @@
                   <span class="ft-script">Chicken Tikka Masala</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1684,7 +1719,7 @@
                   <span class="ft-script">Chocolate Lava Cake</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1751,7 +1786,7 @@
                   <span class="ft-script">Eggs Benedict</span>
                 </div>
                 <div class="front-meta">
-                  <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
+                  <span class="front-ing"></span><span class="front-steps"></span>
                 </div>
               </div>
             </div>
@@ -1814,6 +1849,15 @@
         <button class="cook-close" id="recipe-close" aria-label="Close">✕</button>
       </div>
       <div class="recipe-sheet" id="recipe-sheet"></div>
+      <div class="serves-picker" id="serves-picker" role="dialog" aria-label="Servings" hidden>
+        <div class="serves-picker-title">Servings</div>
+        <div class="serves-quick"></div>
+        <form class="serves-custom">
+          <input type="number" inputmode="numeric" min="1" max="50" step="1" placeholder="Custom (up to 50)" aria-label="Custom servings">
+          <button type="submit" class="cook-action-btn">Set</button>
+        </form>
+        <button type="button" class="serves-cancel">Cancel</button>
+      </div>
       <div class="recipe-actions">
         <button class="recipe-share-btn" id="recipe-share" type="button">Share</button>
         <button class="cook-action-btn" id="recipe-cook" type="button">Start Cooking →</button>
@@ -1938,10 +1982,13 @@
       });
     }
 
-    document.getElementById('servings').addEventListener('change', function () {
-      updateServings(parseInt(this.value));
+    const MAX_SERVINGS = 50;
+    function setServings(n) {
+      n = Math.min(MAX_SERVINGS, Math.max(1, Math.round(Number(n) || 1)));
+      updateServings(n);
       fitBackContent();
-    });
+      if (typeof renderRecipeSheet === 'function' && recipeOverlay.classList.contains('visible')) renderRecipeSheet();
+    }
 
     document.getElementById('units').addEventListener('change', function () {
       currentSystem = this.value;
@@ -2078,8 +2125,41 @@
       if (!currentScene) return;
       const clone = currentScene.querySelector('.back').cloneNode(true);
       clone.style.fontSize = '';
+      // "Serves N" becomes a button that opens the servings picker
+      const servesEl = clone.querySelector('.serves');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'serves-btn';
+      btn.setAttribute('aria-haspopup', 'dialog');
+      btn.innerHTML = `Serves ${currentServings} <span aria-hidden="true">▾</span>`;
+      btn.addEventListener('click', e => { e.stopPropagation(); openServesPicker(); });
+      servesEl.replaceWith(btn);
       recipeSheet.replaceChildren(clone);
     }
+
+    const servesPicker = document.getElementById('serves-picker');
+    function openServesPicker() {
+      const quick = servesPicker.querySelector('.serves-quick');
+      quick.innerHTML = Array.from({ length: 10 }, (_, i) => i + 1)
+        .map(n => `<button type="button" class="${n === currentServings ? 'current' : ''}" data-n="${n}">${n}</button>`).join('');
+      const input = servesPicker.querySelector('input');
+      input.value = currentServings > 10 ? currentServings : '';
+      servesPicker.hidden = false;
+      input.focus({ preventScroll: true });
+    }
+    function closeServesPicker() { servesPicker.hidden = true; }
+    servesPicker.addEventListener('click', e => {
+      e.stopPropagation();
+      const n = e.target.closest('[data-n]');
+      if (n) { setServings(n.dataset.n); closeServesPicker(); }
+    });
+    servesPicker.querySelector('form').addEventListener('submit', e => {
+      e.preventDefault();
+      const v = servesPicker.querySelector('input').value;
+      if (v !== '') { setServings(v); closeServesPicker(); }
+    });
+    servesPicker.querySelector('.serves-cancel').addEventListener('click', closeServesPicker);
+    recipeOverlay.addEventListener('click', () => { if (!servesPicker.hidden) closeServesPicker(); });
 
     function openRecipe(scene) {
       currentScene = scene;
@@ -2095,6 +2175,7 @@
     }
 
     function closeRecipe() {
+      closeServesPicker();
       recipeOverlay.classList.remove('visible');
       document.body.style.overflow = '';
       currentScene = null;
@@ -2110,11 +2191,12 @@
     document.getElementById('recipe-close').addEventListener('click', closeRecipe);
     recipeOverlay.addEventListener('click', e => { if (e.target === recipeOverlay) closeRecipe(); });
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && recipeOverlay.classList.contains('visible')) closeRecipe();
+      if (e.key !== 'Escape' || !recipeOverlay.classList.contains('visible')) return;
+      if (!servesPicker.hidden) closeServesPicker(); else closeRecipe();
     });
 
     // Keep the open recipe in sync with the Servings / Units / Font controls
-    ['servings', 'units', 'font-size'].forEach(id => {
+    ['units', 'font-size'].forEach(id => {
       document.getElementById(id).addEventListener('change', () => {
         if (recipeOverlay.classList.contains('visible')) renderRecipeSheet();
       });

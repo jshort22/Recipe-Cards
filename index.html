@@ -762,8 +762,9 @@
     .serves-cancel:hover { color: #3b1f0a; }
 
     .recipe-actions {
-      display: flex;
-      justify-content: flex-end;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;   /* Share left, Start Cooking centred */
+      align-items: center;
       gap: 10px;
       padding: 12px 16px;
       background: #faf5ec;
@@ -784,7 +785,8 @@
     }
     .recipe-share-btn svg { width: 18px; height: 18px; }
     .recipe-share-btn:hover { border-color: #7a3e1a; }
-    .recipe-share-btn[hidden] { display: none; }
+    .recipe-share-btn[hidden] { visibility: hidden; }   /* keeps Start Cooking centred when Share is unavailable */
+    .recipe-share-btn { justify-self: start; height: 100%; }
 
     #cook-overlay {
       display: none;

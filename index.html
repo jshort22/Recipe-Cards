@@ -748,6 +748,8 @@
       outline: none;
     }
     .serves-custom input:focus { border-color: #7a3e1a; }
+    .serves-custom input.over { border-color: #b5483a; }
+    .serves-custom input.over::placeholder { color: #b5483a; }
     .serves-custom .cook-action-btn { padding: 8px 16px; font-size: 0.95rem; }
     .serves-cancel {
       align-self: flex-end;
@@ -2378,7 +2380,7 @@
         <div class="serves-picker-title">Servings</div>
         <div class="serves-quick"></div>
         <form class="serves-custom">
-          <input type="number" inputmode="numeric" min="1" max="50" step="1" placeholder="Custom (up to 50)" aria-label="Custom servings">
+          <input type="number" inputmode="numeric" min="1" max="50" step="1" placeholder="Custom" aria-label="Custom servings">
           <button type="submit" class="cook-action-btn">Set</button>
         </form>
         <button type="button" class="serves-cancel">Cancel</button>
@@ -2941,15 +2943,27 @@
       servesPicker.hidden = false;
       input.focus({ preventScroll: true });
     }
-    function closeServesPicker() { servesPicker.hidden = true; }
+    function closeServesPicker() { servesPicker.hidden = true; servesInput.value = ''; servesInput.placeholder = 'Custom'; servesInput.classList.remove('over'); }
     servesPicker.addEventListener('click', e => {
       e.stopPropagation();
       const n = e.target.closest('[data-n]');
       if (n) { setServings(n.dataset.n); closeServesPicker(); }
     });
+    const servesInput = servesPicker.querySelector('input');
+    // Over the cap: clear the field and say so in the placeholder instead of silently clamping
+    const rejectOverMax = () => {
+      if (Number(servesInput.value) <= MAX_SERVINGS) return false;
+      servesInput.value = '';
+      servesInput.placeholder = `Max is ${MAX_SERVINGS}`;
+      servesInput.classList.add('over');
+      return true;
+    };
+    servesInput.addEventListener('input', rejectOverMax);
+    servesInput.addEventListener('focus', () => { servesInput.placeholder = 'Custom'; servesInput.classList.remove('over'); });
     servesPicker.querySelector('form').addEventListener('submit', e => {
       e.preventDefault();
-      const v = servesPicker.querySelector('input').value;
+      if (rejectOverMax()) return;
+      const v = servesInput.value;
       if (v !== '') { setServings(v); closeServesPicker(); }
     });
     servesPicker.querySelector('.serves-cancel').addEventListener('click', closeServesPicker);

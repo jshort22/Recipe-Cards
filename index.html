@@ -940,6 +940,25 @@
       margin-bottom: 48px;
     }
     .cook-step-footer { display: flex; justify-content: center; }
+    .cook-tip {
+      font-family: Georgia, serif;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #1e1005;
+      background: rgba(181,72,58,0.07);
+      border-left: 3px solid #b5483a;
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      margin: -24px 0 36px;
+    }
+    .cook-tip-label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #b5483a;
+      margin-bottom: 3px;
+    }
     .cook-hint {
       text-align: center;
       margin-top: 20px;
@@ -1093,6 +1112,7 @@
         margin-bottom: 24px;
         padding: 0 4px;
       }
+      .cook-tip { margin: 0 0 18px; }
       .cook-timer { margin: 0 0 18px; }
       .cook-timer-display { font-size: 3.2rem; }
       .cook-complete { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 15vh; }
@@ -1257,8 +1277,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Cold butter off heat is the key to a silky, emulsified sauce.</li>
-                    <li>Don't skip the fond — those browned bits are where the flavor lives.</li>
+                    <li data-step="5">Cold butter off heat is the key to a silky, emulsified sauce.</li>
+                    <li data-step="3">Don't skip the fond — those browned bits are where the flavor lives.</li>
                   </ul>
                 </div>
               </div>
@@ -1327,8 +1347,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Keep stock warm — cold stock slows cooking and affects texture.</li>
-                    <li>Sear shrimp separately so they don't overcook in the risotto.</li>
+                    <li data-step="5">Keep stock warm — cold stock slows cooking and affects texture.</li>
+                    <li data-step="1">Sear shrimp separately so they don't overcook in the risotto.</li>
                   </ul>
                 </div>
               </div>
@@ -1396,8 +1416,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Sear in batches over high heat so the beef browns rather than steams.</li>
-                    <li>Never boil after adding sour cream or it will curdle.</li>
+                    <li data-step="1">Sear in batches over high heat so the beef browns rather than steams.</li>
+                    <li data-step="5">Never boil after adding sour cream or it will curdle.</li>
                   </ul>
                 </div>
               </div>
@@ -1466,8 +1486,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Russet potatoes break down better than waxy varieties — ideal for a creamy texture.</li>
-                    <li>Don't boil after adding dairy or the soup may curdle.</li>
+                    <li data-step="4">Russet potatoes break down better than waxy varieties — ideal for a creamy texture.</li>
+                    <li data-step="5">Don't boil after adding dairy or the soup may curdle.</li>
                   </ul>
                 </div>
               </div>
@@ -1535,8 +1555,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Chilling is non-negotiable — it's what keeps them from falling apart in the pan.</li>
-                    <li>Less filler means better crab cakes; add just enough panko to bind.</li>
+                    <li data-step="3">Chilling is non-negotiable — it's what keeps them from falling apart in the pan.</li>
+                    <li data-step="2">Less filler means better crab cakes; add just enough panko to bind.</li>
                   </ul>
                 </div>
               </div>
@@ -1602,8 +1622,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Never add cream — the creaminess comes entirely from eggs, cheese, and starchy pasta water.</li>
-                    <li>Off the heat is critical when adding the egg mixture or it will scramble.</li>
+                    <li data-step="5">Never add cream — the creaminess comes entirely from eggs, cheese, and starchy pasta water.</li>
+                    <li data-step="4">Off the heat is critical when adding the egg mixture or it will scramble.</li>
                   </ul>
                 </div>
               </div>
@@ -1670,8 +1690,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>The duxelles (mushroom mixture) must be completely dry or the pastry will be soggy.</li>
-                    <li>Chilling at each stage keeps the layers firm and the shape tight.</li>
+                    <li data-step="2">The duxelles (mushroom mixture) must be completely dry or the pastry will be soggy.</li>
+                    <li data-step="4">Chilling at each stage keeps the layers firm and the shape tight.</li>
                   </ul>
                 </div>
               </div>
@@ -1739,8 +1759,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Soaking breadcrumbs in milk (panade) keeps the meatballs tender and moist.</li>
-                    <li>Mix with your hands just until combined — overworking makes them tough.</li>
+                    <li data-step="1">Soaking breadcrumbs in milk (panade) keeps the meatballs tender and moist.</li>
+                    <li data-step="1">Mix with your hands just until combined — overworking makes them tough.</li>
                   </ul>
                 </div>
               </div>
@@ -1808,8 +1828,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Don't overcook the shrimp — pull them off heat while still slightly underdone as they'll finish in the sauce.</li>
-                    <li>Pasta water is the secret to a silky, emulsified sauce that clings to every noodle.</li>
+                    <li data-step="2">Don't overcook the shrimp — pull them off heat while still slightly underdone as they'll finish in the sauce.</li>
+                    <li data-step="5">Pasta water is the secret to a silky, emulsified sauce that clings to every noodle.</li>
                   </ul>
                 </div>
               </div>
@@ -1878,8 +1898,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Marinating overnight makes a big difference — yogurt tenderizes the chicken and deepens the flavor.</li>
-                    <li>A little char on the chicken is authentic and adds depth to the sauce.</li>
+                    <li data-step="1">Marinating overnight makes a big difference — yogurt tenderizes the chicken and deepens the flavor.</li>
+                    <li data-step="2">A little char on the chicken is authentic and adds depth to the sauce.</li>
                   </ul>
                 </div>
               </div>
@@ -1945,8 +1965,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>The center should jiggle like Jell-O when you pull it — it firms as it rests.</li>
-                    <li>Fill ramekins up to 24 hrs ahead and refrigerate; add 1–2 min to bake time from cold.</li>
+                    <li data-step="5">The center should jiggle like Jell-O when you pull it — it firms as it rests.</li>
+                    <li data-step="5">Fill ramekins up to 24 hrs ahead and refrigerate; add 1–2 min to bake time from cold.</li>
                   </ul>
                 </div>
               </div>
@@ -2010,8 +2030,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Fresh eggs poach best — older eggs spread in the water and lose their shape.</li>
-                    <li>Make hollandaise last and keep it warm while you poach — it doesn't reheat well.</li>
+                    <li data-step="3">Fresh eggs poach best — older eggs spread in the water and lose their shape.</li>
+                    <li data-step="1">Make hollandaise last and keep it warm while you poach — it doesn't reheat well.</li>
                   </ul>
                 </div>
               </div>
@@ -2081,8 +2101,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Don't overbake — that matters more than anything else for keeping it pillowy.</li>
-                    <li>Brush the top with a little melted butter right out of the oven to keep the surface soft and add flavor.</li>
+                    <li data-step="6">Don't overbake — that matters more than anything else for keeping it pillowy.</li>
+                    <li data-step="7">Brush the top with a little melted butter right out of the oven to keep the surface soft and add flavor.</li>
                   </ul>
                 </div>
               </div>
@@ -2156,8 +2176,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Don't boil the chicken hard — a gentle simmer keeps chicken breast much more tender.</li>
-                    <li>The uncovered simmer at the end is what makes this thick instead of watery.</li>
+                    <li data-step="3">Don't boil the chicken hard — a gentle simmer keeps chicken breast much more tender.</li>
+                    <li data-step="5">The uncovered simmer at the end is what makes this thick instead of watery.</li>
                   </ul>
                 </div>
               </div>
@@ -2227,8 +2247,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Let the pepper and onion get really soft — that's the base of the flavor.</li>
-                    <li>Taste before adding sugar. Good tomatoes often don't need it.</li>
+                    <li data-step="1">Let the pepper and onion get really soft — that's the base of the flavor.</li>
+                    <li data-step="7">Taste before adding sugar. Good tomatoes often don't need it.</li>
                   </ul>
                 </div>
               </div>
@@ -2291,8 +2311,8 @@
                 <span class="badge tips">Tips</span>
                 <div class="tips-box">
                   <ul class="tips-list">
-                    <li>Everything depends on temperature. Boiling water melts Pecorino into strings, so make the paste with water that has cooled a moment and finish the pasta off the heat.</li>
-                    <li>Grate the cheese yourself on a Microplane. Pre-grated Pecorino is coated with anti-caking starch and won't emulsify.</li>
+                    <li data-step="5">Everything depends on temperature. Boiling water melts Pecorino into strings, so make the paste with water that has cooled a moment and finish the pasta off the heat.</li>
+                    <li data-step="3">Grate the cheese yourself on a Microplane. Pre-grated Pecorino is coated with anti-caking starch and won't emulsify.</li>
                   </ul>
                 </div>
               </div>
@@ -2600,6 +2620,7 @@
     });
 
     // Share buttons
+    let cookTips = [];   // { step, text } for the recipe being cooked; shown under the matching step
     const shareIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b1f0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`;
 
     function shareCardBack(scene) {
@@ -2969,6 +2990,7 @@
       const title       = scene.querySelector('.ft-script').textContent.trim();
       const ingredients = [...scene.querySelectorAll('[data-qty]')].map(el => el.textContent.trim());
       const steps       = [...scene.querySelectorAll('.instructions-list li')].map(el => el.textContent.trim());
+      cookTips = [...scene.querySelectorAll('.tips-list li')].map(el => ({ step: Number(el.dataset.step), text: el.textContent.trim() }));
       recipeOverlay.classList.remove('visible');
       showPrepPhase(title, ingredients, steps);
       cookOverlay.classList.add('visible');
@@ -3051,6 +3073,7 @@
           <div class="cook-progress-fill" style="width:${progress}%"></div>
         </div>
         <div class="cook-step-text">${steps[index]}</div>
+        ${cookTips.filter(t => t.step === index + 1).map(t => `<div class="cook-tip"><span class="cook-tip-label">Tip</span>${t.text}</div>`).join('')}
         ${timeInfo ? `<div class="cook-timer"><button class="cook-timer-btn" id="cook-timer-start">⏱ Start ${timeInfo.label} timer</button></div>` : ''}
         <div class="cook-step-footer">
           <button class="cook-action-btn" id="cook-step-btn">

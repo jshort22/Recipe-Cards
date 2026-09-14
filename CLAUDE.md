@@ -72,7 +72,8 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
    - 5–7 instruction steps, one sentence or two each. The cook overlay reads times like
      "3 min", "1–2 min", "30 seconds", "1 hour" out of step text to offer a timer, so keep
      times in that form.
-   - Exactly two tips.
+   - Exactly two tips. Each tip `<li>` carries `data-step="N"` naming the instruction step it
+     belongs to; the cook overlay shows the tip beneath that step.
 7. **Search** indexes title, `data-name`, and category. Nothing else to update.
 7. `sw.js` does not need a version bump for new cards. Bump `CACHE_VERSION` only when a
    file that is already cached under the same name changes (fonts, vendor JS, icons, sw.js).

@@ -22,8 +22,10 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
    full-pan recipe down (e.g. a 12-serving 9×14 pan ÷ 3) and noting the pan size for the
    original yield in the first step. Prefer units that stay readable at 1 serving: tbsp
    rather than cup for anything under ½ cup at 4 servings, since fmtQty shows `0` below ⅛.
-2. **Pick a category** from: `seafood`, `poultry`, `beef`, `pasta`, `soup`, `breakfast`,
-   `dessert`, `vegetarian`, `baking` (breads, cornbread, and other baked sides). Each has a stock colour and an icon in the sprite at the top of
+2. **Pick a category** from: `seafood`, `chicken`, `beef`, `pasta`, `soup`, `breakfast`,
+   `dessert`, `vegetarian`, `baking` (breads, cornbread, and other baked sides). Chicken
+   dishes are `chicken`; if turkey or duck ever appear, add a specific category rather
+   than a generic poultry one. Each has a stock colour and an icon in the sprite at the top of
    `<body>`. To add a category, add a `--stock` rule in the front CSS and a `<symbol>` to the
    sprite.
 3. **Set the default servings** on the scene: `<div class="card-scene" data-default-serves="N">`.

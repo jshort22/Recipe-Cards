@@ -279,7 +279,7 @@
 
     /* Card stock colour per category */
     .front[data-category="seafood"]    { --stock: #cfe0d8; }
-    .front[data-category="poultry"]    { --stock: #f3e2b8; }
+    .front[data-category="chicken"]    { --stock: #f3e2b8; }
     .front[data-category="beef"]       { --stock: #e2b9a8; }
     .front[data-category="pasta"]      { --stock: #f1d29a; }
     .front[data-category="soup"]       { --stock: #e8c9a0; }
@@ -983,7 +983,7 @@
 <body>
 
   <!-- Icon sprite for card fronts. Valid data-category values:
-       seafood, poultry, beef, pasta, soup, breakfast, dessert, vegetarian, baking -->
+       seafood, chicken, beef, pasta, soup, breakfast, dessert, vegetarian, baking -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="icon-seafood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M7 12c2.2-3.6 5.4-5.5 9-5.5 2.3 0 4.3 1.9 6 5.5-1.7 3.6-3.7 5.5-6 5.5-3.6 0-6.8-1.9-9-5.5z"/>
@@ -991,7 +991,7 @@
       <path d="M12.5 7.2v9.6"/>
       <circle cx="18.5" cy="10.8" r=".9" fill="currentColor" stroke="none"/>
     </symbol>
-    <symbol id="icon-poultry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <symbol id="icon-chicken" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M15.4 15.63a7.875 6 135 1 1 6.23-6.23 4.5 3.43 135 0 0-6.23 6.23"/>
       <path d="m8.29 12.71-2.6 2.6a2.5 2.5 0 1 0-1.65 4.65A2.5 2.5 0 1 0 8.7 18.3l2.59-2.59"/>
     </symbol>
@@ -1001,10 +1001,11 @@
       <circle cx="16.3" cy="9" r="1.3"/>
     </symbol>
     <symbol id="icon-pasta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 2.5v5M11.5 2.5v5M14 2.5v5"/>
-      <path d="M9 7.5a2.5 2.5 0 0 0 5 0"/>
-      <path d="M11.5 10v11.5"/>
-      <path d="M5 12.5c2.5-1.6 10.5-1.6 13 0M5 15.5c2.5-1.6 10.5-1.6 13 0M5 18.5c2.5-1.6 10.5-1.6 13 0"/>
+      <path d="M2.5 15.5h19"/>
+      <path d="M4.5 15.5c0 2.2 3.4 3.5 7.5 3.5s7.5-1.3 7.5-3.5"/>
+      <path d="M5.5 15.5c1-4.5 3.5-7 6.5-7s5.5 2.5 6.5 7"/>
+      <path d="M8.5 15c.5-2.5 1.5-4 3-4.5M12.5 15c.3-2 1-3.2 2-3.8"/>
+      <path d="M17 2.5v4M19 2.5v4M21 2.5v4M17 6.5a2 2 0 0 0 4 0M19 8.5v5"/>
     </symbol>
     <symbol id="icon-soup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 11.5h18c0 4.4-3 7.5-7 7.5h-4c-4 0-7-3.1-7-7.5z"/>
@@ -1070,10 +1071,10 @@
       <div class="card-scene" data-default-serves="2">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front" data-category="poultry">
-              <svg class="front-icon" aria-hidden="true"><use href="#icon-poultry"/></svg>
+            <div class="front" data-category="chicken">
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-chicken"/></svg>
               <div class="front-body">
-                <div class="front-category">Poultry</div>
+                <div class="front-category">Chicken</div>
                 <div class="front-title">
                   <span class="ft-script">Chicken Francese</span>
                 </div>
@@ -1695,10 +1696,10 @@
       <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front" data-category="poultry">
-              <svg class="front-icon" aria-hidden="true"><use href="#icon-poultry"/></svg>
+            <div class="front" data-category="chicken">
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-chicken"/></svg>
               <div class="front-body">
-                <div class="front-category">Poultry</div>
+                <div class="front-category">Chicken</div>
                 <div class="front-title">
                   <span class="ft-script">Chicken Tikka Masala</span>
                 </div>

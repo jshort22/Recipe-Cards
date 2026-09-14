@@ -1050,7 +1050,7 @@
 
     <!-- CARD: chicken francese -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="2">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="poultry">
@@ -1120,7 +1120,7 @@
 
     <!-- CARD: shrimp risotto -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="2">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="seafood">
@@ -1191,7 +1191,7 @@
 
     <!-- CARD: beef stroganoff -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="beef">
@@ -1261,7 +1261,7 @@
 
     <!-- CARD: baked potato soup -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="soup">
@@ -1331,7 +1331,7 @@
 
     <!-- CARD: crab cakes -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="2">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="seafood">
@@ -1401,7 +1401,7 @@
 
     <!-- CARD 6: spaghetti carbonara -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="2">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="pasta">
@@ -1468,7 +1468,7 @@
 
     <!-- CARD: beef wellington -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="beef">
@@ -1537,7 +1537,7 @@
 
     <!-- CARD: meatballs -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="beef">
@@ -1606,7 +1606,7 @@
 
     <!-- CARD: shrimp scampi -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="2">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="seafood">
@@ -1675,7 +1675,7 @@
 
     <!-- CARD: chicken tikka masala -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="poultry">
@@ -1746,7 +1746,7 @@
 
     <!-- CARD: chocolate lava cake -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="dessert">
@@ -1813,7 +1813,7 @@
 
     <!-- CARD: eggs benedict -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="2">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="breakfast">
@@ -1878,7 +1878,7 @@
 
     <!-- CARD: cornbread -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="12">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="baking">
@@ -1949,7 +1949,7 @@
 
     <!-- CARD: chicken tortilla soup -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="soup">
@@ -2026,7 +2026,7 @@
 
     <!-- CARD: bell pepper tomato sauce -->
     <div>
-      <div class="card-scene">
+      <div class="card-scene" data-default-serves="4">
         <div class="card">
           <div class="card-face card-front">
             <div class="front" data-category="vegetarian">
@@ -2242,8 +2242,10 @@
     }
 
     const MAX_SERVINGS = 50;
+    const servingsByScene = new Map(); // remembers a chosen count per recipe for the session
     function setServings(n) {
       n = Math.min(MAX_SERVINGS, Math.max(1, Math.round(Number(n) || 1)));
+      if (currentScene) servingsByScene.set(currentScene, n);
       updateServings(n);
       fitBackContent();
       if (typeof renderRecipeSheet === 'function' && recipeOverlay.classList.contains('visible')) renderRecipeSheet();
@@ -2437,6 +2439,8 @@
       const source = front.querySelector('.front-source');
       document.getElementById('recipe-cat').innerHTML =
         cat.charAt(0).toUpperCase() + cat.slice(1) + (source ? ' · ' + source.outerHTML : '');
+      // Open at this recipe's sensible default, or whatever the user last chose for it
+      setServings(servingsByScene.get(scene) ?? (Number(scene.dataset.defaultServes) || BASE));
       renderRecipeSheet();
       recipeSheet.scrollTop = 0;
       recipeOverlay.classList.add('visible');

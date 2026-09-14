@@ -6,8 +6,8 @@ at https://recipe-cards-xi.vercel.app/. No build step. `sw.js` handles offline c
 Interaction: the grid shows card fronts. Tapping a card opens a full-screen recipe view
 (`#recipe-overlay`) that clones the card's hidden `.back` into a scrollable sheet, with Share
 and "Start Cooking" buttons. In that view "Serves N" is a button opening a servings picker
-(1–10 plus a custom number, capped at `MAX_SERVINGS` = 50); servings is global state and is
-not on the home screen. Units and Font live in the header as settings; search has its own box. Start Cooking launches the step-by-step cook overlay
+(1–10 plus a custom number, capped at `MAX_SERVINGS` = 50). Each recipe opens at its
+`data-default-serves`; a chosen count is remembered per recipe for the session. Units and Font live in the header as settings; search has its own box. Start Cooking launches the step-by-step cook overlay
 (`#cook-overlay`: ingredient checklist, then one step at a time with timers). Cards do not
 flip; the `.card-back` face exists only as the data source for the view, share export, and
 cook overlay.
@@ -26,9 +26,13 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
    `dessert`, `vegetarian`, `baking` (breads, cornbread, and other baked sides). Each has a stock colour and an icon in the sprite at the top of
    `<body>`. To add a category, add a `--stock` rule in the front CSS and a `<symbol>` to the
    sprite.
-3. **Copy an existing card block** (they start with `<!-- CARD: name -->` inside
+3. **Set the default servings** on the scene: `<div class="card-scene" data-default-serves="N">`.
+   The recipe view opens at N. Use 2 for a weeknight dinner for the user's household,
+   4 for batch dishes (soups, stews, sauces, curries, meatballs, a whole Wellington), and the
+   full original yield for baking and desserts (e.g. cornbread 12).
+4. **Copy an existing card block** (they start with `<!-- CARD: name -->` inside
    `.cards-grid`) and paste it before `<div class="no-results" id="no-results">`.
-4. **Fill in the front:** `data-category`, the category label, the icon `href`, and the
+5. **Fill in the front:** `data-category`, the category label, the icon `href`, and the
    title in `.ft-script`. Leave `.front-ing` and `.front-steps` empty; JS fills them.
    The front carries no serves text.
    **Cite the source.** If the recipe came from somewhere (NYT Cooking, Allrecipes, Serious
@@ -40,7 +44,7 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
    <div class="front-source">Salt Fat Acid Heat</div>
    ```
    Tapping a source link opens it instead of flipping the card.
-5. **Fill in the back:**
+6. **Fill in the back:**
    - `.back-title` matches the front title exactly. `.serves` stays `Serves 4`.
    - Ingredients go in two `<ul>`s, roughly balanced. Each `<li>` needs
      `data-qty` (number, for 4 servings) and `data-name` (everything after the number).
@@ -52,7 +56,7 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
      "3 min", "1–2 min", "30 seconds", "1 hour" out of step text to offer a timer, so keep
      times in that form.
    - Exactly two tips.
-6. **Search** indexes title, `data-name`, and category. Nothing else to update.
+7. **Search** indexes title, `data-name`, and category. Nothing else to update.
 7. `sw.js` does not need a version bump for new cards. Bump `CACHE_VERSION` only when a
    file that is already cached under the same name changes (fonts, vendor JS, icons, sw.js).
 

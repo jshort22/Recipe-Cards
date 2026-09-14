@@ -520,6 +520,15 @@
       font-weight: bold;
     }
 
+    /* Share export: real elements standing in for effects html2canvas can't render */
+    .back-export .instructions-list { list-style: none; }
+    .back-export .instructions-list li { position: relative; }
+    .back-export .step-num { position: absolute; left: -1.2em; color: #b5483a; font-weight: bold; }
+    .back-export .back-title { border-bottom: none; box-shadow: none; padding-bottom: 0.15em; margin-bottom: 0; }
+    .back-export .title-rule { margin-bottom: 0.5em; }
+    .back-export .title-rule i { display: block; height: 2px; background: #b5483a; }
+    .back-export .title-rule i + i { height: 1px; margin-top: 3px; }
+
     .tips-box {
       background: rgba(181,72,58,0.07);
       border-left: 3px solid #b5483a;
@@ -1674,12 +1683,32 @@
       clone.style.height = 'auto';
       clone.style.overflow = 'visible';
 
+      // html2canvas can't draw three of the card's CSS effects, so the export clone gets
+      // real elements instead: ruled lines as a tiled SVG image, step numbers as spans,
+      // and the title's double rule as a bordered div.
+      clone.querySelectorAll('.instructions-list li').forEach((li, i) => {
+        const n = document.createElement('span');
+        n.className = 'step-num';
+        n.textContent = `${i + 1}.`;
+        li.prepend(n);
+      });
+      const titleEl = clone.querySelector('.back-title');
+      const rule = document.createElement('div');
+      rule.className = 'title-rule';
+      rule.innerHTML = '<i></i><i></i>';
+      titleEl.after(rule);
+      wrapper.appendChild(clone);
+      document.body.appendChild(wrapper);
+      const em = parseFloat(getComputedStyle(clone).fontSize);
+      const lineH = Math.round(em * 1.45);
+      const ruled = `<svg xmlns='http://www.w3.org/2000/svg' width='4' height='${lineH}'><rect x='0' y='${lineH - 1}' width='4' height='1' fill='rgb(120,150,190)' fill-opacity='0.28'/></svg>`;
+      clone.style.backgroundImage = `url("data:image/svg+xml;utf8,${encodeURIComponent(ruled)}")`;
+      clone.style.backgroundSize = `4px ${lineH}px`;
+      clone.style.backgroundPosition = `0 ${Math.round(em * 3.6)}px`;
+
       const tempStyle = document.createElement('style');
       tempStyle.textContent = '.back-export::after { display: none !important; }';
       document.head.appendChild(tempStyle);
-
-      wrapper.appendChild(clone);
-      document.body.appendChild(wrapper);
 
       requestAnimationFrame(() => {
         const fullHeight = clone.getBoundingClientRect().height;

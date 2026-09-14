@@ -48,6 +48,11 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
    Tapping a source link opens it instead of flipping the card.
 6. **Fill in the back:**
    - `.back-title` matches the front title exactly. `.serves` stays `Serves 4`.
+   - **Leave out pantry staples that aren't measured into the dish.** Oil that only greases
+     the pan for searing or sautéing is not an ingredient; oil mixed into a batter or a sauce
+     (scampi, cornbread) is. "Salt, to taste" is not an ingredient; a measured salt
+     (`¼ tsp salt`) or a specialty salt (`½ tsp kosher salt`) is. The steps still say
+     "heat the oil" and "season to taste" as normal.
    - Ingredients go in two `<ul>`s, roughly balanced. Each `<li>` needs
      `data-qty` (number, for 4 servings) and `data-name` (everything after the number).
      Units the converter understands, when they lead `data-name`: `tbsp`, `tsp`, `oz`,

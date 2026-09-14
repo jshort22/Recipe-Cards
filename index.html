@@ -479,7 +479,7 @@
     .share-btn {
       position: absolute;
       bottom: 0.65em;
-      right: 3.3em;
+      right: 0.65em;
       z-index: 10;
       width: 2em;
       height: 2em;
@@ -504,37 +504,6 @@
     }
 
     .share-btn:hover {
-      background: rgba(255,255,255,0.92);
-    }
-
-    .download-btn {
-      position: absolute;
-      bottom: 0.65em;
-      right: 0.65em;
-      z-index: 10;
-      width: 2em;
-      height: 2em;
-      background: rgba(255,255,255,0.65);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s, background 0.15s;
-      padding: 0;
-    }
-
-    .card-scene:hover .download-btn {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .download-btn:hover {
       background: rgba(255,255,255,0.92);
     }
 
@@ -932,8 +901,7 @@
       }
 
       /* The buttons act on the back, so only show them once the card is flipped */
-      .card-scene.flipped .share-btn,
-      .card-scene.flipped .download-btn { opacity: 1; pointer-events: auto; }
+      .card-scene.flipped .share-btn { opacity: 1; pointer-events: auto; }
 
       .card-scene.flipped .card { transform: rotateY(180deg); }
     }
@@ -2002,7 +1970,7 @@
 
       scenes.forEach(scene => {
         scene.addEventListener('click', e => {
-          if (e.target.closest('.share-btn, .download-btn, .cook-mode-btn')) return;
+          if (e.target.closest('.share-btn, .cook-mode-btn')) return;
           scene.classList.toggle('flipped');
         });
       });
@@ -2050,44 +2018,7 @@
       document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
     });
 
-    // Download buttons
-    const downloadIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b1f0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
-
-    function downloadCardBack(scene) {
-      const back = scene.querySelector('.back');
-      const rect = scene.getBoundingClientRect();
-
-      // Wrapper re-establishes the container query context at the correct card size
-      const wrapper = document.createElement('div');
-      wrapper.style.cssText = `position:fixed;left:-9999px;top:0;width:${rect.width}px;height:9999px;container-type:size;overflow:hidden;`;
-
-      const clone = back.cloneNode(true);
-      clone.classList.remove('large', 'xl');
-      clone.classList.add('back-download');
-      clone.style.height = 'auto';
-      clone.style.overflow = 'visible';
-
-      const tempStyle = document.createElement('style');
-      tempStyle.textContent = '.back-download::after { display: none !important; }';
-      document.head.appendChild(tempStyle);
-
-      wrapper.appendChild(clone);
-      document.body.appendChild(wrapper);
-
-      requestAnimationFrame(() => {
-        const fullHeight = clone.getBoundingClientRect().height;
-        html2canvas(wrapper, { width: rect.width, height: fullHeight, scale: 2, useCORS: true }).then(canvas => {
-          document.body.removeChild(wrapper);
-          document.head.removeChild(tempStyle);
-          const title = scene.querySelector('.ft-script').textContent.trim();
-          const link = document.createElement('a');
-          link.download = title.toLowerCase().replace(/\s+/g, '_') + '_recipe.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-        });
-      });
-    }
-
+    // Share buttons
     const shareIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b1f0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`;
 
     function shareCardBack(scene) {
@@ -2100,12 +2031,12 @@
 
       const clone = back.cloneNode(true);
       clone.classList.remove('large', 'xl');
-      clone.classList.add('back-download');
+      clone.classList.add('back-export');
       clone.style.height = 'auto';
       clone.style.overflow = 'visible';
 
       const tempStyle = document.createElement('style');
-      tempStyle.textContent = '.back-download::after { display: none !important; }';
+      tempStyle.textContent = '.back-export::after { display: none !important; }';
       document.head.appendChild(tempStyle);
 
       wrapper.appendChild(clone);
@@ -2137,15 +2068,6 @@
         scene.appendChild(shareBtn);
       }
 
-      const btn = document.createElement('button');
-      btn.className = 'download-btn';
-      btn.title = 'Download recipe card';
-      btn.innerHTML = downloadIcon;
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        downloadCardBack(scene);
-      });
-      scene.appendChild(btn);
     });
 
     // ── COOK MODE ──
@@ -2199,7 +2121,7 @@
     document.querySelectorAll('.card-scene').forEach(scene => {
       scene.addEventListener('click', e => {
         if (!cookModeActive) return;
-        if (e.target.closest('.download-btn, .share-btn')) return;
+        if (e.target.closest('.share-btn')) return;
         e.stopPropagation();
         const title       = scene.querySelector('.ft-script').textContent.trim();
         const ingredients = [...scene.querySelectorAll('[data-qty]')].map(el => el.textContent.trim());

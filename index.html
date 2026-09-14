@@ -2869,7 +2869,9 @@
     function closeCookOverlay() {
       clearCookTimer();
       cookOverlay.classList.remove('visible');
-      document.body.style.overflow = document.getElementById('pantry-overlay').classList.contains('visible') ? 'hidden' : '';
+      // Return to the recipe the cook started from, not the grid
+      if (currentScene) recipeOverlay.classList.add('visible');
+      document.body.style.overflow = (currentScene || document.getElementById('pantry-overlay').classList.contains('visible')) ? 'hidden' : '';
       if (cookKeyHandler) {
         document.removeEventListener('keydown', cookKeyHandler);
         cookKeyHandler = null;

@@ -52,6 +52,16 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
      `fl oz`, `lb`/`lbs`, `cup`/`cups`, `g`, `kg`, `ml`. Countable items (eggs, cloves)
      have no unit and get singularised automatically at quantity 1.
      Example: `<li data-qty="0.5" data-name="cup all-purpose flour">½ cup all-purpose flour</li>`
+     Countable names are written **plural** (`eggs, beaten`, `onions, diced`, `jalapeños`); the
+     app singularises at 1 or below. Canned goods are given in `oz` with the word `canned` in
+     the name so they never flip to pounds: `data-name="oz canned diced tomatoes"`.
+   - **Scaling rule** (`data-scale`, default linear). Tag anything that shouldn't simply multiply:
+     - `season` — salt, pepper, dried spices, flakes, Worcestershire, Dijon, sauté oil. Scales by ratio^0.7.
+     - `fixed` — pan-dependent: poaching vinegar, reserved pasta water, "a pinch of".
+     - `whole` — countables that can't be split (eggs). Default for integer countables anyway.
+     - `half` — countables that halve sensibly: chicken breasts, onions, shallots, lemons, limes, peppers.
+     Customary amounts are then snapped to kitchen measures (tsp → tbsp at 3 tsp, tbsp → cup at
+     ¼ cup, oz → lb at 32 oz, under ⅛ tsp becomes "Pinch of"), so pick units freely.
    - 5–7 instruction steps, one sentence or two each. The cook overlay reads times like
      "3 min", "1–2 min", "30 seconds", "1 hour" out of step text to offer a timer, so keep
      times in that form.

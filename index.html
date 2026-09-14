@@ -1021,18 +1021,18 @@
       align-items: center;
       gap: 8px;
       font-family: Georgia, serif;
-      font-size: 0.95rem;
-      font-style: italic;
-      color: #5a3e2b;
-      background: #fff;
-      border: 1.5px solid #c4a870;
-      border-radius: 999px;
-      padding: 7px 16px 7px 14px;
+      font-size: 1rem;
+      color: #3b1f0a;
+      background: #e8c97a;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 20px 11px 16px;
       cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
+      box-shadow: 0 3px 10px rgba(120, 90, 30, 0.28);
+      transition: background 0.15s;
     }
-    .cook-timer-btn:hover { border-color: #7a3e1a; color: #3b1f0a; }
-    .cook-timer-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .cook-timer-btn:hover { background: #dbb95f; }
+    .cook-timer-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
     .cook-timer-display {
       font-family: Georgia, serif;
       font-size: 2.8rem;
@@ -3152,7 +3152,7 @@
         </div>
         <div class="cook-step-text">${steps[index]}</div>
         ${cookTips.filter(t => t.step === index + 1).map(t => `<div class="cook-tip"><span class="cook-tip-label">Tip</span>${t.text}</div>`).join('')}
-        ${timeInfo ? `<div class="cook-timer"><button class="cook-timer-btn" id="cook-timer-start"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M10 2h4"/></svg>Start ${timeInfo.label} timer</button></div>` : ''}
+        ${timeInfo ? `<div class="cook-timer"><button class="cook-timer-btn" id="cook-timer-start"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M7 4.5v15a1 1 0 0 0 1.5.87l12-7.5a1 1 0 0 0 0-1.74l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>Start ${timeInfo.label} timer</button></div>` : ''}
         <div class="cook-step-footer">
           ${index > 0 ? `<button class="cook-back-btn" id="cook-back-btn" type="button" aria-label="Previous step" title="Previous step">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>

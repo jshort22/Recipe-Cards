@@ -750,11 +750,12 @@
 
     .cook-checklist {
       list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* two columns when there's room, one on phones */
+      gap: 8px 12px;
       margin-bottom: 32px;
     }
+    .cook-checklist li label { height: 100%; }
     .cook-checklist li label {
       display: flex;
       align-items: center;

@@ -119,6 +119,9 @@
       width: 100%;
     }
 
+    .settings { position: relative; }
+    .settings-toggle { display: none; }
+
     /* Search — its own box under the title */
     .search-box {
       display: flex;
@@ -283,6 +286,7 @@
     .front[data-category="breakfast"]  { --stock: #f5e0a8; }
     .front[data-category="dessert"]    { --stock: #e6c3c8; }
     .front[data-category="vegetarian"] { --stock: #d5dcb6; }
+    .front[data-category="baking"]     { --stock: #e6d3b8; }
 
     /* Vignette + inner rule, like a vintage index card */
     .front::before {
@@ -913,11 +917,36 @@
       .page-header { gap: 14px; margin-bottom: 24px; }
 
       /* Title on the left, settings tucked to the right; search full width beneath */
-      .header-top { align-items: center; flex-wrap: wrap; row-gap: 10px; }
+      .header-top { align-items: center; flex-wrap: nowrap; }
       h1 { font-size: 3rem; }
-      .controls-row { margin-top: 0; margin-left: auto; }
-      .controls-row > div { padding: 7px 12px; }
-      .controls-row select { font-size: 0.95rem; }
+
+      .settings-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #fff;
+        border: 1.5px solid #c4a870;
+        color: #7a3e1a;
+        box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
+        cursor: pointer;
+        padding: 0;
+      }
+      .settings-toggle[aria-expanded="true"] { background: #7a3e1a; color: #faf6ef; border-color: #5a2e0e; }
+
+      .controls-row {
+        display: none;
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        margin-top: 0;
+        z-index: 40;
+      }
+      .settings-toggle[aria-expanded="true"] + .controls-row { display: flex; }
+      .controls-row > div { padding: 9px 14px; min-width: 9.5em; }
+      .controls-row select { font-size: 1rem; }
 
       .search-box { max-width: none; }
       .search-input { font-size: 1rem; } /* 16px stops iOS Safari zooming on focus */
@@ -937,7 +966,7 @@
 <body>
 
   <!-- Icon sprite for card fronts. Valid data-category values:
-       seafood, poultry, beef, pasta, soup, breakfast, dessert, vegetarian -->
+       seafood, poultry, beef, pasta, soup, breakfast, dessert, vegetarian, baking -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="icon-seafood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M6.5 12c2.8-4.6 6.4-6.5 9.5-6.5 2.6 0 4.6 2.2 6 6.5-1.4 4.3-3.4 6.5-6 6.5-3.1 0-6.7-1.9-9.5-6.5z"/>
@@ -976,6 +1005,10 @@
       <path d="M12 9.5V6.5"/>
       <path d="M12 6.5c-1-.9-1-2 0-3.2 1 1.2 1 2.3 0 3.2z"/>
     </symbol>
+    <symbol id="icon-baking" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 10.5C4 8.2 6 6.5 8.5 6.5h7c2.5 0 4.5 1.7 4.5 4 0 1.3-.7 2.2-1.5 2.6V19a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-5.9C4.7 12.7 4 11.8 4 10.5z"/>
+      <path d="M9.5 9.5c.8 1 .8 2.2 0 3.2M14.5 9.5c.8 1 .8 2.2 0 3.2"/>
+    </symbol>
     <symbol id="icon-vegetarian" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 20C4 10.5 10.5 4 20.5 3.5 20 13.5 13.5 20 4 20z"/>
       <path d="M4 20L15 9"/>
@@ -985,7 +1018,11 @@
   <div class="page-header">
     <div class="header-top">
       <h1>Recipes</h1>
-      <div class="controls-row settings-row" aria-label="Settings">
+      <div class="settings">
+        <button class="settings-toggle" id="settings-toggle" type="button" aria-label="Settings" aria-expanded="false" aria-controls="settings-row">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        </button>
+        <div class="controls-row settings-row" id="settings-row" aria-label="Settings">
         <div>
           <label for="units">Units</label>
           <select id="units">
@@ -1000,6 +1037,7 @@
             <option value="large">Large</option>
             <option value="xl">Extra Large</option>
           </select>
+        </div>
         </div>
       </div>
     </div>
@@ -1838,6 +1876,77 @@
       </div>
     </div>
 
+    <!-- CARD: cornbread -->
+    <div>
+      <div class="card-scene">
+        <div class="card">
+          <div class="card-face card-front">
+            <div class="front" data-category="baking">
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-baking"/></svg>
+              <div class="front-body">
+                <div class="front-category">Baking</div>
+                <div class="front-title">
+                  <span class="ft-script">Pillowy Cornbread</span>
+                </div>
+                <div class="front-meta">
+                  <span class="front-ing"></span><span class="front-steps"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div class="back">
+              <div class="back-title">Pillowy Cornbread</div>
+              <div class="serves">Serves 4</div>
+              <div>
+                <span class="badge">Ingredients</span>
+                <div class="dotted-box">
+                  <div class="ingredients-cols">
+                    <ul>
+                      <li data-qty="0.5" data-name="cup all-purpose flour">½ cup all-purpose flour</li>
+                      <li data-qty="0.5" data-name="cup yellow cornmeal, pulsed finer if medium-grind">½ cup yellow cornmeal, pulsed finer if medium-grind</li>
+                      <li data-qty="0.333" data-name="cup cane sugar">⅓ cup cane sugar</li>
+                      <li data-qty="1.5" data-name="tsp baking powder">1½ tsp baking powder</li>
+                      <li data-qty="0.25" data-name="tsp salt">¼ tsp salt</li>
+                      <li data-qty="1" data-name="large eggs">1 large egg</li>
+                    </ul>
+                    <ul>
+                      <li data-qty="0.5" data-name="cup whole milk">½ cup whole milk</li>
+                      <li data-qty="2.667" data-name="tbsp sour cream">2⅔ tbsp sour cream</li>
+                      <li data-qty="4" data-name="tbsp unsalted butter, melted and slightly cooled">4 tbsp unsalted butter, melted and slightly cooled</li>
+                      <li data-qty="1" data-name="tbsp canola oil">1 tbsp canola oil</li>
+                      <li data-qty="0.5" data-name="tsp vanilla extract">½ tsp vanilla extract</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="badge">Instructions</span>
+                <ol class="instructions-list">
+                  <li>Heat oven to 350°F with a rack in the middle. Grease a baking dish well — a 9×14-inch casserole dish suits 12 servings; use a smaller dish for fewer.</li>
+                  <li>If your cornmeal is medium-grind, pulse it in a blender until finer and sand-like.</li>
+                  <li>In a large bowl, whisk together the flour, cornmeal, sugar, baking powder, and salt.</li>
+                  <li>In a separate bowl, whisk the eggs, milk, sour cream, melted butter, oil, and vanilla until smooth.</li>
+                  <li>Pour the wet into the dry and stir just until combined — don't overmix. If you used medium-grind cornmeal, let the batter sit 10 min.</li>
+                  <li>Pour into the dish, spread evenly, and bake 28–36 min. Start checking at 28. It's done when the center is set and a toothpick comes out with a few moist crumbs.</li>
+                  <li>Rest 10–15 min before cutting.</li>
+                </ol>
+              </div>
+              <div>
+                <span class="badge tips">Tips</span>
+                <div class="tips-box">
+                  <ul class="tips-list">
+                    <li>Don't overbake — that matters more than anything else for keeping it pillowy.</li>
+                    <li>Brush the top with a little melted butter right out of the oven to keep the surface soft and add flavor.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="no-results" id="no-results">No recipes found.</div>
   </div>
 
@@ -2016,6 +2125,16 @@
 
     updateServings(1);
     requestAnimationFrame(() => fitBackContent());
+
+    // Mobile settings gear
+    const settingsToggle = document.getElementById('settings-toggle');
+    const setSettingsOpen = open => settingsToggle.setAttribute('aria-expanded', String(open));
+    settingsToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      setSettingsOpen(settingsToggle.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('click', e => { if (!e.target.closest('.settings')) setSettingsOpen(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setSettingsOpen(false); });
 
     // Clicking anywhere in a controls segment opens its dropdown
     document.querySelectorAll('.controls-row > div').forEach(div => {

@@ -18,9 +18,12 @@ The user pastes a recipe (often from ChatGPT, NYT Cooking, or a recipe site, wit
 tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
 
 1. **Normalise to 4 servings.** All quantities are stored for 4 servings (`BASE = 4` in the
-   script); the Servings control scales from there.
+   script); the Servings control scales from there. For baked goods that means dividing a
+   full-pan recipe down (e.g. a 12-serving 9×14 pan ÷ 3) and noting the pan size for the
+   original yield in the first step. Prefer units that stay readable at 1 serving: tbsp
+   rather than cup for anything under ½ cup at 4 servings, since fmtQty shows `0` below ⅛.
 2. **Pick a category** from: `seafood`, `poultry`, `beef`, `pasta`, `soup`, `breakfast`,
-   `dessert`, `vegetarian`. Each has a stock colour and an icon in the sprite at the top of
+   `dessert`, `vegetarian`, `baking` (breads, cornbread, and other baked sides). Each has a stock colour and an icon in the sprite at the top of
    `<body>`. To add a category, add a `--stock` rule in the front CSS and a `<symbol>` to the
    sprite.
 3. **Copy an existing card block** (they start with `<!-- CARD: name -->` inside

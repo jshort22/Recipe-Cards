@@ -250,26 +250,69 @@
       position: relative;
       width: 100%;
       height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7cqw 7cqw 6.5cqw;
+      background: var(--stock, #f0d898);
+      color: #3b1f0a;
+      text-align: center;
     }
 
-    .front img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    /* Card stock colour per category */
+    .front[data-category="seafood"]    { --stock: #cfe0d8; }
+    .front[data-category="poultry"]    { --stock: #f3e2b8; }
+    .front[data-category="beef"]       { --stock: #e2b9a8; }
+    .front[data-category="pasta"]      { --stock: #f1d29a; }
+    .front[data-category="soup"]       { --stock: #e8c9a0; }
+    .front[data-category="breakfast"]  { --stock: #f5e0a8; }
+    .front[data-category="dessert"]    { --stock: #e6c3c8; }
+    .front[data-category="vegetarian"] { --stock: #d5dcb6; }
+
+    /* Vignette + inner rule, like a vintage index card */
+    .front::before {
+      content: '';
+      position: absolute;
+      inset: 4cqw;
+      border: 1px solid rgba(59,31,10,0.35);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .front::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      box-shadow:
+        inset 0 0 2em rgba(50,20,0,0.18),
+        inset 0 0 0.5em rgba(50,20,0,0.1);
+      pointer-events: none;
+    }
+
+    .front-category {
+      font-family: Georgia, serif;
+      font-size: 2.7cqw;
+      font-weight: bold;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #e8d5a8;
+      background: #3d1f08;
+      padding: 0.35em 1.1em;
+      border-radius: 0.3em;
+      opacity: 0.88;
+    }
+
+    .front-icon {
+      width: 32cqw;
+      height: 32cqw;
+      opacity: 0.85;
+      flex-shrink: 0;
     }
 
     .front-title {
-      position: absolute;
-      top: 6%;
-      left: 0;
-      right: 0;
-      text-align: center;
+      width: 100%;
       line-height: 1;
-      background: rgba(255,255,255,0.45);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      padding: 0.4em 0;
     }
 
     .ft-script {
@@ -277,10 +320,28 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-weight: 700;
-      font-size: 10cqw;
+      font-size: 9cqw;
+      line-height: 1.1;
       color: #3b1f0a;
-      text-shadow: 0 1px 6px rgba(255,255,255,0.4);
+      text-wrap: balance;
+    }
+
+    .front-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0 0.6em;
+      font-family: Georgia, serif;
+      font-size: 2.8cqw;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5a3e2b;
       white-space: nowrap;
+    }
+    .front-meta span + span::before {
+      content: '·';
+      margin-right: 0.6em;
+      color: #9a7a5a;
     }
 
     /* ── BACK CARD ── */
@@ -320,7 +381,7 @@
       margin-bottom: 0.2em;
     }
 
-    .serves {
+    .back .serves {
       position: absolute;
       top: 0.9em;
       right: 0.9em;
@@ -824,6 +885,54 @@
 </head>
 <body>
 
+  <!-- Icon sprite for card fronts. Valid data-category values:
+       seafood, poultry, beef, pasta, soup, breakfast, dessert, vegetarian -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-seafood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6.5 12c2.8-4.6 6.4-6.5 9.5-6.5 2.6 0 4.6 2.2 6 6.5-1.4 4.3-3.4 6.5-6 6.5-3.1 0-6.7-1.9-9.5-6.5z"/>
+      <path d="M6.5 12L2 8v8z"/>
+      <circle cx="18" cy="10.8" r=".9" fill="currentColor" stroke="none"/>
+      <path d="M11 6.8c1.2 1 2.6 1.4 4.2 1.2M11 17.2c1.2-1 2.6-1.4 4.2-1.2"/>
+    </symbol>
+    <symbol id="icon-poultry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9.5 14.5c-2.3-2.3-2.2-5.6.2-8 3.2-3.2 8.6-3.6 11.4-.8s2.4 8.2-.8 11.4c-2.4 2.4-5.7 2.5-8 .2z"/>
+      <path d="M9.5 14.5L6 18"/>
+      <circle cx="4.3" cy="19.7" r="1.7"/>
+      <circle cx="7.3" cy="20.6" r="1.4"/>
+    </symbol>
+    <symbol id="icon-beef" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 9.5C3.5 6.2 6.8 4 11 4c5 0 9.5 2 9.5 5.5 0 2.3-1.7 3-2.6 4.8-.9 1.9-1 5.7-5.4 5.7-4.7 0-9-4-9-10.5z"/>
+      <path d="M8.5 9c1.2 1.2 1.2 3.3 0 4.5M12.5 8c1.5 1.3 1.5 4 0 5.5"/>
+      <circle cx="16.3" cy="9" r="1.3"/>
+    </symbol>
+    <symbol id="icon-pasta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 2.5v5M11.5 2.5v5M14 2.5v5"/>
+      <path d="M9 7.5a2.5 2.5 0 0 0 5 0"/>
+      <path d="M11.5 10v11.5"/>
+      <path d="M5 12.5c2.5-1.6 10.5-1.6 13 0M5 15.5c2.5-1.6 10.5-1.6 13 0M5 18.5c2.5-1.6 10.5-1.6 13 0"/>
+    </symbol>
+    <symbol id="icon-soup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11.5h18c0 4.4-3 7.5-7 7.5h-4c-4 0-7-3.1-7-7.5z"/>
+      <path d="M8 19l-.8 2.5M16 19l.8 2.5"/>
+      <path d="M9 3.5c0 1.5-1.2 1.5-1.2 3M13 3.5c0 1.5-1.2 1.5-1.2 3M17 3.5c0 1.5-1.2 1.5-1.2 3"/>
+    </symbol>
+    <symbol id="icon-breakfast" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 12.5c0-4.6 3.6-8.5 8.2-8.5 3 0 5.2 1.4 6.7 3.4 1.6 2.1 2.5 4.5 1.9 7.2-.8 3.6-4 5.9-8 5.9-4.7 0-8.8-3.4-8.8-8z"/>
+      <circle cx="11" cy="12.5" r="3.2"/>
+    </symbol>
+    <symbol id="icon-dessert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 20.5h18"/>
+      <path d="M4.5 20.5v-6.5L12 9.5l7.5 4.5v6.5"/>
+      <path d="M4.5 17h15"/>
+      <path d="M12 9.5V6.5"/>
+      <path d="M12 6.5c-1-.9-1-2 0-3.2 1 1.2 1 2.3 0 3.2z"/>
+    </symbol>
+    <symbol id="icon-vegetarian" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 20C4 10.5 10.5 4 20.5 3.5 20 13.5 13.5 20 4 20z"/>
+      <path d="M4 20L15 9"/>
+    </symbol>
+  </svg>
+
   <div class="page-header">
     <h1>Recipe Cards</h1>
     <div class="controls">
@@ -877,10 +986,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/chicken_francese_blank.webp" alt="Chicken Francese" loading="lazy">
+            <div class="front" data-category="poultry">
+              <div class="front-category">Poultry</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-poultry"/></svg>
               <div class="front-title">
                 <span class="ft-script">Chicken Francese</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -941,10 +1054,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/shrimp risotto.webp" alt="Shrimp Risotto" loading="lazy">
+            <div class="front" data-category="seafood">
+              <div class="front-category">Seafood</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-seafood"/></svg>
               <div class="front-title">
                 <span class="ft-script">Shrimp Risotto</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1006,10 +1123,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/beef_stroganoff.webp" alt="Beef Stroganoff" loading="lazy">
+            <div class="front" data-category="beef">
+              <div class="front-category">Beef</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-beef"/></svg>
               <div class="front-title">
                 <span class="ft-script">Beef Stroganoff</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1070,10 +1191,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/baked_potato_soup.webp" alt="Baked Potato Soup" loading="lazy">
+            <div class="front" data-category="soup">
+              <div class="front-category">Soup</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-soup"/></svg>
               <div class="front-title">
                 <span class="ft-script">Baked Potato Soup</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1134,10 +1259,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/crab_cakes.webp" alt="Crab Cakes" loading="lazy">
+            <div class="front" data-category="seafood">
+              <div class="front-category">Seafood</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-seafood"/></svg>
               <div class="front-title">
                 <span class="ft-script">Crab Cakes</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1198,10 +1327,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/spaghetti_carbonara.webp" alt="Spaghetti Carbonara" loading="lazy">
+            <div class="front" data-category="pasta">
+              <div class="front-category">Pasta</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-pasta"/></svg>
               <div class="front-title">
                 <span class="ft-script">Spaghetti Carbonara</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1259,10 +1392,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/beef_wellington.webp" alt="Beef Wellington" loading="lazy">
+            <div class="front" data-category="beef">
+              <div class="front-category">Beef</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-beef"/></svg>
               <div class="front-title">
                 <span class="ft-script">Beef Wellington</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1322,10 +1459,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/meatballs.webp" alt="Meatballs" loading="lazy">
+            <div class="front" data-category="beef">
+              <div class="front-category">Beef</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-beef"/></svg>
               <div class="front-title">
                 <span class="ft-script">Meatballs</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1385,10 +1526,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/shrimp_scampi.webp" alt="Shrimp Scampi" loading="lazy">
+            <div class="front" data-category="seafood">
+              <div class="front-category">Seafood</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-seafood"/></svg>
               <div class="front-title">
                 <span class="ft-script">Shrimp Scampi</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1448,10 +1593,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/chicken_tikka_masala.webp" alt="Chicken Tikka Masala" loading="lazy">
+            <div class="front" data-category="poultry">
+              <div class="front-category">Poultry</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-poultry"/></svg>
               <div class="front-title">
                 <span class="ft-script">Chicken Tikka Masala</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1513,10 +1662,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/chocolate_lava_cake.webp" alt="Chocolate Lava Cake" loading="lazy">
+            <div class="front" data-category="dessert">
+              <div class="front-category">Dessert</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-dessert"/></svg>
               <div class="front-title">
                 <span class="ft-script">Chocolate Lava Cake</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1574,10 +1727,14 @@
       <div class="card-scene">
         <div class="card">
           <div class="card-face card-front">
-            <div class="front">
-              <img src="Cards/eggs_benedict.webp" alt="Eggs Benedict" loading="lazy">
+            <div class="front" data-category="breakfast">
+              <div class="front-category">Breakfast</div>
+              <svg class="front-icon" aria-hidden="true"><use href="#icon-breakfast"/></svg>
               <div class="front-title">
                 <span class="ft-script">Eggs Benedict</span>
+              </div>
+              <div class="front-meta">
+                <span class="serves">Serves 4</span><span class="front-ing"></span><span class="front-steps"></span>
               </div>
             </div>
           </div>
@@ -1770,6 +1927,14 @@
     });
 
     // initialise at 1 serving on load
+    // Front-of-card meta: ingredient and step counts
+    document.querySelectorAll('.card-scene').forEach(scene => {
+      const ing   = scene.querySelectorAll('[data-name]').length;
+      const steps = scene.querySelectorAll('.instructions-list li').length;
+      scene.querySelector('.front-ing').textContent   = `${ing} ingredients`;
+      scene.querySelector('.front-steps').textContent = `${steps} steps`;
+    });
+
     updateServings(1);
     requestAnimationFrame(() => fitBackContent());
 
@@ -1818,8 +1983,9 @@
       let visible = 0;
       cards.forEach(card => {
         const title = card.querySelector('.ft-script').textContent.toLowerCase();
+        const category = (card.querySelector('.front').dataset.category || '').toLowerCase();
         const ingredients = [...card.querySelectorAll('[data-name]')].map(el => el.dataset.name.toLowerCase());
-        const match = !q || title.includes(q) || ingredients.some(ing => ingredientMatches(ing, q));
+        const match = !q || title.includes(q) || category.includes(q) || ingredients.some(ing => ingredientMatches(ing, q));
         card.style.display = match ? '' : 'none';
         if (match) visible++;
       });

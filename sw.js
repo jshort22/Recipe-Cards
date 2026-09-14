@@ -1,7 +1,7 @@
 // Recipe Cards service worker.
 // Bump CACHE_VERSION whenever index.html or any precached asset changes so
 // installed apps pick up the new files.
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const CACHE_NAME = `recipe-cards-${CACHE_VERSION}`;
 
 const PRECACHE = [
@@ -14,18 +14,6 @@ const PRECACHE = [
   './vendor/fonts/PlayfairDisplay-Italic700.woff2',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './Cards/chicken_francese_blank.webp',
-  './Cards/shrimp risotto.webp',
-  './Cards/beef_stroganoff.webp',
-  './Cards/baked_potato_soup.webp',
-  './Cards/crab_cakes.webp',
-  './Cards/spaghetti_carbonara.webp',
-  './Cards/shrimp_scampi.webp',
-  './Cards/meatballs.webp',
-  './Cards/beef_wellington.webp',
-  './Cards/chicken_tikka_masala.webp',
-  './Cards/chocolate_lava_cake.webp',
-  './Cards/eggs_benedict.webp',
 ];
 
 self.addEventListener('install', event => {

@@ -1,13 +1,14 @@
 // Recipes service worker.
 // Bump CACHE_VERSION whenever index.html or any precached asset changes so
 // installed apps pick up the new files.
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 const CACHE_NAME = `recipe-cards-${CACHE_VERSION}`;
 
 const PRECACHE = [
   './',
   './index.html',
   './manifest.json',
+  './recipes.json',
   './vendor/html2canvas.min.js',
   './vendor/fonts/fonts.css',
   './vendor/fonts/DancingScript-600.woff2',
@@ -42,16 +43,18 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // The page itself: try the network so edits show up promptly, fall back to cache offline.
-  if (request.mode === 'navigate') {
+  // The page and the recipe data: try the network so edits show up promptly, fall back to cache offline.
+  const isRecipes = url.pathname.endsWith('/recipes.json');
+  if (request.mode === 'navigate' || isRecipes) {
+    const key = isRecipes ? './recipes.json' : './index.html';
     event.respondWith(
       fetch(request)
         .then(response => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
+          caches.open(CACHE_NAME).then(cache => cache.put(key, copy));
           return response;
         })
-        .catch(() => caches.match('./index.html'))
+        .catch(() => caches.match(key))
     );
     return;
   }

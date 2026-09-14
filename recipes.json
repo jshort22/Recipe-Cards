@@ -1,0 +1,1098 @@
+[
+  {
+    "id": "chicken-francese",
+    "title": "Chicken Francese",
+    "category": "chicken",
+    "defaultServes": 2,
+    "time": 30,
+    "ingredients": [
+      {
+        "qty": 2,
+        "name": "large chicken breasts, halved lengthwise",
+        "scale": "half"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup all-purpose flour"
+      },
+      {
+        "qty": 3,
+        "name": "eggs, beaten"
+      },
+      {
+        "qty": 3,
+        "name": "tbsp unsalted butter, divided"
+      },
+      {
+        "qty": 3,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup dry white wine"
+      },
+      {
+        "qty": 0.75,
+        "name": "cup chicken stock"
+      },
+      {
+        "qty": 3,
+        "name": "tbsp fresh lemon juice"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp capers, drained"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp flat-leaf parsley, chopped"
+      }
+    ],
+    "steps": [
+      "Season cutlets well. Dredge in flour, shaking off excess, then coat in beaten egg.",
+      "Heat oil and 1 tbsp butter over medium-high until shimmering. Cook cutlets 3 min per side until deep golden. Remove and tent with foil.",
+      "Reduce heat to medium. Add garlic and cook 30 seconds. Pour in wine and reduce by half, scraping up the fond.",
+      "Add stock and lemon juice. Simmer 3 min until slightly thickened.",
+      "Off heat, swirl in remaining cold butter to finish the sauce. Stir in capers.",
+      "Return chicken, spoon sauce over, and garnish with parsley."
+    ],
+    "tips": [
+      {
+        "step": 5,
+        "text": "Cold butter off heat is the key to a silky, emulsified sauce."
+      },
+      {
+        "step": 3,
+        "text": "Don't skip the fond — those browned bits are where the flavor lives."
+      }
+    ]
+  },
+  {
+    "id": "shrimp-risotto",
+    "title": "Shrimp Risotto",
+    "category": "seafood",
+    "defaultServes": 2,
+    "time": 45,
+    "ingredients": [
+      {
+        "qty": 1.5,
+        "name": "lb large shrimp, peeled & deveined"
+      },
+      {
+        "qty": 3,
+        "name": "tbsp unsalted butter, divided"
+      },
+      {
+        "qty": 1,
+        "name": "shallots, finely diced",
+        "scale": "half"
+      },
+      {
+        "qty": 4,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 1.5,
+        "name": "cups Arborio rice"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup dry white wine"
+      },
+      {
+        "qty": 5,
+        "name": "cups warm seafood or chicken stock"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup Parmesan, grated"
+      },
+      {
+        "qty": 1,
+        "name": "lemons (zest & juice)",
+        "scale": "half"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp flat-leaf parsley, chopped"
+      }
+    ],
+    "steps": [
+      "Season shrimp. Sear in 1 tbsp butter and oil over high heat, 1–2 min per side until pink. Set aside.",
+      "Reduce heat to medium. Add remaining butter and shallot, cook 3 min until soft. Add garlic, cook 1 min.",
+      "Add rice and toast 2 min, stirring constantly, until edges turn translucent.",
+      "Pour in wine and stir until fully absorbed.",
+      "Add warm stock one ladle at a time, stirring frequently and waiting until each addition is absorbed, about 18–20 min total.",
+      "Stir in Parmesan, lemon zest and juice. Fold shrimp back in, rest 1 min off heat, and serve topped with parsley."
+    ],
+    "tips": [
+      {
+        "step": 5,
+        "text": "Keep stock warm — cold stock slows cooking and affects texture."
+      },
+      {
+        "step": 1,
+        "text": "Sear shrimp separately so they don't overcook in the risotto."
+      }
+    ]
+  },
+  {
+    "id": "beef-stroganoff",
+    "title": "Beef Stroganoff",
+    "category": "beef",
+    "defaultServes": 4,
+    "time": 35,
+    "ingredients": [
+      {
+        "qty": 1.5,
+        "name": "lb beef sirloin, thinly sliced"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp unsalted butter, divided"
+      },
+      {
+        "qty": 1,
+        "name": "onions, thinly sliced",
+        "scale": "half"
+      },
+      {
+        "qty": 8,
+        "name": "oz cremini mushrooms, sliced"
+      },
+      {
+        "qty": 3,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp all-purpose flour"
+      },
+      {
+        "qty": 1,
+        "name": "cup beef stock"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp Worcestershire sauce",
+        "scale": "season"
+      },
+      {
+        "qty": 1,
+        "name": "tsp Dijon mustard",
+        "scale": "season"
+      },
+      {
+        "qty": 0.75,
+        "name": "cup sour cream"
+      }
+    ],
+    "steps": [
+      "Season beef well. Sear in 1 tbsp butter and oil over high heat in batches, 1 min per side. Set aside — don't crowd the pan.",
+      "Reduce to medium. Add remaining butter and onion, cook 5 min until softened.",
+      "Add mushrooms and cook 4–5 min until golden. Add garlic and cook 1 min.",
+      "Sprinkle flour over and stir 1 min. Add stock and Worcestershire, scraping up the fond. Simmer 3–4 min until thickened.",
+      "Stir in Dijon and sour cream. Warm through gently — do not boil.",
+      "Return beef and any juices. Stir gently, season to taste, and serve over egg noodles with fresh parsley."
+    ],
+    "tips": [
+      {
+        "step": 1,
+        "text": "Sear in batches over high heat so the beef browns rather than steams."
+      },
+      {
+        "step": 5,
+        "text": "Never boil after adding sour cream or it will curdle."
+      }
+    ]
+  },
+  {
+    "id": "baked-potato-soup",
+    "title": "Baked Potato Soup",
+    "category": "soup",
+    "defaultServes": 4,
+    "time": 45,
+    "ingredients": [
+      {
+        "qty": 4,
+        "name": "large russet potatoes, peeled & cubed"
+      },
+      {
+        "qty": 4,
+        "name": "strips bacon, chopped"
+      },
+      {
+        "qty": 1,
+        "name": "onions, finely diced",
+        "scale": "half"
+      },
+      {
+        "qty": 3,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 3,
+        "name": "tbsp unsalted butter"
+      },
+      {
+        "qty": 3,
+        "name": "tbsp all-purpose flour"
+      },
+      {
+        "qty": 3,
+        "name": "cups chicken stock"
+      },
+      {
+        "qty": 2,
+        "name": "cups whole milk"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup sour cream"
+      },
+      {
+        "qty": 1,
+        "name": "cup cheddar cheese, shredded"
+      },
+      {
+        "qty": 3,
+        "name": "green onions, sliced"
+      }
+    ],
+    "steps": [
+      "Cook bacon in a large pot over medium heat until crispy. Remove and set aside, leaving the fat in the pot.",
+      "Add butter and onion. Cook 4–5 min until softened. Add garlic and cook 1 min.",
+      "Sprinkle flour over and stir 1 min. Pour in stock gradually, whisking until smooth.",
+      "Add potatoes and bring to a boil. Reduce heat and simmer 15–18 min until tender.",
+      "Lightly mash some potatoes in the pot to thicken. Stir in milk and sour cream. Warm through — do not boil.",
+      "Season to taste and serve topped with cheddar, bacon, and green onions."
+    ],
+    "tips": [
+      {
+        "step": 4,
+        "text": "Russet potatoes break down better than waxy varieties — ideal for a creamy texture."
+      },
+      {
+        "step": 5,
+        "text": "Don't boil after adding dairy or the soup may curdle."
+      }
+    ]
+  },
+  {
+    "id": "crab-cakes",
+    "title": "Crab Cakes",
+    "category": "seafood",
+    "defaultServes": 2,
+    "time": 60,
+    "ingredients": [
+      {
+        "qty": 1,
+        "name": "lb lump crab meat, picked over"
+      },
+      {
+        "qty": 0.25,
+        "name": "cup mayonnaise"
+      },
+      {
+        "qty": 1,
+        "name": "large eggs, beaten"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp Dijon mustard"
+      },
+      {
+        "qty": 1,
+        "name": "tsp Old Bay seasoning",
+        "scale": "season"
+      },
+      {
+        "qty": 1,
+        "name": "tsp Worcestershire sauce",
+        "scale": "season"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp fresh lemon juice"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp flat-leaf parsley, chopped"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup panko breadcrumbs"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp unsalted butter"
+      }
+    ],
+    "steps": [
+      "Gently combine mayo, egg, mustard, Old Bay, Worcestershire, lemon juice, and parsley in a bowl.",
+      "Fold in crab meat and panko, being careful not to break up the lumps. Season to taste.",
+      "Shape into 8 patties about ¾ inch thick. Refrigerate at least 30 min to firm up.",
+      "Heat butter and oil in a large skillet over medium-high until the foam subsides.",
+      "Cook crab cakes 3–4 min per side until deeply golden and heated through. Work in batches if needed.",
+      "Serve with lemon wedges and remoulade or tartar sauce."
+    ],
+    "tips": [
+      {
+        "step": 3,
+        "text": "Chilling is non-negotiable — it's what keeps them from falling apart in the pan."
+      },
+      {
+        "step": 2,
+        "text": "Less filler means better crab cakes; add just enough panko to bind."
+      }
+    ]
+  },
+  {
+    "id": "spaghetti-carbonara",
+    "title": "Spaghetti Carbonara",
+    "category": "pasta",
+    "defaultServes": 2,
+    "time": 25,
+    "ingredients": [
+      {
+        "qty": 12,
+        "name": "oz spaghetti"
+      },
+      {
+        "qty": 200,
+        "name": "g pancetta or guanciale, diced"
+      },
+      {
+        "qty": 3,
+        "name": "garlic cloves, lightly crushed"
+      },
+      {
+        "qty": 4,
+        "name": "large egg yolks"
+      },
+      {
+        "qty": 1,
+        "name": "whole eggs"
+      },
+      {
+        "qty": 80,
+        "name": "g Pecorino Romano, finely grated"
+      },
+      {
+        "qty": 40,
+        "name": "g Parmesan, finely grated"
+      },
+      {
+        "qty": 1,
+        "name": "cup pasta water, reserved",
+        "scale": "fixed"
+      }
+    ],
+    "steps": [
+      "Boil spaghetti in heavily salted water until al dente. Reserve 1 cup pasta water before draining.",
+      "Cook pancetta in a large skillet over medium heat until crispy. Add garlic for 1 min, then remove garlic.",
+      "Whisk egg yolks, whole egg, Pecorino, and Parmesan together. Season very generously with black pepper.",
+      "Remove skillet from heat and let cool 1 min. Add drained pasta and toss to coat in the fat.",
+      "Pour egg mixture over pasta, tossing quickly. Add pasta water a splash at a time until the sauce is silky and coats every strand.",
+      "Serve immediately with extra cheese and a crack of black pepper."
+    ],
+    "tips": [
+      {
+        "step": 5,
+        "text": "Never add cream — the creaminess comes entirely from eggs, cheese, and starchy pasta water."
+      },
+      {
+        "step": 4,
+        "text": "Off the heat is critical when adding the egg mixture or it will scramble."
+      }
+    ]
+  },
+  {
+    "id": "beef-wellington",
+    "title": "Beef Wellington",
+    "category": "beef",
+    "defaultServes": 4,
+    "time": 105,
+    "ingredients": [
+      {
+        "qty": 2,
+        "name": "lb center-cut beef tenderloin"
+      },
+      {
+        "qty": 1,
+        "name": "lb cremini mushrooms, finely chopped"
+      },
+      {
+        "qty": 4,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 2,
+        "name": "shallots, minced",
+        "scale": "half"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp Dijon mustard"
+      },
+      {
+        "qty": 6,
+        "name": "thin slices prosciutto"
+      },
+      {
+        "qty": 1,
+        "name": "sheets puff pastry, thawed"
+      },
+      {
+        "qty": 2,
+        "name": "egg yolks, beaten (egg wash)"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp fresh thyme leaves"
+      }
+    ],
+    "steps": [
+      "Season tenderloin generously. Sear in hot oil 2 min per side until browned all over. Brush with Dijon and let cool completely.",
+      "Cook mushrooms, shallots, garlic, and thyme in the same pan over medium heat, stirring, until all moisture evaporates, about 15 min. Cool completely.",
+      "Lay prosciutto in overlapping slices on plastic wrap. Spread mushroom mixture evenly over prosciutto. Place tenderloin at edge and roll tightly into a log. Refrigerate 30 min.",
+      "Wrap in puff pastry, sealing seams with egg wash. Brush all over with egg wash. Score lightly. Chill 15 min.",
+      "Bake at 425°F (220°C) for 25–30 min until pastry is deep golden and internal temp reads 125°F (52°C) for medium-rare.",
+      "Rest 10 min before slicing."
+    ],
+    "tips": [
+      {
+        "step": 2,
+        "text": "The duxelles (mushroom mixture) must be completely dry or the pastry will be soggy."
+      },
+      {
+        "step": 4,
+        "text": "Chilling at each stage keeps the layers firm and the shape tight."
+      }
+    ]
+  },
+  {
+    "id": "meatballs",
+    "title": "Meatballs",
+    "category": "beef",
+    "defaultServes": 4,
+    "time": 70,
+    "ingredients": [
+      {
+        "qty": 1,
+        "name": "lb ground beef (80/20)"
+      },
+      {
+        "qty": 0.5,
+        "name": "lb ground pork"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup breadcrumbs, soaked in ¼ cup milk"
+      },
+      {
+        "qty": 2,
+        "name": "eggs"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup Parmesan, grated"
+      },
+      {
+        "qty": 4,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 0.25,
+        "name": "cup flat-leaf parsley, chopped"
+      },
+      {
+        "qty": 1,
+        "name": "tsp dried oregano",
+        "scale": "season"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp red pepper flakes",
+        "scale": "season"
+      },
+      {
+        "qty": 28,
+        "name": "oz canned crushed San Marzano tomatoes"
+      }
+    ],
+    "steps": [
+      "Combine beef, pork, soaked breadcrumbs, eggs, Parmesan, garlic, parsley, oregano, and pepper flakes. Mix gently until just combined — do not overwork.",
+      "Roll into 1½-inch balls. Refrigerate 20 min to firm up.",
+      "Brown meatballs in olive oil over medium-high heat, turning to sear all sides, about 6 min. Remove and set aside.",
+      "In the same pan, sauté a little garlic in olive oil, then add crushed tomatoes. Season and simmer 10 min.",
+      "Nestle meatballs into sauce. Cover and simmer on low for 20 min.",
+      "Serve over pasta or with crusty bread, topped with extra Parmesan."
+    ],
+    "tips": [
+      {
+        "step": 1,
+        "text": "Soaking breadcrumbs in milk (panade) keeps the meatballs tender and moist."
+      },
+      {
+        "step": 1,
+        "text": "Mix with your hands just until combined — overworking makes them tough."
+      }
+    ]
+  },
+  {
+    "id": "shrimp-scampi",
+    "title": "Shrimp Scampi",
+    "category": "seafood",
+    "defaultServes": 2,
+    "time": 25,
+    "ingredients": [
+      {
+        "qty": 1.5,
+        "name": "lb large shrimp, peeled & deveined"
+      },
+      {
+        "qty": 16,
+        "name": "oz linguine"
+      },
+      {
+        "qty": 4,
+        "name": "tbsp unsalted butter"
+      },
+      {
+        "qty": 3,
+        "name": "tbsp olive oil",
+        "scale": "season"
+      },
+      {
+        "qty": 6,
+        "name": "garlic cloves, thinly sliced"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp red pepper flakes",
+        "scale": "season"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup dry white wine"
+      },
+      {
+        "qty": 1,
+        "name": "lemons, juice & zest",
+        "scale": "half"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup pasta water, reserved",
+        "scale": "fixed"
+      },
+      {
+        "qty": 0.25,
+        "name": "cup flat-leaf parsley, chopped"
+      }
+    ],
+    "steps": [
+      "Cook linguine in salted boiling water until al dente. Reserve ½ cup pasta water before draining.",
+      "Pat shrimp dry and season. Sear in 1 tbsp butter and olive oil over high heat, 1 min per side. Remove and set aside.",
+      "Reduce heat to medium. Add remaining butter, garlic, and pepper flakes. Cook 1–2 min until garlic is fragrant but not browned.",
+      "Pour in white wine and lemon juice. Simmer 2 min, scraping up any bits.",
+      "Add pasta and a splash of pasta water. Toss to coat, adding more water as needed for a glossy sauce.",
+      "Return shrimp, toss together, and finish with lemon zest and parsley."
+    ],
+    "tips": [
+      {
+        "step": 2,
+        "text": "Don't overcook the shrimp — pull them off heat while still slightly underdone as they'll finish in the sauce."
+      },
+      {
+        "step": 5,
+        "text": "Pasta water is the secret to a silky, emulsified sauce that clings to every noodle."
+      }
+    ]
+  },
+  {
+    "id": "chicken-tikka-masala",
+    "title": "Chicken Tikka Masala",
+    "category": "chicken",
+    "defaultServes": 4,
+    "time": 75,
+    "ingredients": [
+      {
+        "qty": 1.5,
+        "name": "lb boneless chicken thighs, cubed"
+      },
+      {
+        "qty": 1,
+        "name": "cup plain yogurt"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp fresh lemon juice"
+      },
+      {
+        "qty": 2,
+        "name": "tsp garam masala",
+        "scale": "season"
+      },
+      {
+        "qty": 1,
+        "name": "onions, finely diced",
+        "scale": "half"
+      },
+      {
+        "qty": 4,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp fresh ginger, grated"
+      },
+      {
+        "qty": 1,
+        "name": "tsp paprika",
+        "scale": "season"
+      },
+      {
+        "qty": 14,
+        "name": "oz canned crushed tomatoes"
+      },
+      {
+        "qty": 1,
+        "name": "cup heavy cream"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp fresh cilantro, chopped"
+      }
+    ],
+    "steps": [
+      "Combine chicken with yogurt, lemon juice, 1 tsp garam masala, and salt. Marinate at least 30 min.",
+      "Cook chicken over high heat in a pan or under the broiler until charred in spots, 8–10 min. Set aside.",
+      "Heat oil over medium. Cook onion 6–8 min until golden. Add garlic and ginger; cook 2 min.",
+      "Stir in remaining garam masala and paprika. Cook 1 min until fragrant.",
+      "Add tomatoes and simmer 10 min. Stir in cream and simmer 5 min until thickened.",
+      "Add chicken and simmer 5 min to heat through. Garnish with cilantro and serve with rice or naan."
+    ],
+    "tips": [
+      {
+        "step": 1,
+        "text": "Marinating overnight makes a big difference — yogurt tenderizes the chicken and deepens the flavor."
+      },
+      {
+        "step": 2,
+        "text": "A little char on the chicken is authentic and adds depth to the sauce."
+      }
+    ]
+  },
+  {
+    "id": "chocolate-lava-cake",
+    "title": "Chocolate Lava Cake",
+    "category": "dessert",
+    "defaultServes": 4,
+    "time": 30,
+    "ingredients": [
+      {
+        "qty": 4,
+        "name": "oz dark chocolate (70%), chopped"
+      },
+      {
+        "qty": 4,
+        "name": "tbsp unsalted butter, plus more for ramekins"
+      },
+      {
+        "qty": 2,
+        "name": "large eggs"
+      },
+      {
+        "qty": 2,
+        "name": "egg yolks"
+      },
+      {
+        "qty": 0.25,
+        "name": "cup granulated sugar"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp all-purpose flour"
+      },
+      {
+        "qty": 1,
+        "name": "pinch of salt",
+        "scale": "fixed"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp cocoa powder, for dusting"
+      }
+    ],
+    "steps": [
+      "Preheat oven to 425°F. Butter 4 ramekins and dust with cocoa powder, tapping out the excess.",
+      "Melt chocolate and butter together over a double boiler or in 30-second microwave bursts, stirring until smooth. Cool slightly.",
+      "Whisk eggs, yolks, and sugar until pale and slightly thickened, about 2 min.",
+      "Fold chocolate mixture into eggs. Stir in flour and salt until just combined.",
+      "Divide batter among ramekins. Bake 12–13 min until edges are set but the center still jiggles.",
+      "Rest 1 min. Run a knife around the edge, invert onto plates, and serve immediately."
+    ],
+    "tips": [
+      {
+        "step": 5,
+        "text": "The center should jiggle like Jell-O when you pull it — it firms as it rests."
+      },
+      {
+        "step": 5,
+        "text": "Fill ramekins up to 24 hrs ahead and refrigerate; add 1–2 min to bake time from cold."
+      }
+    ]
+  },
+  {
+    "id": "eggs-benedict",
+    "title": "Eggs Benedict",
+    "category": "breakfast",
+    "defaultServes": 2,
+    "time": 30,
+    "ingredients": [
+      {
+        "qty": 4,
+        "name": "English muffins, split & toasted"
+      },
+      {
+        "qty": 8,
+        "name": "slices Canadian bacon"
+      },
+      {
+        "qty": 8,
+        "name": "large eggs"
+      },
+      {
+        "qty": 2,
+        "name": "tbsp white vinegar",
+        "scale": "fixed"
+      },
+      {
+        "qty": 3,
+        "name": "egg yolks"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp fresh lemon juice"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup unsalted butter, melted"
+      },
+      {
+        "qty": 1,
+        "name": "pinch cayenne pepper",
+        "scale": "fixed"
+      }
+    ],
+    "steps": [
+      "Hollandaise: whisk egg yolks and lemon juice in a heatproof bowl over barely simmering water until thickened, 3–4 min. Slowly drizzle in butter, whisking constantly. Season with cayenne and salt. Keep warm over the hot water off heat.",
+      "Warm Canadian bacon in a pan over medium, 1 min per side.",
+      "Poach eggs: bring a wide pan of water to a gentle simmer and add vinegar. Crack eggs in and poach 3–4 min until whites are set but yolks are runny. Remove with a slotted spoon.",
+      "Assemble: toasted muffin half, Canadian bacon, poached egg, generous spoon of hollandaise."
+    ],
+    "tips": [
+      {
+        "step": 3,
+        "text": "Fresh eggs poach best — older eggs spread in the water and lose their shape."
+      },
+      {
+        "step": 1,
+        "text": "Make hollandaise last and keep it warm while you poach — it doesn't reheat well."
+      }
+    ]
+  },
+  {
+    "id": "pillowy-cornbread",
+    "title": "Pillowy Cornbread",
+    "category": "baking",
+    "defaultServes": 12,
+    "time": 55,
+    "ingredients": [
+      {
+        "qty": 0.5,
+        "name": "cup all-purpose flour"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup yellow cornmeal, pulsed finer if medium-grind"
+      },
+      {
+        "qty": 0.333,
+        "name": "cup cane sugar"
+      },
+      {
+        "qty": 1.5,
+        "name": "tsp baking powder"
+      },
+      {
+        "qty": 0.25,
+        "name": "tsp salt"
+      },
+      {
+        "qty": 1,
+        "name": "large eggs"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup whole milk"
+      },
+      {
+        "qty": 2.667,
+        "name": "tbsp sour cream"
+      },
+      {
+        "qty": 4,
+        "name": "tbsp unsalted butter, melted and slightly cooled"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp canola oil"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp vanilla extract"
+      }
+    ],
+    "steps": [
+      "Heat oven to 350°F with a rack in the middle. Grease a baking dish well — a 9×14-inch casserole dish suits 12 servings; use a smaller dish for fewer.",
+      "If your cornmeal is medium-grind, pulse it in a blender until finer and sand-like.",
+      "In a large bowl, whisk together the flour, cornmeal, sugar, baking powder, and salt.",
+      "In a separate bowl, whisk the eggs, milk, sour cream, melted butter, oil, and vanilla until smooth.",
+      "Pour the wet into the dry and stir just until combined — don't overmix. If you used medium-grind cornmeal, let the batter sit 10 min.",
+      "Pour into the dish, spread evenly, and bake 28–36 min. Start checking at 28. It's done when the center is set and a toothpick comes out with a few moist crumbs.",
+      "Rest 10–15 min before cutting."
+    ],
+    "tips": [
+      {
+        "step": 6,
+        "text": "Don't overbake — that matters more than anything else for keeping it pillowy."
+      },
+      {
+        "step": 7,
+        "text": "Brush the top with a little melted butter right out of the oven to keep the surface soft and add flavor."
+      }
+    ]
+  },
+  {
+    "id": "chicken-tortilla-soup",
+    "title": "Chicken Tortilla Soup",
+    "category": "soup",
+    "defaultServes": 4,
+    "time": 50,
+    "ingredients": [
+      {
+        "qty": 1,
+        "name": "small onions, diced",
+        "scale": "half"
+      },
+      {
+        "qty": 3,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 1,
+        "name": "jalapeños, diced (optional)",
+        "scale": "half"
+      },
+      {
+        "qty": 1,
+        "name": "tsp cumin",
+        "scale": "season"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp smoked paprika",
+        "scale": "season"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp dried oregano",
+        "scale": "season"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp chili powder",
+        "scale": "season"
+      },
+      {
+        "qty": 15,
+        "name": "oz canned diced tomatoes"
+      },
+      {
+        "qty": 15,
+        "name": "oz red enchilada sauce"
+      },
+      {
+        "qty": 3,
+        "name": "cups chicken broth"
+      },
+      {
+        "qty": 1,
+        "name": "lb raw chicken breast"
+      },
+      {
+        "qty": 15,
+        "name": "oz canned black beans, drained and rinsed"
+      },
+      {
+        "qty": 1,
+        "name": "cup corn"
+      },
+      {
+        "qty": 0.5,
+        "name": "cup sour cream"
+      },
+      {
+        "qty": 1,
+        "name": "limes, juiced",
+        "scale": "half"
+      }
+    ],
+    "steps": [
+      "Heat the olive oil in a large pot over medium. Add the onion and jalapeño and cook about 5 min, until softened.",
+      "Add the garlic, cumin, smoked paprika, oregano, and chili powder. Cook 30 seconds, just until fragrant.",
+      "Stir in the tomatoes, enchilada sauce, and broth. Add the raw chicken breasts, mostly submerged. Bring to a gentle simmer, lower the heat, partially cover, and cook 15–20 min, until the thickest part reaches 165°F.",
+      "Remove the chicken and rest 5 min. Add the black beans and corn and simmer uncovered while you shred the chicken with two forks. Return it to the pot.",
+      "Simmer uncovered another 5–10 min, depending on how thick you want it.",
+      "Turn the heat to low. Stir a few spoonfuls of hot soup into the sour cream until smooth, then stir that back into the pot. Stir in the lime juice.",
+      "Taste and add salt if needed. Keep warm over low heat without boiling. Serve with shredded cheese, avocado, sour cream, cilantro, lime wedges, and crushed tortilla chips."
+    ],
+    "tips": [
+      {
+        "step": 3,
+        "text": "Don't boil the chicken hard — a gentle simmer keeps chicken breast much more tender."
+      },
+      {
+        "step": 5,
+        "text": "The uncovered simmer at the end is what makes this thick instead of watery."
+      }
+    ]
+  },
+  {
+    "id": "bell-pepper-tomato-sauce",
+    "title": "Bell Pepper Tomato Sauce",
+    "category": "vegetarian",
+    "defaultServes": 4,
+    "time": 55,
+    "ingredients": [
+      {
+        "qty": 28,
+        "name": "oz canned tomatoes, whole peeled or crushed"
+      },
+      {
+        "qty": 1,
+        "name": "bell peppers, diced small",
+        "scale": "half"
+      },
+      {
+        "qty": 0.5,
+        "name": "medium onions, diced",
+        "scale": "half"
+      },
+      {
+        "qty": 3,
+        "name": "garlic cloves, minced"
+      },
+      {
+        "qty": 1,
+        "name": "tsp dried oregano",
+        "scale": "season"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp dried basil",
+        "scale": "season"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp kosher salt, plus more to taste",
+        "scale": "season"
+      },
+      {
+        "qty": 0.25,
+        "name": "tsp black pepper",
+        "scale": "season"
+      },
+      {
+        "qty": 0.5,
+        "name": "tsp sugar (optional)",
+        "scale": "season"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp butter, for finishing (optional)"
+      }
+    ],
+    "steps": [
+      "Heat the olive oil in a saucepan over medium. Add the onion, bell pepper, and a small pinch of salt. Cook 7–10 min, stirring occasionally, until very soft.",
+      "Add the garlic, oregano, basil, and red pepper flakes. Cook 30–60 seconds, just until fragrant.",
+      "Pour in the tomatoes. If using whole peeled, crush them with your hands first or break them up in the pot with a wooden spoon.",
+      "Add the salt and black pepper. Bring to a gentle simmer.",
+      "Reduce to medium-low and simmer 25–35 min, partially covered with a good gap for steam. Stir every 5–10 min.",
+      "Blend to your preferred texture with an immersion blender — partially, so a little texture remains but the pepper and onion melt into the tomatoes.",
+      "Taste and add salt if needed. If the tomatoes taste acidic, add up to ½ tsp sugar. Stir in the butter right at the end for a richer, silkier sauce."
+    ],
+    "tips": [
+      {
+        "step": 1,
+        "text": "Let the pepper and onion get really soft — that's the base of the flavor."
+      },
+      {
+        "step": 7,
+        "text": "Taste before adding sugar. Good tomatoes often don't need it."
+      }
+    ]
+  },
+  {
+    "id": "cacio-e-pepe",
+    "title": "Cacio e Pepe",
+    "category": "pasta",
+    "defaultServes": 2,
+    "time": 20,
+    "ingredients": [
+      {
+        "qty": 1,
+        "name": "lb spaghetti or tonnarelli"
+      },
+      {
+        "qty": 2,
+        "name": "tsp whole black peppercorns, coarsely cracked",
+        "scale": "season"
+      },
+      {
+        "qty": 5,
+        "name": "oz Pecorino Romano, finely grated"
+      },
+      {
+        "qty": 1,
+        "name": "tbsp unsalted butter (optional)"
+      },
+      {
+        "qty": 1.5,
+        "name": "cups pasta water, reserved",
+        "scale": "fixed"
+      }
+    ],
+    "steps": [
+      "Bring a large pot of water to a boil and salt it lightly, since the Pecorino is salty. Cook the pasta until just shy of al dente, about 2 min short of the package time.",
+      "While the pasta cooks, toast the cracked pepper in a large dry skillet over medium heat, swirling, until fragrant, about 1 min. Turn off the heat.",
+      "Put the grated Pecorino in a large bowl. Ladle in about ½ cup of the hot pasta water a little at a time, stirring with a fork into a smooth, thick paste.",
+      "Drain the pasta, reserving the rest of the cooking water. Add the pasta to the skillet with the pepper along with ½ cup pasta water and toss over low heat for 1 min so the starchy water coats every strand.",
+      "Remove the skillet from the heat. Add the cheese paste and the butter, if using, and toss vigorously with tongs, splashing in more pasta water a tablespoon at a time, until the sauce turns glossy and clings to the pasta.",
+      "Serve at once in warm bowls with more Pecorino and cracked pepper on top."
+    ],
+    "tips": [
+      {
+        "step": 5,
+        "text": "Everything depends on temperature. Boiling water melts Pecorino into strings, so make the paste with water that has cooled a moment and finish the pasta off the heat."
+      },
+      {
+        "step": 3,
+        "text": "Grate the cheese yourself on a Microplane. Pre-grated Pecorino is coated with anti-caking starch and won't emulsify."
+      }
+    ]
+  }
+]

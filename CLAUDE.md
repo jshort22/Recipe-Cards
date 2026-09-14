@@ -1,6 +1,6 @@
 # Recipes
 
-Single-file PWA (`index.html`) of recipe cards. Deployed by Vercel on push to `main`
+PWA of recipe cards: `index.html` (app and styles) plus `recipes.json` (the recipes). Deployed by Vercel on push to `main`
 at https://recipe-cards-xi.vercel.app/. No build step. `sw.js` handles offline caching.
 
 Interaction: the grid shows card fronts. Tapping a card opens a full-screen recipe view
@@ -14,69 +14,79 @@ cook overlay.
 
 ## Adding a recipe
 
-The user pastes a recipe (often from ChatGPT, NYT Cooking, or a recipe site, with their own
-tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
+Recipes live in `recipes.json`; `index.html` fetches it on load and builds the card DOM from
+it (`renderCards`), so the HTML never needs editing for a new recipe. The user pastes a
+recipe (often from ChatGPT, NYT Cooking, or a recipe site, with their own tweaks), or names a
+dish and asks for one written from general knowledge. Show the recipe in chat (ingredients,
+steps, two tips) for approval first, then append an object to `recipes.json`, commit, push.
+Vercel deploys in about a minute.
+
+```json
+{
+  "id": "cacio-e-pepe",
+  "title": "Cacio e Pepe",
+  "category": "pasta",
+  "defaultServes": 2,
+  "time": 20,
+  "source": { "label": "NYT Cooking", "url": "https://cooking.nytimes.com/..." },
+  "ingredients": [
+    { "qty": 1,   "name": "lb spaghetti or tonnarelli" },
+    { "qty": 2,   "name": "tsp whole black peppercorns, coarsely cracked", "scale": "season" },
+    { "qty": 1.5, "name": "cups pasta water, reserved", "scale": "fixed" }
+  ],
+  "steps": ["…", "…"],
+  "tips": [{ "step": 5, "text": "…" }, { "step": 3, "text": "…" }]
+}
+```
 
 1. **Normalise to 4 servings.** All quantities are stored for 4 servings (`BASE = 4` in the
    script); the Servings control scales from there. For baked goods that means dividing a
    full-pan recipe down (e.g. a 12-serving 9×14 pan ÷ 3) and noting the pan size for the
    original yield in the first step. Prefer units that stay readable at 1 serving: tbsp
    rather than cup for anything under ½ cup at 4 servings, since fmtQty shows `0` below ⅛.
-2. **Pick a category** from: `seafood`, `chicken`, `beef`, `pasta`, `soup`, `breakfast`,
+2. **`category`** is one of: `seafood`, `chicken`, `beef`, `pasta`, `soup`, `breakfast`,
    `dessert`, `vegetarian`, `baking` (breads, cornbread, and other baked sides). Chicken
    dishes are `chicken`; if turkey or duck ever appear, add a specific category rather
-   than a generic poultry one. Each has a stock colour and an icon in the sprite at the top of
-   `<body>`. To add a category, add a `--stock` rule in the front CSS and a `<symbol>` to the
-   sprite.
-3. **Set the default servings** on the scene: `<div class="card-scene" data-default-serves="N">`.
-   The recipe view opens at N. Use 2 for a weeknight dinner for the user's household,
-   4 for batch dishes (soups, stews, sauces, curries, meatballs, a whole Wellington), and the
-   full original yield for baking and desserts (e.g. cornbread 12).
-4. **Copy an existing card block** (they start with `<!-- CARD: name -->` inside
-   `.cards-grid`) and paste it before `<div class="no-results" id="no-results">`.
-5. **Fill in the front:** `data-category`, the category label, the icon `href`, and the
-   title in `.ft-script`. Leave `.front-ing` and `.front-steps` empty; JS fills them.
-   The front carries no serves text.
-   **Cite the source.** If the recipe came from somewhere (NYT Cooking, Allrecipes, Serious
-   Eats, a cookbook), add a source tag as the first child of `.front` so it can be tracked
-   down later. Use a link when there is a URL; plain text otherwise. Ask for the source if
-   the user doesn't give one. Recipes the user wrote or built with ChatGPT get no tag.
-   ```html
-   <a class="front-source" href="https://cooking.nytimes.com/..." target="_blank" rel="noopener">NYT Cooking</a>
-   <div class="front-source">Salt Fat Acid Heat</div>
-   ```
-   Tapping a source link opens it instead of flipping the card.
-6. **Fill in the back:**
-   - `.back-title` matches the front title exactly. `.serves` stays `Serves 4`.
+   than a generic poultry one. Each has a stock colour (`--stock` rule in the front CSS), an
+   icon `<symbol id="icon-NAME">` in the sprite at the top of `<body>`, and a label in
+   `CATEGORY_LABELS` in the script. Add all three for a new category.
+3. **`defaultServes`**: the recipe view opens at this count. Use 2 for a weeknight dinner for
+   the user's household, 4 for batch dishes (soups, stews, sauces, curries, meatballs, a whole
+   Wellington), and the full original yield for baking and desserts (e.g. cornbread 12).
+4. **`time`**: rough start-to-finish minutes including chilling or a short marinade, shown on
+   the tile as "35 min" or "1¼ hr". Leave out overnight steps.
+5. **`source`** (optional). If the recipe came from somewhere (NYT Cooking, Allrecipes, Serious
+   Eats, a cookbook), give `label` and, when there is one, `url`; it shows on the tile front
+   and in the recipe header. Ask for the source if the user doesn't give one. Recipes the user
+   wrote, built with ChatGPT, or asked Claude to compose from general knowledge get no source.
+6. **`ingredients`**: one flat list; the card splits it into two columns.
    - **Leave out pantry staples that aren't measured into the dish.** Oil that only greases
      the pan for searing or sautéing is not an ingredient; oil mixed into a batter or a sauce
      (scampi, cornbread) is. "Salt, to taste" is not an ingredient; a measured salt
      (`¼ tsp salt`) or a specialty salt (`½ tsp kosher salt`) is. The steps still say
      "heat the oil" and "season to taste" as normal.
-   - Ingredients go in two `<ul>`s, roughly balanced. Each `<li>` needs
-     `data-qty` (number, for 4 servings) and `data-name` (everything after the number).
-     Units the converter understands, when they lead `data-name`: `tbsp`, `tsp`, `oz`,
-     `fl oz`, `lb`/`lbs`, `cup`/`cups`, `g`, `kg`, `ml`. Countable items (eggs, cloves)
-     have no unit and get singularised automatically at quantity 1.
-     Example: `<li data-qty="0.5" data-name="cup all-purpose flour">½ cup all-purpose flour</li>`
-     Countable names are written **plural** (`eggs, beaten`, `onions, diced`, `jalapeños`); the
-     app singularises at 1 or below. Canned goods are given in `oz` with the word `canned` in
-     the name so they never flip to pounds: `data-name="oz canned diced tomatoes"`.
-   - **Scaling rule** (`data-scale`, default linear). Tag anything that shouldn't simply multiply:
+   - `qty` is a number for 4 servings; `name` is everything after the number. Units the
+     converter understands, when they lead `name`: `tbsp`, `tsp`, `oz`, `fl oz`, `lb`/`lbs`,
+     `cup`/`cups`, `g`, `kg`, `ml`. Countable items (eggs, cloves) have no unit and get
+     singularised automatically at quantity 1, so write countable names **plural**
+     (`eggs, beaten`, `onions, diced`). Canned goods are given in `oz` with the word `canned`
+     in the name so they never flip to pounds: `"oz canned diced tomatoes"`.
+   - **`scale`** (default linear). Tag anything that shouldn't simply multiply:
      - `season` — salt, pepper, dried spices, flakes, Worcestershire, Dijon, sauté oil. Scales by ratio^0.7.
      - `fixed` — pan-dependent: poaching vinegar, reserved pasta water, "a pinch of".
      - `whole` — countables that can't be split (eggs). Default for integer countables anyway.
      - `half` — countables that halve sensibly: chicken breasts, onions, shallots, lemons, limes, peppers.
      Customary amounts are then snapped to kitchen measures (tsp → tbsp at 3 tsp, tbsp → cup at
      ¼ cup, oz → lb at 32 oz, under ⅛ tsp becomes "Pinch of"), so pick units freely.
-   - 5–7 instruction steps, one sentence or two each. The cook overlay reads times like
-     "3 min", "1–2 min", "30 seconds", "1 hour" out of step text to offer a timer, so keep
-     times in that form.
-   - Exactly two tips. Each tip `<li>` carries `data-step="N"` naming the instruction step it
-     belongs to; the cook overlay shows the tip beneath that step.
-7. **Search** indexes title, `data-name`, and category. Nothing else to update.
-7. `sw.js` does not need a version bump for new cards. Bump `CACHE_VERSION` only when a
-   file that is already cached under the same name changes (fonts, vendor JS, icons, sw.js).
+7. **`steps`**: 5–7 strings, one sentence or two each. The cook overlay reads times like
+   "3 min", "1–2 min", "30 seconds", "1 hour" out of step text to offer a timer, so keep
+   times in that form. Plain text only; no HTML.
+8. **`tips`**: exactly two, each with the 1-based `step` it belongs to; the cook overlay shows
+   the tip beneath that step.
+9. **Search** indexes title, ingredient names, and category. Nothing else to update.
+10. `sw.js` fetches `recipes.json` network-first, so new recipes need no cache bump. Bump
+   `CACHE_VERSION` only when a file that is already cached under the same name changes
+   (fonts, vendor JS, icons, sw.js).
 
 ## "What can I make?"
 
@@ -95,8 +105,9 @@ on hand; `GROUPS` sorts the rest into Spices & seasonings / Pantry & condiments 
 Produce / Dairy & cheese, else Other; `LABELS`
 fixes capitalisation of proper nouns. Names containing "optional" are ignored for matching.
 
-**When adding a recipe**, check what its ingredients key to. In the browser console:
-`[...document.querySelectorAll('.card-scene')].at(-1).querySelectorAll('[data-name]').forEach(l => console.log(l.dataset.name, '→', ingredientKey(l.dataset.name)))`.
+**When adding a recipe**, check what its ingredients key to. The app script runs inside
+`main()`, so from the console use the DOM: open the pantry and look for the new names under
+"Other", or temporarily log `ingredientKey(name)` from inside the script.
 A new ingredient that keys to something wrong or too specific needs an `ALIASES` entry. Every
 other new key belongs in a `GROUPS` set (spice, pantry item, protein, produce, dairy) so it
 doesn't fall into Other; add to `STAPLES` only for something nearly every kitchen has.

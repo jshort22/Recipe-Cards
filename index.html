@@ -34,7 +34,7 @@
 
     .page-header {
       width: 100%;
-      max-width: calc(3 * 360px + 2 * 48px);
+      max-width: calc(3 * 320px + 2 * 40px);
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -199,8 +199,9 @@
 
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, 360px);
-      gap: 48px;
+      grid-template-columns: repeat(auto-fit, 320px);
+      gap: 40px;
+      max-width: calc(3 * 320px + 2 * 40px);
       justify-content: center;
       position: relative;
       z-index: 1;
@@ -208,8 +209,8 @@
     }
 
     .card-scene {
-      width: 360px;
-      aspect-ratio: 2 / 3;
+      width: 320px;
+      aspect-ratio: 3 / 4;
       perspective: 1200px;
       cursor: pointer;
       container-type: size;
@@ -355,7 +356,7 @@
       flex-direction: column;
       gap: 0.65em;
       font-family: Georgia, serif;
-      font-size: min(3.2cqw, 2.2cqh);
+      font-size: min(3.2cqw, 2.6cqh);
       overflow: hidden;
     }
 
@@ -497,12 +498,14 @@
       align-items: center;
       justify-content: center;
       opacity: 0;
+      pointer-events: none;
       transition: opacity 0.2s, background 0.15s;
       padding: 0;
     }
 
     .card-scene:hover .share-btn {
       opacity: 1;
+      pointer-events: auto;
     }
 
     .share-btn:hover {
@@ -526,12 +529,14 @@
       align-items: center;
       justify-content: center;
       opacity: 0;
+      pointer-events: none;
       transition: opacity 0.2s, background 0.15s;
       padding: 0;
     }
 
     .card-scene:hover .download-btn {
       opacity: 1;
+      pointer-events: auto;
     }
 
     .download-btn:hover {
@@ -876,8 +881,9 @@
         margin: 0 auto;
       }
 
-      .share-btn,
-      .download-btn { opacity: 1; }
+      /* The buttons act on the back, so only show them once the card is flipped */
+      .card-scene.flipped .share-btn,
+      .card-scene.flipped .download-btn { opacity: 1; pointer-events: auto; }
 
       .card-scene.flipped .card { transform: rotateY(180deg); }
     }
@@ -895,10 +901,8 @@
       <path d="M11 6.8c1.2 1 2.6 1.4 4.2 1.2M11 17.2c1.2-1 2.6-1.4 4.2-1.2"/>
     </symbol>
     <symbol id="icon-poultry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9.5 14.5c-2.3-2.3-2.2-5.6.2-8 3.2-3.2 8.6-3.6 11.4-.8s2.4 8.2-.8 11.4c-2.4 2.4-5.7 2.5-8 .2z"/>
-      <path d="M9.5 14.5L6 18"/>
-      <circle cx="4.3" cy="19.7" r="1.7"/>
-      <circle cx="7.3" cy="20.6" r="1.4"/>
+      <path d="M15.4 15.63a7.875 6 135 1 1 6.23-6.23 4.5 3.43 135 0 0-6.23 6.23"/>
+      <path d="m8.29 12.71-2.6 2.6a2.5 2.5 0 1 0-1.65 4.65A2.5 2.5 0 1 0 8.7 18.3l2.59-2.59"/>
     </symbol>
     <symbol id="icon-beef" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3.5 9.5C3.5 6.2 6.8 4 11 4c5 0 9.5 2 9.5 5.5 0 2.3-1.7 3-2.6 4.8-.9 1.9-1 5.7-5.4 5.7-4.7 0-9-4-9-10.5z"/>

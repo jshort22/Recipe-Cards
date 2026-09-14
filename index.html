@@ -1074,6 +1074,22 @@
       .cook-checklist li label { font-size: 0.9rem; line-height: 1.3; padding: 8px 9px; gap: 9px; align-items: flex-start; }
       .cook-checklist input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; }
 
+      /* Step phase: text takes the free space, timer and Next sit in thumb reach */
+      #cook-content { display: flex; flex-direction: column; min-height: 100%; }
+      .cook-progress-bar { margin-bottom: 20px; }
+      .cook-step-text {
+        flex: 1;
+        font-size: 1.5rem;
+        line-height: 1.55;
+        min-height: 0;
+        margin-bottom: 24px;
+        padding: 0 4px;
+      }
+      .cook-timer { margin: 0 0 18px; }
+      .cook-timer-display { font-size: 3.2rem; }
+      .cook-complete { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 15vh; }
+      .cook-step-footer .cook-action-btn { width: 100%; padding: 16px 28px; font-size: 1.15rem; }
+
       .cards-grid {
         grid-template-columns: 1fr;
         gap: 16px;

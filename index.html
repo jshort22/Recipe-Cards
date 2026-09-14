@@ -956,6 +956,22 @@
       #recipe-overlay { padding: 0; }
       .recipe-sheet .back { border-radius: 0; }
 
+      /* Cooking view fills the phone screen */
+      #cook-overlay { padding: 0; align-items: stretch; }
+      .cook-modal {
+        max-width: none;
+        max-height: none;
+        height: 100dvh;
+        border-radius: 0;
+        padding: calc(24px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+      }
+      .cook-close { top: calc(10px + env(safe-area-inset-top)); right: 12px; }
+      .cook-recipe-title { font-size: 2.2rem; }
+      .cook-prompt { font-size: 0.9rem; margin-bottom: 16px; }
+      .cook-checklist { grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 24px; }
+      .cook-checklist li label { font-size: 0.9rem; line-height: 1.3; padding: 8px 9px; gap: 9px; align-items: flex-start; }
+      .cook-checklist input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; }
+
       .cards-grid {
         grid-template-columns: 1fr;
         gap: 16px;

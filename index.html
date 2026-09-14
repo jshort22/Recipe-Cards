@@ -122,6 +122,23 @@
     .settings { position: relative; }
     .settings-toggle { display: none; }
 
+    .search-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .pantry-btn {
+      font-family: Georgia, serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      color: #3b1f0a;
+      background: #fff;
+      border: 1.5px solid #c4a870;
+      border-radius: 20px;
+      padding: 11px 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .pantry-btn:hover { background: #7a3e1a; color: #faf6ef; border-color: #5a2e0e; }
+
     /* Search — its own box under the title */
     .search-box {
       display: flex;
@@ -508,6 +525,71 @@
       left: 0;
       color: #b5483a;
     }
+
+    /* ── WHAT CAN I MAKE? ── */
+    #pantry-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 12, 3, 0.88);
+      z-index: 1800;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #pantry-overlay.visible { display: flex; }
+    .pantry-modal { max-width: 960px; }
+    .pantry-head-title { font-family: Georgia, serif; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: #e8d5a8; }
+    .pantry-body {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      background: #fbf4e3;
+    }
+    .pantry-list { overflow-y: auto; padding: 18px 22px 24px; font-family: Georgia, serif; color: #1e1005; }
+    .pantry-results {
+      overflow-y: auto;
+      padding: 18px 20px 24px;
+      background: #f5ead0;
+      border-right: 1px solid #e3d2ae;
+      font-family: Georgia, serif;
+    }
+    .pantry-h {
+      font-family: 'Dancing Script', cursive;
+      font-weight: 600;
+      font-size: 1.45rem;
+      color: #7a2a1a;
+      margin: 0 0 8px;
+    }
+    .pantry-h small { font-family: Georgia, serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #9a7a5a; margin-left: 8px; }
+    .pantry-group { margin-bottom: 18px; }
+    .pantry-group summary { cursor: pointer; list-style: none; }
+    .pantry-group summary::-webkit-details-marker { display: none; }
+    .pantry-group summary .pantry-h::after { content: ' ▸'; font-family: Georgia, serif; font-size: 0.8em; color: #9a7a5a; }
+    .pantry-group[open] summary .pantry-h::after { content: ' ▾'; }
+    .pantry-note { font-size: 0.85rem; font-style: italic; color: #5a3e2b; margin: -4px 0 10px; }
+    .pantry-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px 10px; }
+    .pantry-items label {
+      display: flex; align-items: center; gap: 9px;
+      font-size: 0.95rem; padding: 7px 10px; border-radius: 6px;
+      background: rgba(196, 168, 112, 0.14); cursor: pointer;
+    }
+    .pantry-items label:hover { background: rgba(196, 168, 112, 0.28); }
+    .pantry-items input { width: 16px; height: 16px; accent-color: #7a3e1a; flex-shrink: 0; cursor: pointer; }
+    .pantry-items label.on { background: rgba(122, 62, 26, 0.12); }
+    .pantry-empty { font-size: 0.9rem; font-style: italic; color: #5a3e2b; line-height: 1.5; }
+    .pantry-hit {
+      display: block; width: 100%; text-align: left;
+      font-family: Georgia, serif; color: #1e1005;
+      background: #fff; border: 1.5px solid #c4a870; border-radius: 10px;
+      padding: 10px 12px; margin-bottom: 8px; cursor: pointer;
+    }
+    .pantry-hit:hover { border-color: #7a3e1a; }
+    .pantry-hit .t { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 1.05rem; color: #3b1f0a; display: block; }
+    .pantry-hit .c { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #9a7a5a; }
+    .pantry-hit .m { display: block; font-size: 0.85rem; color: #7a2a1a; margin-top: 4px; }
+    .pantry-hit .m b { font-weight: normal; color: #9a7a5a; }
 
     /* ── RECIPE VIEW (tap a card) ── */
     #recipe-overlay {
@@ -966,6 +1048,16 @@
       #recipe-overlay { padding: 0; }
       .recipe-sheet .back { border-radius: 0; }
 
+      .search-row { flex-direction: column; align-items: stretch; }
+      .pantry-btn { text-align: center; }
+      #pantry-overlay { padding: 0; }
+      .pantry-modal { max-height: 100dvh; border-radius: 0; }
+      .pantry-body { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+      .pantry-results { border-right: none; border-bottom: 1px solid #e3d2ae; max-height: 42vh; padding: 14px 16px 16px; }
+      .pantry-list { padding: 14px 16px 24px; }
+      .pantry-items { grid-template-columns: 1fr 1fr; gap: 6px; }
+      .pantry-items label { font-size: 0.9rem; padding: 7px 8px; }
+
       /* Cooking view fills the phone screen */
       #cook-overlay { padding: 0; align-items: stretch; }
       .cook-modal {
@@ -1069,8 +1161,11 @@
         </div>
       </div>
     </div>
-    <div class="search-box">
-      <input class="search-input" id="search" type="search" placeholder="Search recipes…" autocomplete="off">
+    <div class="search-row">
+      <div class="search-box">
+        <input class="search-input" id="search" type="search" placeholder="Search recipes…" autocomplete="off">
+      </div>
+      <button type="button" class="pantry-btn" id="pantry-open">What can I make?</button>
     </div>
   </div>
 
@@ -1173,7 +1268,7 @@
                   <div class="ingredients-cols">
                     <ul>
                       <li data-qty="1.5" data-name="lb large shrimp, peeled &amp; deveined">1½ lb large shrimp, peeled &amp; deveined</li>
-                      <li>Chili flakes</li>
+                      <li data-name="red pepper flakes, to taste">Chili flakes, to taste</li>
                       <li data-qty="3" data-name="tbsp unsalted butter, divided">3 tbsp unsalted butter, divided</li>
                       <li data-qty="1" data-scale="half" data-name="shallots, finely diced">1 shallot, finely diced</li>
                       <li data-qty="4" data-name="garlic cloves, minced">4 garlic cloves, minced</li>
@@ -2119,6 +2214,22 @@
   </div>
 
   <!-- Guide Mode Overlay -->
+  <div id="pantry-overlay" role="dialog" aria-modal="true" aria-label="What can I make?">
+    <div class="recipe-modal pantry-modal">
+      <div class="recipe-head">
+        <div class="recipe-head-title"><span id="recipe-title-pantry" class="pantry-head-title">What can I make?</span></div>
+        <div class="recipe-head-actions">
+          <button type="button" class="serves-btn" id="pantry-reset">Reset</button>
+          <button class="cook-close" id="pantry-close" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="pantry-body">
+        <section class="pantry-results" id="pantry-results" aria-live="polite"></section>
+        <section class="pantry-list" id="pantry-list"></section>
+      </div>
+    </div>
+  </div>
+
   <div id="recipe-overlay" role="dialog" aria-modal="true" aria-label="Recipe">
     <div class="recipe-modal">
       <div class="recipe-head">
@@ -2428,6 +2539,200 @@
     }
 
 
+
+    // ── WHAT CAN I MAKE? ──
+    // Canonical ingredient key from a data-name string. Ships in index.html.
+    const UNIT_RE = /^(tbsp|tsp|fl\s+oz|oz|lbs?|cups?|kg|g|ml|pinch(?:\s+of)?)\b\s*/i;
+    const PREP_RE = /\b(peeled|deveined|minced|diced|chopped|sliced|thinly|finely|lightly|crushed|grated|shredded|melted|softened|beaten|divided|cubed|toasted|split|thawed|drained|rinsed|juiced|halved|lengthwise|picked over|reserved|pulsed|finer|medium-grind|small|large|medium|whole|fresh|dried|raw|boneless|center-cut|thin|warm|cold|hot|plain|to taste|plus more|for (?:finishing|dusting|ramekins|egg wash)|slightly cooled|and|or|if|with|in)\b/gi;
+    const ALIASES = [
+      [/\bunsalted butter\b|\bbutter\b/, 'butter'],
+      [/\b(cane|granulated) sugar\b|\bsugar\b/, 'sugar'],
+      [/\bchicken (stock|broth)\b/, 'chicken stock'],
+      [/\bseafood chicken stock\b/, 'chicken stock'],
+      [/\bbeef stock\b/, 'beef stock'],
+      [/\begg yolks?\b|\beggs?\b/, 'eggs'],
+      [/\ball-purpose flour\b|\bflour\b/, 'flour'],
+      [/\bgarlic\b/, 'garlic'],
+      [/\bgreen onions?\b/, 'green onions'],
+      [/\bonions?\b/, 'onion'],
+      [/\bshallots?\b/, 'shallots'],
+      [/\blemons?\b|\blemon juice\b/, 'lemon'],
+      [/\blimes?\b/, 'lime'],
+      [/\bparsley\b/, 'parsley'],
+      [/\bcilantro\b/, 'cilantro'],
+      [/\bthyme\b/, 'thyme'],
+      [/\bparmesan\b/, 'parmesan'],
+      [/\bpecorino\b/, 'pecorino romano'],
+      [/\bcheddar\b/, 'cheddar'],
+      [/\bsour cream\b/, 'sour cream'],
+      [/\bheavy cream\b/, 'heavy cream'],
+      [/\bpanko\b|\bbreadcrumbs\b/, 'breadcrumbs'],
+      [/\bwhole milk\b|\bmilk\b/, 'milk'],
+      [/\byogurt\b/, 'yogurt'],
+      [/\bchicken breasts?\b/, 'chicken breast'],
+      [/\bchicken thighs?\b/, 'chicken thighs'],
+      [/\bshrimp\b/, 'shrimp'],
+      [/\bcrab\b/, 'crab meat'],
+      [/\bbeef sirloin\b/, 'beef sirloin'],
+      [/\bbeef tenderloin\b/, 'beef tenderloin'],
+      [/\bground beef\b/, 'ground beef'],
+      [/\bground pork\b/, 'ground pork'],
+      [/\bcanadian bacon\b/, 'canadian bacon'],
+      [/\bbacon\b/, 'bacon'],
+      [/\bpancetta\b/, 'pancetta or guanciale'],
+      [/\bprosciutto\b/, 'prosciutto'],
+      [/\bmushrooms?\b/, 'cremini mushrooms'],
+      [/\bpotato(es)?\b/, 'russet potatoes'],
+      [/\bbell peppers?\b/, 'bell pepper'],
+      [/\bjalape/, 'jalapeño'],
+      [/\bcorn\b(?!meal|bread)/, 'corn'],
+      [/\bcornmeal\b/, 'cornmeal'],
+      [/\bblack beans\b/, 'black beans'],
+      [/\btomatoes\b/, 'canned tomatoes'],
+      [/\benchilada sauce\b/, 'enchilada sauce'],
+      [/\bwhite wine\b/, 'white wine'],
+      [/\bvinegar\b/, 'white vinegar'],
+      [/\bolive oil\b/, 'olive oil'],
+      [/\bcanola oil\b/, 'canola oil'],
+      [/\bmayonnaise\b/, 'mayonnaise'],
+      [/\bdijon\b/, 'dijon mustard'],
+      [/\bworcestershire\b/, 'worcestershire sauce'],
+      [/\bold bay\b/, 'old bay seasoning'],
+      [/\bgaram masala\b/, 'garam masala'],
+      [/\b(smoked )?paprika\b/, 'paprika'],
+      [/\bcumin\b/, 'cumin'],
+      [/\boregano\b/, 'oregano'],
+      [/\bbasil\b/, 'basil'],
+      [/\bchili powder\b/, 'chili powder'],
+      [/\bred pepper flakes\b|\bchili flakes\b/, 'red pepper flakes'],
+      [/\bcayenne\b/, 'cayenne'],
+      [/\bblack pepper\b/, 'black pepper'],
+      [/\bkosher salt\b|\bsalt\b/, 'salt'],
+      [/\bbaking powder\b/, 'baking powder'],
+      [/\bvanilla\b/, 'vanilla extract'],
+      [/\bcocoa\b/, 'cocoa powder'],
+      [/\bdark chocolate\b/, 'dark chocolate'],
+      [/\bginger\b/, 'ginger'],
+      [/\bcapers\b/, 'capers'],
+      [/\barborio\b/, 'arborio rice'],
+      [/\bspaghetti\b|\blinguine\b/, 'pasta'],
+      [/\bpasta water\b/, null],           // not an ingredient
+      [/\bpuff pastry\b/, 'puff pastry'],
+      [/\benglish muffins?\b/, 'english muffins'],
+    ];
+    function ingredientKey(name) {
+      let n = name.toLowerCase().replace(/\([^)]*\)/g, ' ').replace(UNIT_RE, '');
+      for (const [re, key] of ALIASES) if (re.test(n)) return key;
+      n = n.replace(PREP_RE, ' ').replace(/[,&]/g, ' ').replace(/\s+/g, ' ').trim();
+      return n || null;
+    }
+    const isOptional = name => /\boptional\b/i.test(name);
+
+    // Assumed on hand unless unticked
+    const STAPLES = new Set(['baking powder','basil','beef stock','black pepper','breadcrumbs','butter','canned tomatoes',
+      'canola oil','cayenne','chicken stock','chili powder','cocoa powder','cumin','dijon mustard','eggs','flour','garlic',
+      'mayonnaise','milk','olive oil','onion','oregano','paprika','pasta','red pepper flakes','salt','sugar','vanilla extract',
+      'white vinegar','worcestershire sauce']);
+    const GROUPS = [
+      ['Proteins', new Set(['bacon','canadian bacon','beef sirloin','beef tenderloin','chicken breast','chicken thighs','crab meat','ground beef','ground pork','pancetta or guanciale','prosciutto','shrimp'])],
+      ['Produce', new Set(['bell pepper','cilantro','corn','cremini mushrooms','green onions','ginger','jalapeño','lemon','lime','parsley','russet potatoes','shallots','thyme'])],
+      ['Dairy & cheese', new Set(['cheddar','heavy cream','parmesan','pecorino romano','sour cream','yogurt'])],
+    ];
+    const LABELS = { 'dijon mustard':'Dijon mustard','old bay seasoning':'Old Bay seasoning','worcestershire sauce':'Worcestershire sauce',
+      parmesan:'Parmesan','pecorino romano':'Pecorino Romano','english muffins':'English muffins','canadian bacon':'Canadian bacon',
+      'arborio rice':'Arborio rice','garam masala':'Garam masala','canned tomatoes':'Canned tomatoes' };
+    const keyLabel = k => LABELS[k] || k.charAt(0).toUpperCase() + k.slice(1);
+    const groupOf = k => STAPLES.has(k) ? 'Pantry staples' : (GROUPS.find(([, set]) => set.has(k)) || ['Other'])[0];
+
+    const recipeIndex = [...document.querySelectorAll('.card-scene')].map(scene => {
+      const need = new Set();
+      scene.querySelectorAll('.ingredients-cols li[data-name]').forEach(li => {
+        if (isOptional(li.dataset.name)) return;
+        const k = ingredientKey(li.dataset.name);
+        if (k) need.add(k);
+      });
+      return { scene, title: scene.querySelector('.ft-script').textContent.trim(), category: scene.querySelector('.front').dataset.category, need };
+    });
+    const allKeys = [...new Set(recipeIndex.flatMap(r => [...r.need]))].sort((a, b) => keyLabel(a).localeCompare(keyLabel(b)));
+
+    const PANTRY_KEY = 'recipes.pantry.v1';
+    let have;
+    try { const saved = JSON.parse(localStorage.getItem(PANTRY_KEY)); have = saved ? new Set(saved) : null; } catch (e) { have = null; }
+    const defaultHave = () => new Set(allKeys.filter(k => STAPLES.has(k)));
+    if (!have) have = defaultHave();
+    const savePantry = () => { try { localStorage.setItem(PANTRY_KEY, JSON.stringify([...have])); } catch (e) {} };
+
+    const pantryOverlay = document.getElementById('pantry-overlay');
+    const pantryList    = document.getElementById('pantry-list');
+    const pantryResults = document.getElementById('pantry-results');
+
+    function renderPantryList() {
+      const groups = ['Pantry staples', ...GROUPS.map(g => g[0]), 'Other'];
+      pantryList.innerHTML = groups.map(g => {
+        const keys = allKeys.filter(k => groupOf(k) === g);
+        if (!keys.length) return '';
+        const items = keys.map(k => `<label class="${have.has(k) ? 'on' : ''}"><input type="checkbox" data-key="${k}" ${have.has(k) ? 'checked' : ''}> ${keyLabel(k)}</label>`).join('');
+        if (g === 'Pantry staples') {
+          const on = keys.filter(k => have.has(k)).length;
+          return `<details class="pantry-group" id="pantry-staples"><summary><h3 class="pantry-h">${g}<small id="pantry-staples-count">${on} of ${keys.length} on hand</small></h3></summary>
+            <p class="pantry-note">Assumed you have these. Untick anything you're out of.</p><div class="pantry-items">${items}</div></details>`;
+        }
+        return `<div class="pantry-group"><h3 class="pantry-h">${g}</h3><div class="pantry-items">${items}</div></div>`;
+      }).join('');
+    }
+
+    function renderPantryResults() {
+      const scored = recipeIndex.map(r => ({ ...r, missing: [...r.need].filter(k => !have.has(k)) }));
+      const ready  = scored.filter(r => r.missing.length === 0).sort((a, b) => a.title.localeCompare(b.title));
+      const almost = scored.filter(r => r.missing.length >= 1 && r.missing.length <= 2)
+                           .sort((a, b) => a.missing.length - b.missing.length || a.title.localeCompare(b.title));
+      const hit = r => `<button type="button" class="pantry-hit" data-i="${recipeIndex.indexOf(recipeIndex.find(x => x.scene === r.scene))}">
+          <span class="t">${r.title}</span><span class="c">${r.category}</span>
+          ${r.missing.length ? `<span class="m"><b>Just need:</b> ${r.missing.map(keyLabel).join(', ')}</span>` : ''}</button>`;
+      let html = '';
+      html += `<h3 class="pantry-h">Ready to cook<small>${ready.length}</small></h3>`;
+      html += ready.length ? ready.map(hit).join('') : `<p class="pantry-empty">Nothing yet. Tick what's in your fridge — staples are already assumed.</p>`;
+      if (almost.length) {
+        html += `<h3 class="pantry-h" style="margin-top:16px">Almost there<small>${almost.length}</small></h3>` + almost.map(hit).join('');
+      }
+      pantryResults.innerHTML = html;
+    }
+
+    function openPantry() {
+      renderPantryList();
+      renderPantryResults();
+      pantryOverlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePantry() {
+      pantryOverlay.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('pantry-open').addEventListener('click', openPantry);
+    document.getElementById('pantry-close').addEventListener('click', closePantry);
+    pantryOverlay.addEventListener('click', e => { if (e.target === pantryOverlay) closePantry(); });
+    document.getElementById('pantry-reset').addEventListener('click', () => {
+      have = defaultHave(); savePantry(); renderPantryList(); renderPantryResults();
+    });
+    pantryList.addEventListener('change', e => {
+      const cb = e.target.closest('input[data-key]');
+      if (!cb) return;
+      cb.checked ? have.add(cb.dataset.key) : have.delete(cb.dataset.key);
+      cb.closest('label').classList.toggle('on', cb.checked);
+      const count = document.getElementById('pantry-staples-count');
+      if (count) { const st = allKeys.filter(k => STAPLES.has(k)); count.textContent = `${st.filter(k => have.has(k)).length} of ${st.length} on hand`; }
+      savePantry();
+      renderPantryResults();
+    });
+    pantryResults.addEventListener('click', e => {
+      const b = e.target.closest('.pantry-hit');
+      if (b) openRecipe(recipeIndex[+b.dataset.i].scene);
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && pantryOverlay.classList.contains('visible') && !recipeOverlay.classList.contains('visible') && !cookOverlay.classList.contains('visible')) closePantry();
+    });
+
     // ── COOK MODE ──
     let cookKeyHandler = null;
     let cookTimerInterval = null;
@@ -2512,7 +2817,7 @@
     function closeRecipe() {
       closeServesPicker();
       recipeOverlay.classList.remove('visible');
-      document.body.style.overflow = '';
+      document.body.style.overflow = document.getElementById('pantry-overlay').classList.contains('visible') ? 'hidden' : '';
       currentScene = null;
     }
 
@@ -2564,7 +2869,7 @@
     function closeCookOverlay() {
       clearCookTimer();
       cookOverlay.classList.remove('visible');
-      document.body.style.overflow = '';
+      document.body.style.overflow = document.getElementById('pantry-overlay').classList.contains('visible') ? 'hidden' : '';
       if (cookKeyHandler) {
         document.removeEventListener('keydown', cookKeyHandler);
         cookKeyHandler = null;

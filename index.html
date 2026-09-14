@@ -228,7 +228,7 @@
     }
 
     @media (hover: hover) {
-      .card-scene:hover .card { transform: rotateY(180deg); }
+      .card-scene:hover .card { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.26); }
     }
 
 
@@ -492,136 +492,96 @@
       color: #b5483a;
     }
 
-    .share-btn {
-      position: absolute;
-      bottom: 0.65em;
-      right: 0.65em;
-      z-index: 10;
-      width: 2em;
-      height: 2em;
-      background: rgba(255,255,255,0.65);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
+    /* ── RECIPE VIEW (tap a card) ── */
+    #recipe-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 12, 3, 0.88);
+      z-index: 1900;
       align-items: center;
       justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s, background 0.15s;
-      padding: 0;
+      padding: 24px;
+    }
+    #recipe-overlay.visible { display: flex; }
+
+    .recipe-modal {
+      width: 100%;
+      max-width: 640px;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      background: #fbf4e3;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
     }
 
-    .card-scene:hover .share-btn {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .share-btn:hover {
-      background: rgba(255,255,255,0.92);
-    }
-
-    /* ── COOK MODE ── */
-    .cook-mode-btn {
+    .recipe-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px 10px 20px;
+      background: #3d1f08;
+      color: #e8d5a8;
       font-family: Georgia, serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.04em;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .recipe-head .front-source {
+      position: static;
+      font-size: inherit;
+      letter-spacing: inherit;
+      color: #c4a870;
+      margin-left: 0.6em;
+    }
+    .recipe-head .cook-close { position: static; color: #c4a870; }
+    .recipe-head .cook-close:hover { color: #faf6ef; }
+
+    .recipe-sheet {
+      flex: 1;
+      overflow-y: auto;
+      container-type: inline-size;
+      -webkit-overflow-scrolling: touch;
+    }
+    .recipe-sheet .back {
+      height: auto;
+      min-height: 100%;
+      overflow: visible;
+      font-size: clamp(14px, 2.9cqw, 17px);
+      padding: 1.5em 1.6em 1.6em;
+      gap: 0.9em;
+    }
+    .recipe-sheet .back.large { font-size: clamp(16px, 3.4cqw, 19px); }
+    .recipe-sheet .back.xl    { font-size: clamp(18px, 4cqw, 22px); }
+    .recipe-sheet .back-title { font-size: 2.3em; }
+    .recipe-sheet .back .serves { top: 1.5em; right: 1.6em; }
+
+    .recipe-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #faf5ec;
+      border-top: 1px solid #e3d2ae;
+    }
+    .recipe-share-btn {
+      font-family: Georgia, serif;
+      font-size: 1rem;
       color: #3b1f0a;
       background: #fff;
       border: 1.5px solid #c4a870;
-      border-radius: 20px;
-      padding: 9px 22px;
+      border-radius: 8px;
+      padding: 11px 18px;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      white-space: nowrap;
-      box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
-    }
-    .cook-mode-wrap {
-      position: relative;
-      top: -16px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
     }
-    .info-btn {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 1.5px solid #c4a870;
-      background: #fff;
-      color: #9a7a5a;
-      font-family: Georgia, serif;
-      font-style: italic;
-      font-weight: bold;
-      font-size: 0.85rem;
-      line-height: 1;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .info-btn:hover,
-    .info-btn:focus-visible,
-    .info-btn[aria-expanded="true"] { color: #3b1f0a; border-color: #7a3e1a; outline: none; }
-    .info-pop {
-      position: absolute;
-      top: calc(100% + 10px);
-      right: 0;
-      width: 270px;
-      max-width: calc(100vw - 32px);
-      padding: 12px 14px;
-      background: #fff;
-      border: 1.5px solid #c4a870;
-      border-radius: 10px;
-      box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
-      font-family: Georgia, serif;
-      font-size: 0.85rem;
-      line-height: 1.5;
-      color: #5a3e2b;
-      text-align: left;
-      z-index: 30;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-4px);
-      transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
-    }
-    .info-pop strong { color: #3b1f0a; font-weight: bold; }
-    .info-btn[aria-expanded="true"] + .info-pop { opacity: 1; visibility: visible; transform: none; }
-    @media (hover: hover) {
-      .info-btn:hover + .info-pop { opacity: 1; visibility: visible; transform: none; }
-    }
-    .cook-mode-btn.active {
-      background: #7a3e1a;
-      color: #faf6ef;
-      border-color: #5a2e0e;
-    }
-    .cook-mode-btn.active:hover { background: #5a2e0e; }
-
-    body.cook-mode-on .card-scene {
-      position: relative;
-    }
-    body.cook-mode-on .card-scene::after {
-      content: 'Tap to Cook';
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(42, 16, 4, 0.6);
-      color: #faf6ef;
-      font-family: 'Dancing Script', cursive;
-      font-size: 10cqw;
-      border-radius: 8px;
-      opacity: 0;
-      transition: opacity 0.2s;
-      z-index: 15;
-      pointer-events: none;
-    }
-    body.cook-mode-on .card-scene:hover::after { opacity: 1; }
+    .recipe-share-btn:hover { border-color: #7a3e1a; }
+    .recipe-share-btn[hidden] { display: none; }
 
     #cook-overlay {
       display: none;
@@ -902,8 +862,6 @@
         background-position: right 4px center;
       }
 
-      .cook-mode-wrap { top: 0; align-self: flex-start; }
-      .info-pop { right: auto; left: 0; }
 
       .cards-grid {
         grid-template-columns: 1fr;
@@ -916,10 +874,9 @@
         margin: 0 auto;
       }
 
-      /* The buttons act on the back, so only show them once the card is flipped */
-      .card-scene.flipped .share-btn { opacity: 1; pointer-events: auto; }
-
-      .card-scene.flipped .card { transform: rotateY(180deg); }
+      .recipe-modal { max-height: 100dvh; border-radius: 0; }
+      #recipe-overlay { padding: 0; }
+      .recipe-sheet .back { border-radius: 0; }
     }
   </style>
 </head>
@@ -974,13 +931,6 @@
   <div class="page-header">
     <h1>Recipe Cards</h1>
     <div class="controls">
-      <div class="cook-mode-wrap">
-        <button id="cook-mode-toggle" class="cook-mode-btn">Guided Mode</button>
-        <button id="cook-mode-info" class="info-btn" type="button" aria-label="What is Guided Mode?" aria-expanded="false" aria-controls="cook-mode-tip">i</button>
-        <div id="cook-mode-tip" class="info-pop" role="tooltip">
-          <strong>Guided Mode</strong> walks you through a recipe while you cook. Turn it on, then tap any card. You'll get a checklist of ingredients to gather, then one step at a time in large type, with a timer whenever a step calls for one.
-        </div>
-      </div>
       <div class="controls-row">
         <div>
           <input class="search-input" id="search" type="search" placeholder="Search recipes…" autocomplete="off">
@@ -1831,6 +1781,20 @@
   </div>
 
   <!-- Guide Mode Overlay -->
+  <div id="recipe-overlay" role="dialog" aria-modal="true" aria-label="Recipe">
+    <div class="recipe-modal">
+      <div class="recipe-head">
+        <span id="recipe-cat"></span>
+        <button class="cook-close" id="recipe-close" aria-label="Close">✕</button>
+      </div>
+      <div class="recipe-sheet" id="recipe-sheet"></div>
+      <div class="recipe-actions">
+        <button class="recipe-share-btn" id="recipe-share" type="button">Share</button>
+        <button class="cook-action-btn" id="recipe-cook" type="button">Start Cooking →</button>
+      </div>
+    </div>
+  </div>
+
   <div id="cook-overlay">
     <div class="cook-modal">
       <button class="cook-close" aria-label="Close">✕</button>
@@ -1980,28 +1944,6 @@
     updateServings(1);
     requestAnimationFrame(() => fitBackContent());
 
-    // Tap-to-flip on touch devices
-    if ('ontouchstart' in window) {
-      const scenes = document.querySelectorAll('.card-scene');
-
-      scenes.forEach(scene => {
-        scene.addEventListener('click', e => {
-          if (e.target.closest('.share-btn, .cook-mode-btn, .front-source')) return;
-          scene.classList.toggle('flipped');
-        });
-      });
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio < 0.2) {
-            entry.target.classList.remove('flipped');
-          }
-        });
-      }, { threshold: 0.2 });
-
-      scenes.forEach(scene => observer.observe(scene));
-    }
-
     // Clicking anywhere in a controls segment opens its dropdown
     document.querySelectorAll('.controls-row > div').forEach(div => {
       const select = div.querySelector('select');
@@ -2071,23 +2013,8 @@
       });
     }
 
-    document.querySelectorAll('.card-scene').forEach(scene => {
-      if (navigator.canShare) {
-        const shareBtn = document.createElement('button');
-        shareBtn.className = 'share-btn';
-        shareBtn.title = 'Share recipe card';
-        shareBtn.innerHTML = shareIcon;
-        shareBtn.addEventListener('click', e => {
-          e.stopPropagation();
-          shareCardBack(scene);
-        });
-        scene.appendChild(shareBtn);
-      }
-
-    });
 
     // ── COOK MODE ──
-    let cookModeActive = false;
     let cookKeyHandler = null;
     let cookTimerInterval = null;
 
@@ -2115,37 +2042,74 @@
 
     const cookOverlay  = document.getElementById('cook-overlay');
     const cookContent  = document.getElementById('cook-content');
-    const cookToggleBtn = document.getElementById('cook-mode-toggle');
+    // ── RECIPE VIEW: tap a card to open it full screen ──
+    const recipeOverlay = document.getElementById('recipe-overlay');
+    const recipeSheet   = document.getElementById('recipe-sheet');
+    const recipeShare   = document.getElementById('recipe-share');
+    let currentScene = null;
 
-    const cookInfoBtn = document.getElementById('cook-mode-info');
-    const setInfoOpen = open => cookInfoBtn.setAttribute('aria-expanded', String(open));
-    cookInfoBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      setInfoOpen(cookInfoBtn.getAttribute('aria-expanded') !== 'true');
-    });
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.cook-mode-wrap')) setInfoOpen(false);
-    });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') setInfoOpen(false); });
+    function renderRecipeSheet() {
+      if (!currentScene) return;
+      const clone = currentScene.querySelector('.back').cloneNode(true);
+      clone.style.fontSize = '';
+      recipeSheet.replaceChildren(clone);
+    }
 
-    cookToggleBtn.addEventListener('click', () => {
-      cookModeActive = !cookModeActive;
-      cookToggleBtn.classList.toggle('active', cookModeActive);
-      document.body.classList.toggle('cook-mode-on', cookModeActive);
-    });
+    function openRecipe(scene) {
+      currentScene = scene;
+      const front  = scene.querySelector('.front');
+      const cat    = front.dataset.category || '';
+      const source = front.querySelector('.front-source');
+      document.getElementById('recipe-cat').innerHTML =
+        cat.charAt(0).toUpperCase() + cat.slice(1) + (source ? ' · ' + source.outerHTML : '');
+      renderRecipeSheet();
+      recipeSheet.scrollTop = 0;
+      recipeOverlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeRecipe() {
+      recipeOverlay.classList.remove('visible');
+      document.body.style.overflow = '';
+      currentScene = null;
+    }
 
     document.querySelectorAll('.card-scene').forEach(scene => {
       scene.addEventListener('click', e => {
-        if (!cookModeActive) return;
-        if (e.target.closest('.share-btn, .front-source')) return;
-        e.stopPropagation();
-        const title       = scene.querySelector('.ft-script').textContent.trim();
-        const ingredients = [...scene.querySelectorAll('[data-qty]')].map(el => el.textContent.trim());
-        const steps       = [...scene.querySelectorAll('.instructions-list li')].map(el => el.textContent.trim());
-        showPrepPhase(title, ingredients, steps);
-        cookOverlay.classList.add('visible');
-        document.body.style.overflow = 'hidden';
+        if (e.target.closest('.front-source')) return;
+        openRecipe(scene);
       });
+    });
+
+    document.getElementById('recipe-close').addEventListener('click', closeRecipe);
+    recipeOverlay.addEventListener('click', e => { if (e.target === recipeOverlay) closeRecipe(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && recipeOverlay.classList.contains('visible')) closeRecipe();
+    });
+
+    // Keep the open recipe in sync with the Servings / Units / Font controls
+    ['servings', 'units', 'font-size'].forEach(id => {
+      document.getElementById(id).addEventListener('change', () => {
+        if (recipeOverlay.classList.contains('visible')) renderRecipeSheet();
+      });
+    });
+
+    if (navigator.canShare) {
+      recipeShare.innerHTML = shareIcon + ' Share';
+      recipeShare.addEventListener('click', () => shareCardBack(currentScene));
+    } else {
+      recipeShare.hidden = true;
+    }
+
+    document.getElementById('recipe-cook').addEventListener('click', () => {
+      const scene = currentScene;
+      const title       = scene.querySelector('.ft-script').textContent.trim();
+      const ingredients = [...scene.querySelectorAll('[data-qty]')].map(el => el.textContent.trim());
+      const steps       = [...scene.querySelectorAll('.instructions-list li')].map(el => el.textContent.trim());
+      recipeOverlay.classList.remove('visible');
+      showPrepPhase(title, ingredients, steps);
+      cookOverlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
     });
 
     cookOverlay.addEventListener('click', e => {

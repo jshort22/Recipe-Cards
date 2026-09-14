@@ -1,7 +1,14 @@
 # Recipe Cards
 
-Single-file PWA (`index.html`) of flippable recipe cards. Deployed by Vercel on push to `main`
+Single-file PWA (`index.html`) of recipe cards. Deployed by Vercel on push to `main`
 at https://recipe-cards-xi.vercel.app/. No build step. `sw.js` handles offline caching.
+
+Interaction: the grid shows card fronts. Tapping a card opens a full-screen recipe view
+(`#recipe-overlay`) that clones the card's hidden `.back` into a scrollable sheet, with Share
+and "Start Cooking" buttons. Start Cooking launches the step-by-step cook overlay
+(`#cook-overlay`: ingredient checklist, then one step at a time with timers). Cards do not
+flip; the `.card-back` face exists only as the data source for the view, share export, and
+cook overlay.
 
 ## Adding a recipe
 
@@ -35,7 +42,7 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
      `fl oz`, `lb`/`lbs`, `cup`/`cups`, `g`, `kg`, `ml`. Countable items (eggs, cloves)
      have no unit and get singularised automatically at quantity 1.
      Example: `<li data-qty="0.5" data-name="cup all-purpose flour">½ cup all-purpose flour</li>`
-   - 5–7 instruction steps, one sentence or two each. Guided Mode reads times like
+   - 5–7 instruction steps, one sentence or two each. The cook overlay reads times like
      "3 min", "1–2 min", "30 seconds", "1 hour" out of step text to offer a timer, so keep
      times in that form.
    - Exactly two tips.

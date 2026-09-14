@@ -939,7 +939,22 @@
       justify-content: center;
       margin-bottom: 48px;
     }
-    .cook-step-footer { display: flex; justify-content: center; }
+    .cook-step-footer { display: flex; justify-content: center; align-items: stretch; gap: 10px; }
+    .cook-back-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      flex: 0 0 46px;
+      background: none;
+      border: 1.5px solid #d8c8a8;
+      border-radius: 8px;
+      color: #9a7a5a;
+      cursor: pointer;
+      padding: 0;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .cook-back-btn:hover { border-color: #9a7a5a; color: #3b1f0a; }
     .cook-tip {
       font-family: Georgia, serif;
       font-size: 1.15rem;
@@ -1117,7 +1132,8 @@
       .cook-timer { margin: 0 0 18px; }
       .cook-timer-display { font-size: 3.2rem; }
       .cook-complete { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 15vh; }
-      .cook-step-footer .cook-action-btn { width: 100%; padding: 16px 28px; font-size: 1.15rem; }
+      .cook-step-footer .cook-action-btn { flex: 1; padding: 16px 28px; font-size: 1.15rem; }
+      .cook-back-btn { flex-basis: 56px; width: 56px; }
 
       .cards-grid {
         grid-template-columns: 1fr;
@@ -3077,6 +3093,9 @@
         ${cookTips.filter(t => t.step === index + 1).map(t => `<div class="cook-tip"><span class="cook-tip-label">Tip</span>${t.text}</div>`).join('')}
         ${timeInfo ? `<div class="cook-timer"><button class="cook-timer-btn" id="cook-timer-start">⏱ Start ${timeInfo.label} timer</button></div>` : ''}
         <div class="cook-step-footer">
+          ${index > 0 ? `<button class="cook-back-btn" id="cook-back-btn" type="button" aria-label="Previous step" title="Previous step">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          </button>` : ''}
           <button class="cook-action-btn" id="cook-step-btn">
             ${isLast ? 'Finish Cooking' : 'Next Step'}
           </button>
@@ -3085,6 +3104,7 @@
 
       const advance = () => { clearCookTimer(); isLast ? showCompletePhase(title) : showCookPhase(title, steps, index + 1); };
       document.getElementById('cook-step-btn').addEventListener('click', advance);
+      document.getElementById('cook-back-btn')?.addEventListener('click', () => { clearCookTimer(); showCookPhase(title, steps, index - 1); });
       setKeyHandler(advance);
 
       if (timeInfo) {

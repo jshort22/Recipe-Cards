@@ -79,21 +79,26 @@ tweaks). Turn it into a card, commit, push. Vercel deploys in about a minute.
 
 ## "What can I make?"
 
-A button beside the search opens `#pantry-overlay`: a checklist of every distinct ingredient
-across the deck, with recipes you can make (all non-optional ingredients ticked) and "Almost
-there" (missing 1–2) updating live. Ticked state persists in `localStorage` under
-`recipes.pantry.v1`. Pantry staples start ticked.
+A basket icon button in the header (left of the settings gear) opens `#pantry-overlay`: a
+checklist of every distinct ingredient across the deck, with recipes you can make (all
+non-optional ingredients ticked) and "Almost there" (missing 1–2) updating live. Ticked state
+persists in `localStorage` under `recipes.pantry.v2`. Only the short `STAPLES` list starts
+ticked (salt, pepper, olive oil, butter, eggs, milk, flour, sugar, garlic, onion). "Spices &
+seasonings" and "Pantry & condiments" are unticked groups with a Select all / Clear control
+(`SELECT_ALL`).
 
 Ingredient identity comes from `ingredientKey(data-name)` in the script: units and prep words
 are stripped, then an `ALIASES` table maps variants to one canonical key (`unsalted butter` →
 `butter`, `chicken broth` → `chicken stock`, `egg yolks` → `eggs`). `STAPLES` lists keys assumed
-on hand; `GROUPS` sorts the rest into Proteins / Produce / Dairy & cheese, else Other; `LABELS`
+on hand; `GROUPS` sorts the rest into Spices & seasonings / Pantry & condiments / Proteins /
+Produce / Dairy & cheese, else Other; `LABELS`
 fixes capitalisation of proper nouns. Names containing "optional" are ignored for matching.
 
 **When adding a recipe**, check what its ingredients key to. In the browser console:
 `[...document.querySelectorAll('.card-scene')].at(-1).querySelectorAll('[data-name]').forEach(l => console.log(l.dataset.name, '→', ingredientKey(l.dataset.name)))`.
-A new ingredient that keys to something wrong or too specific needs an `ALIASES` entry; a new
-staple goes in `STAPLES`; a protein, produce, or dairy item goes in `GROUPS`.
+A new ingredient that keys to something wrong or too specific needs an `ALIASES` entry. Every
+other new key belongs in a `GROUPS` set (spice, pantry item, protein, produce, dairy) so it
+doesn't fall into Other; add to `STAPLES` only for something nearly every kitchen has.
 
 ## Verifying visually
 

@@ -123,18 +123,21 @@
     .settings-toggle { display: none; }
 
     .search-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .header-tools { display: flex; align-items: flex-start; gap: 10px; }
     .pantry-btn {
-      font-family: Georgia, serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.02em;
-      color: #3b1f0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      margin-top: 6px;
+      border-radius: 50%;
       background: #fff;
       border: 1.5px solid #c4a870;
-      border-radius: 20px;
-      padding: 11px 20px;
-      cursor: pointer;
-      white-space: nowrap;
+      color: #7a3e1a;
       box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
+      cursor: pointer;
+      padding: 0;
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
     .pantry-btn:hover { background: #7a3e1a; color: #faf6ef; border-color: #5a2e0e; }
@@ -568,6 +571,10 @@
     .pantry-group summary::-webkit-details-marker { display: none; }
     .pantry-group summary .pantry-h::after { content: ' ▸'; font-family: Georgia, serif; font-size: 0.8em; color: #9a7a5a; }
     .pantry-group[open] summary .pantry-h::after { content: ' ▾'; }
+    .pantry-h-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .pantry-h-row .pantry-h { margin-bottom: 0; }
+    .pantry-all { font-family: Georgia, serif; font-size: 0.8rem; color: #7a3e1a; background: none; border: none; padding: 2px 4px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+    .pantry-all:hover { color: #3b1f0a; }
     .pantry-note { font-size: 0.85rem; font-style: italic; color: #5a3e2b; margin: -4px 0 10px; }
     .pantry-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px 10px; }
     .pantry-items label {
@@ -769,12 +776,13 @@
       background: #fff;
       border: 1.5px solid #c4a870;
       border-radius: 8px;
-      padding: 11px 18px;
+      padding: 0 16px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
     }
+    .recipe-share-btn svg { width: 18px; height: 18px; }
     .recipe-share-btn:hover { border-color: #7a3e1a; }
     .recipe-share-btn[hidden] { display: none; }
 
@@ -1048,8 +1056,8 @@
       #recipe-overlay { padding: 0; }
       .recipe-sheet .back { border-radius: 0; }
 
-      .search-row { flex-direction: column; align-items: stretch; }
-      .pantry-btn { text-align: center; }
+      .header-tools { align-items: center; }
+      .pantry-btn { margin-top: 0; }
       #pantry-overlay { padding: 0; }
       .pantry-modal { max-height: 100dvh; border-radius: 0; }
       .pantry-body { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
@@ -1154,6 +1162,10 @@
   <div class="page-header">
     <div class="header-top">
       <h1>Recipes</h1>
+      <div class="header-tools">
+      <button type="button" class="pantry-btn" id="pantry-open" aria-label="What can I make?" title="What can I make?">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11h14l-1.4 8.2a1.5 1.5 0 0 1-1.5 1.3H7.9a1.5 1.5 0 0 1-1.5-1.3z"/><path d="M3 11h18"/><path d="M8.5 11 12 4l3.5 7"/><path d="M10 15v3M14 15v3"/></svg>
+      </button>
       <div class="settings">
         <button class="settings-toggle" id="settings-toggle" type="button" aria-label="Settings" aria-expanded="false" aria-controls="settings-row">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
@@ -1176,12 +1188,12 @@
         </div>
         </div>
       </div>
+      </div>
     </div>
     <div class="search-row">
       <div class="search-box">
         <input class="search-input" id="search" type="search" placeholder="Search recipes…" autocomplete="off">
       </div>
-      <button type="button" class="pantry-btn" id="pantry-open">What can I make?</button>
     </div>
   </div>
 
@@ -2269,7 +2281,7 @@
         <button type="button" class="serves-cancel">Cancel</button>
       </div>
       <div class="recipe-actions">
-        <button class="recipe-share-btn" id="recipe-share" type="button">Share</button>
+        <button class="recipe-share-btn" id="recipe-share" type="button" aria-label="Share" title="Share"></button>
         <button class="cook-action-btn" id="recipe-cook" type="button">Start Cooking</button>
       </div>
     </div>
@@ -2645,13 +2657,15 @@
     const isOptional = name => /\boptional\b/i.test(name);
 
     // Assumed on hand unless unticked
-    const STAPLES = new Set(['baking powder','basil','beef stock','black pepper','breadcrumbs','butter','canned tomatoes',
-      'canola oil','cayenne','chicken stock','chili powder','cocoa powder','cumin','dijon mustard','eggs','flour','garlic',
-      'mayonnaise','milk','olive oil','onion','oregano','paprika','pasta','red pepper flakes','salt','sugar','vanilla extract',
-      'white vinegar','worcestershire sauce']);
+    // Ticked by default: the handful nearly every kitchen has.
+    const STAPLES = new Set(['salt','black pepper','olive oil','butter','eggs','milk','flour','sugar','garlic','onion']);
+    // Groups with a "Select all" control start unticked.
+    const SELECT_ALL = new Set(['Spices & seasonings', 'Pantry & condiments']);
     const GROUPS = [
+      ['Spices & seasonings', new Set(['basil','cayenne','chili powder','cumin','garam masala','old bay seasoning','oregano','paprika','red pepper flakes','thyme','vanilla extract'])],
+      ['Pantry & condiments', new Set(['baking powder','beef stock','black beans','breadcrumbs','canned tomatoes','canola oil','capers','chicken stock','cocoa powder','cornmeal','dijon mustard','enchilada sauce','mayonnaise','pasta','white vinegar','worcestershire sauce'])],
       ['Proteins', new Set(['bacon','canadian bacon','beef sirloin','beef tenderloin','chicken breast','chicken thighs','crab meat','ground beef','ground pork','pancetta or guanciale','prosciutto','shrimp'])],
-      ['Produce', new Set(['bell pepper','cilantro','corn','cremini mushrooms','green onions','ginger','jalapeño','lemon','lime','parsley','russet potatoes','shallots','thyme'])],
+      ['Produce', new Set(['bell pepper','cilantro','corn','cremini mushrooms','green onions','ginger','jalapeño','lemon','lime','parsley','russet potatoes','shallots'])],
       ['Dairy & cheese', new Set(['cheddar','heavy cream','parmesan','pecorino romano','sour cream','yogurt'])],
     ];
     const LABELS = { 'dijon mustard':'Dijon mustard','old bay seasoning':'Old Bay seasoning','worcestershire sauce':'Worcestershire sauce',
@@ -2671,7 +2685,7 @@
     });
     const allKeys = [...new Set(recipeIndex.flatMap(r => [...r.need]))].sort((a, b) => keyLabel(a).localeCompare(keyLabel(b)));
 
-    const PANTRY_KEY = 'recipes.pantry.v1';
+    const PANTRY_KEY = 'recipes.pantry.v2';
     let have;
     try { const saved = JSON.parse(localStorage.getItem(PANTRY_KEY)); have = saved ? new Set(saved) : null; } catch (e) { have = null; }
     const defaultHave = () => new Set(allKeys.filter(k => STAPLES.has(k)));
@@ -2692,6 +2706,11 @@
           const on = keys.filter(k => have.has(k)).length;
           return `<details class="pantry-group" id="pantry-staples"><summary><h3 class="pantry-h">${g}<small id="pantry-staples-count">${on} of ${keys.length} on hand</small></h3></summary>
             <p class="pantry-note">Assumed you have these. Untick anything you're out of.</p><div class="pantry-items">${items}</div></details>`;
+        }
+        if (SELECT_ALL.has(g)) {
+          const all = keys.every(k => have.has(k));
+          return `<div class="pantry-group"><div class="pantry-h-row"><h3 class="pantry-h">${g}</h3>
+            <button type="button" class="pantry-all" data-group="${g}">${all ? 'Clear' : 'Select all'}</button></div><div class="pantry-items">${items}</div></div>`;
         }
         return `<div class="pantry-group"><h3 class="pantry-h">${g}</h3><div class="pantry-items">${items}</div></div>`;
       }).join('');
@@ -2731,6 +2750,14 @@
     document.getElementById('pantry-reset').addEventListener('click', () => {
       have = defaultHave(); savePantry(); renderPantryList(); renderPantryResults();
     });
+    pantryList.addEventListener('click', e => {
+      const btn = e.target.closest('.pantry-all');
+      if (!btn) return;
+      const keys = allKeys.filter(k => groupOf(k) === btn.dataset.group);
+      const all = keys.every(k => have.has(k));
+      keys.forEach(k => all ? have.delete(k) : have.add(k));
+      savePantry(); renderPantryList(); renderPantryResults();
+    });
     pantryList.addEventListener('change', e => {
       const cb = e.target.closest('input[data-key]');
       if (!cb) return;
@@ -2738,6 +2765,8 @@
       cb.closest('label').classList.toggle('on', cb.checked);
       const count = document.getElementById('pantry-staples-count');
       if (count) { const st = allKeys.filter(k => STAPLES.has(k)); count.textContent = `${st.filter(k => have.has(k)).length} of ${st.length} on hand`; }
+      const allBtn = cb.closest('.pantry-group').querySelector('.pantry-all');
+      if (allBtn) allBtn.textContent = allKeys.filter(k => groupOf(k) === allBtn.dataset.group).every(k => have.has(k)) ? 'Clear' : 'Select all';
       savePantry();
       renderPantryResults();
     });
@@ -2859,7 +2888,7 @@
     });
 
     if (navigator.canShare) {
-      recipeShare.innerHTML = shareIcon + ' Share';
+      recipeShare.innerHTML = shareIcon;
       recipeShare.addEventListener('click', () => shareCardBack(currentScene));
     } else {
       recipeShare.hidden = true;

@@ -2270,7 +2270,7 @@
       </div>
       <div class="recipe-actions">
         <button class="recipe-share-btn" id="recipe-share" type="button">Share</button>
-        <button class="cook-action-btn" id="recipe-cook" type="button">Start Cooking →</button>
+        <button class="cook-action-btn" id="recipe-cook" type="button">Start Cooking</button>
       </div>
     </div>
   </div>
@@ -2916,7 +2916,7 @@
         </ul>
         <div class="cook-footer">
           <span class="cook-checked-count" id="cook-count">0 of ${ingredients.length} ready</span>
-          <button class="cook-action-btn" id="cook-start-btn">Start Cooking →</button>
+          <button class="cook-action-btn" id="cook-start-btn">Start Cooking</button>
         </div>
       `;
 
@@ -2955,7 +2955,7 @@
         ${timeInfo ? `<div class="cook-timer"><button class="cook-timer-btn" id="cook-timer-start">⏱ Start ${timeInfo.label} timer</button></div>` : ''}
         <div class="cook-step-footer">
           <button class="cook-action-btn" id="cook-step-btn">
-            ${isLast ? 'Finish Cooking ✓' : 'Next Step →'}
+            ${isLast ? 'Finish Cooking' : 'Next Step'}
           </button>
         </div>
       `;

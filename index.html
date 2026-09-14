@@ -184,6 +184,24 @@
       color: #b09a7a;
       font-style: italic;
     }
+    .search-input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+    .search-clear {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      margin: -4px -4px -4px 0;
+      border: none;
+      border-radius: 50%;
+      background: #e3d2ae;
+      color: #5a3e2b;
+      cursor: pointer;
+      padding: 0;
+    }
+    .search-clear:hover { background: #c4a870; }
+    .search-clear[hidden] { display: none; }
 
     .no-results {
       display: none;
@@ -1234,6 +1252,9 @@
     <div class="search-row">
       <div class="search-box">
         <input class="search-input" id="search" type="search" placeholder="Search recipes…" autocomplete="off">
+        <button type="button" class="search-clear" id="search-clear" aria-label="Clear search" hidden>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -2625,8 +2646,12 @@
       return !derivedForms.has(nextWord);
     }
 
-    document.getElementById('search').addEventListener('input', function () {
-      const q = this.value.trim().toLowerCase();
+    const searchInput = document.getElementById('search');
+    const searchClear = document.getElementById('search-clear');
+    let searchIdleTimer = null;
+    function runSearch() {
+      const q = searchInput.value.trim().toLowerCase();
+      searchClear.hidden = q === '';
       const cards = document.querySelectorAll('.cards-grid > div:not(#no-results)');
       let visible = 0;
       cards.forEach(card => {
@@ -2638,6 +2663,19 @@
         if (match) visible++;
       });
       document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+    }
+    searchInput.addEventListener('input', () => {
+      runSearch();
+      // On touch devices, drop the keyboard once typing pauses so the results are visible
+      clearTimeout(searchIdleTimer);
+      if (matchMedia('(pointer: coarse)').matches) {
+        searchIdleTimer = setTimeout(() => { if (document.activeElement === searchInput) searchInput.blur(); }, 1500);
+      }
+    });
+    searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') searchInput.blur(); });
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      runSearch();
     });
 
     // Share buttons

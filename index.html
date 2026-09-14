@@ -551,9 +551,63 @@
       cursor: pointer;
       transition: background 0.2s, color 0.2s, border-color 0.2s;
       white-space: nowrap;
+      box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
+    }
+    .cook-mode-wrap {
       position: relative;
       top: -16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid #c4a870;
+      background: #fff;
+      color: #9a7a5a;
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 0.85rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .info-btn:hover,
+    .info-btn:focus-visible,
+    .info-btn[aria-expanded="true"] { color: #3b1f0a; border-color: #7a3e1a; outline: none; }
+    .info-pop {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 270px;
+      max-width: calc(100vw - 32px);
+      padding: 12px 14px;
+      background: #fff;
+      border: 1.5px solid #c4a870;
+      border-radius: 10px;
       box-shadow: 0 4px 18px rgba(90, 50, 15, 0.18);
+      font-family: Georgia, serif;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #5a3e2b;
+      text-align: left;
+      z-index: 30;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+    }
+    .info-pop strong { color: #3b1f0a; font-weight: bold; }
+    .info-btn[aria-expanded="true"] + .info-pop { opacity: 1; visibility: visible; transform: none; }
+    @media (hover: hover) {
+      .info-btn:hover + .info-pop { opacity: 1; visibility: visible; transform: none; }
     }
     .cook-mode-btn.active {
       background: #7a3e1a;
@@ -863,7 +917,8 @@
         background-position: right 4px center;
       }
 
-      .cook-mode-btn { top: 0; align-self: flex-start; }
+      .cook-mode-wrap { top: 0; align-self: flex-start; }
+      .info-pop { right: auto; left: 0; }
 
       .cards-grid {
         grid-template-columns: 1fr;
@@ -935,8 +990,12 @@
   <div class="page-header">
     <h1>Recipe Cards</h1>
     <div class="controls">
-      <div>
+      <div class="cook-mode-wrap">
         <button id="cook-mode-toggle" class="cook-mode-btn">Guided Mode</button>
+        <button id="cook-mode-info" class="info-btn" type="button" aria-label="What is Guided Mode?" aria-expanded="false" aria-controls="cook-mode-tip">i</button>
+        <div id="cook-mode-tip" class="info-pop" role="tooltip">
+          <strong>Guided Mode</strong> walks you through a recipe while you cook. Turn it on, then tap any card. You'll get a checklist of ingredients to gather, then one step at a time in large type, with a timer whenever a step calls for one.
+        </div>
       </div>
       <div class="controls-row">
         <div>
@@ -2119,6 +2178,17 @@
     const cookOverlay  = document.getElementById('cook-overlay');
     const cookContent  = document.getElementById('cook-content');
     const cookToggleBtn = document.getElementById('cook-mode-toggle');
+
+    const cookInfoBtn = document.getElementById('cook-mode-info');
+    const setInfoOpen = open => cookInfoBtn.setAttribute('aria-expanded', String(open));
+    cookInfoBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      setInfoOpen(cookInfoBtn.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.cook-mode-wrap')) setInfoOpen(false);
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setInfoOpen(false); });
 
     cookToggleBtn.addEventListener('click', () => {
       cookModeActive = !cookModeActive;

@@ -1,4 +1,4 @@
-# Recipe Cards
+# Recipes
 
 Single-file PWA (`index.html`) of recipe cards. Deployed by Vercel on push to `main`
 at https://recipe-cards-xi.vercel.app/. No build step. `sw.js` handles offline caching.

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Recipe Cards</title>
+  <title>Recipes</title>
   <meta name="theme-color" content="#f5f0e8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -929,7 +929,7 @@
   </svg>
 
   <div class="page-header">
-    <h1>Recipe Cards</h1>
+    <h1>Recipes</h1>
     <div class="controls">
       <div class="controls-row">
         <div>
@@ -2116,7 +2116,7 @@
       if (e.target === cookOverlay) closeCookOverlay();
     });
 
-    document.querySelector('.cook-close').addEventListener('click', closeCookOverlay);
+    document.querySelector('#cook-overlay .cook-close').addEventListener('click', closeCookOverlay);
 
     function closeCookOverlay() {
       clearCookTimer();

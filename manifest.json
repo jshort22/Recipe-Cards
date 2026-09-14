@@ -1,5 +1,5 @@
 {
-  "name": "Recipe Cards",
+  "name": "Recipes",
   "short_name": "Recipes",
   "description": "A deck of flippable recipe cards with servings scaling, unit conversion, and a guided cook mode.",
   "start_url": "./",
